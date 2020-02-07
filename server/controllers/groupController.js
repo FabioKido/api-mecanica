@@ -1,5 +1,7 @@
-const Group = require('../models/groupModel');
-const Permission = require('../models/permissionModel');
+/*
+
+const Group = require('../models/Group');
+const Permission = require('../models/Permission');
 
 exports.getGroups = async (req, res, next) => {
   const groups = await Group.find({});
@@ -63,3 +65,5 @@ exports.getPermission = async (req, res, next) => {
     next(error)
   }
 }
+
+*/

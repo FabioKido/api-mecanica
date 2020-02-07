@@ -1,7 +1,6 @@
-const User = require('../models/userModel');
+const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const nodemailer = require("nodemailer");
 const path = require('path');
 
 const { roles } = require('../roles')
@@ -49,13 +48,13 @@ exports.allowIfLoggedin = async (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   try {
-    const { role, email, password, enable, group } = req.body
+    const { username, type, role, email, password, enable, accept_terms_privacy, id_access_plan } = req.body
     const hashedPassword = await hashPassword(password);
-    const newUser = new User({ email, password: hashedPassword, role: role || "basic", enable: enable || false, group });
-    const accessToken = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+    const newUser = new User({ username, email, password: hashedPassword, type, role: role || "basic", enable: enable || false, accept_terms_privacy, id_access_plan });
+    const access_token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
       expiresIn: "1d"
     });
-    newUser.accessToken = accessToken;
+    newUser.access_token = access_token;
     await newUser.save();
     res.json({
       data: newUser,
@@ -73,13 +72,13 @@ exports.login = async (req, res, next) => {
     if (!user) return next(new Error('Email does not exist'));
     const validPassword = await validatePassword(password, user.password);
     if (!validPassword) return next(new Error('Password is not correct'))
-    const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: "1d"
     });
-    await User.findByIdAndUpdate(user._id, { accessToken })
+    await User.findByIdAndUpdate(user.id, { access_token })
     res.status(200).json({
-      data: { email: user.email, role: user.role, _id: user._id },
-      accessToken
+      data: { email: user.email, role: user.role, id: user.id },
+      access_token
     })
   } catch (error) {
     next(error);
@@ -87,16 +86,19 @@ exports.login = async (req, res, next) => {
 }
 
 exports.getUsers = async (req, res, next) => {
+
   const users = await User.find({});
+
   res.status(200).json({
     data: users
   });
+
 }
 
 exports.getUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    const user = await User.findById(userId);
+    const user = await User.findByPk(userId);
     if (!user) return next(new Error('User does not exist'));
     res.status(200).json({
       data: user
@@ -128,52 +130,6 @@ exports.deleteUser = async (req, res, next) => {
       message: 'User has been deleted'
     });
   } catch (error) {
-    next(error)
-  }
-}
-
-exports.enviarEmail = async (req, res, next) => {
-
-  try{
-    const { email, subject, mensagem } = req.body
-
-    let transporter = nodemailer.createTransport({
-      service:'gmail',
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      requireTLS: true,
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS
-      }
-    });
-
-    transporter.verify(function(error, success) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Server is ready to take our messages");
-      }
-    });
-  
-    transporter.sendMail({
-      from: "Fábio Kido <fabiohenryquemesquita@gmail.com>",
-      to: email,
-      subject: subject,
-      text: mensagem
-    }).then(message => {
-      console.log(message);
-    }).catch(err => {
-      console.log(err);
-    });
-
-    res.status(200).json({
-      message: 'Email enviado com sucesso'
-    });
-
-    next()
-  }catch (error) {
     next(error)
   }
 }
