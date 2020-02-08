@@ -61,10 +61,6 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },
-      id_access_plan: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
       access_token: {
         type: Sequelize.STRING,
         allowNull: true,

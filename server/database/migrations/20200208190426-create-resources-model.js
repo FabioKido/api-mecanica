@@ -29,10 +29,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      id_access_plan: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      }
     });
   },
 
