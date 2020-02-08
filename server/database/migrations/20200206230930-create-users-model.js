@@ -30,7 +30,7 @@ module.exports = {
         allowNull: false,
       },
       enable: {
-        type: Sequelize.TINYINT,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
       created_at: {
@@ -58,7 +58,7 @@ module.exports = {
         allowNull: true,
       },
       accept_terms_privacy: {
-        type: Sequelize.TINYINT,
+        type: Sequelize.BOOLEAN,
         allowNull: false
       },
       id_access_plan: {
