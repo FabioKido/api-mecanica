@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const ownerController = require('../controllers/ownerController');
 const workerController = require('../controllers/workerController');
+const companyController = require('../controllers/companyController');
 
 router.post('/signup', userController.signup);
 
@@ -25,6 +27,8 @@ router.delete('/user/:userId', userController.allowIfLoggedin, userController.gr
 
 //router.get('/groups', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), groupController.getGroups);
 
+router.post('/user/:id_user/owner', userController.allowIfLoggedin, ownerController.addOwner);
 router.post('/user/:id_user/worker', userController.allowIfLoggedin, workerController.addWorker);
+router.post('/user/:id_user/company', userController.allowIfLoggedin, companyController.addCompany);
 
 module.exports = router;

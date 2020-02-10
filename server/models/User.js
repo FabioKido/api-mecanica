@@ -21,7 +21,10 @@ class User extends Model {
   }
 
   static associate(models) {
+    this.hasMany(models.Owner, { foreignKey: 'id_user', as: 'owners' });
     this.hasMany(models.Worker, { foreignKey: 'id_user', as: 'workers' });
+    this.hasMany(models.Company, { foreignKey: 'id_user', as: 'companies' });
+    this.belongsTo(models.AccessPlan, { foreignKey: 'id_access_plan', as: 'access_plans' });
     //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
   }
 }
