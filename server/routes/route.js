@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-//const groupController = require('../controllers/groupController');
+const workerController = require('../controllers/workerController');
 
 router.post('/signup', userController.signup);
 
@@ -24,5 +24,7 @@ router.delete('/user/:userId', userController.allowIfLoggedin, userController.gr
 //router.get('/permission/:permissionId', userController.allowIfLoggedin, groupController.getPermission);
 
 //router.get('/groups', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), groupController.getGroups);
+
+router.post('/user/:userId/worker', userController.allowIfLoggedin, workerController.addWorker);
 
 module.exports = router;

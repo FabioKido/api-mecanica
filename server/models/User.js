@@ -14,7 +14,6 @@ class User extends Model {
       last_login: DataTypes.DATE,
       password_requested_at: DataTypes.DATE,
       accept_terms_privacy: DataTypes.BOOLEAN,
-      id_access_plan: DataTypes.INTEGER,
       access_token: DataTypes.STRING,
     }, {
       sequelize
