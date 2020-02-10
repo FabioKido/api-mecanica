@@ -28,7 +28,7 @@ exports.addResource = async (req, res, next) => {
   try {
 
     const { id_access_plan } = req.params;
-    const { name, action, enable } = req.body;
+    const { name, action, enable, qtd } = req.body;
 
     const plan = await AccessPlan.findByPk(id_access_plan);
 
@@ -40,6 +40,7 @@ exports.addResource = async (req, res, next) => {
       name, 
       action, 
       enable,
+      qtd,
       id_access_plan,
     });
     

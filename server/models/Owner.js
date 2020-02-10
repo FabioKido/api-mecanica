@@ -9,7 +9,6 @@ class Owner extends Model {
       rg: DataTypes.STRING(14),
       birthday: DataTypes.DATE,
       orgao_expeditor: DataTypes.STRING(30),
-      id_contact: DataTypes.INTEGER,
     }, {
       sequelize
     })
@@ -17,6 +16,7 @@ class Owner extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'id_user', as: 'user' });
+    this.belongsTo(models.Contact, { foreignKey: 'id_contact', as: 'contact' });
   }
 }
 

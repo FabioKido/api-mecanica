@@ -25,8 +25,9 @@ class User extends Model {
     this.hasMany(models.Worker, { foreignKey: 'id_user', as: 'workers' });
     this.hasMany(models.Company, { foreignKey: 'id_user', as: 'companies' });
     this.belongsTo(models.AccessPlan, { foreignKey: 'id_access_plan', as: 'access_plans' });
-    //this.belongsToMany(models.Tech, { foreignKey: 'user_id', through: 'user_techs', as: 'techs' });
+    this.belongsToMany(models.Group, { foreignKey: 'id_group', through: 'users_groups', as: 'groups' });
   }
+  
 }
 
 module.exports = User;

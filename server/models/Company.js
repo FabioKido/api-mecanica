@@ -8,7 +8,6 @@ class Company extends Model {
       type: DataTypes.STRING,
       cnpj: DataTypes.STRING(25),
       ie: DataTypes.STRING(13),
-      id_contact: DataTypes.INTEGER,
     }, {
       sequelize
     })
@@ -16,6 +15,7 @@ class Company extends Model {
 
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'id_user', as: 'user' });
+    this.belongsTo(models.Contact, { foreignKey: 'id_contact', as: 'contact' });
   }
 }
 
