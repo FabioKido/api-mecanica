@@ -6,6 +6,7 @@ class Resource extends Model {
       name: DataTypes.STRING,
       action: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,
+      qtd: DataTypes.INTEGER,
     }, {
       sequelize
     })

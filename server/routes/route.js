@@ -4,6 +4,7 @@ const userController = require('../controllers/userController');
 const ownerController = require('../controllers/ownerController');
 const workerController = require('../controllers/workerController');
 const companyController = require('../controllers/companyController');
+const accessPlanController = require('../controllers/accessPlanController');
 
 router.post('/signup', userController.signup);
 
@@ -30,5 +31,8 @@ router.delete('/user/:userId', userController.allowIfLoggedin, userController.gr
 router.post('/user/:id_user/owner', userController.allowIfLoggedin, ownerController.addOwner);
 router.post('/user/:id_user/worker', userController.allowIfLoggedin, workerController.addWorker);
 router.post('/user/:id_user/company', userController.allowIfLoggedin, companyController.addCompany);
+
+router.post('/plans/new-plan', userController.allowIfLoggedin, accessPlanController.addAccessPlan);
+router.post('/plans/:id_access_plan/new-resource', userController.allowIfLoggedin, accessPlanController.addResource);
 
 module.exports = router;
