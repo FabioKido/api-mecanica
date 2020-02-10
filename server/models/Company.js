@@ -1,12 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 
-class Worker extends Model {
+class Company extends Model {
   static init(sequelize) {
     super.init({
       name: DataTypes.STRING,
       nome_fantasia: DataTypes.STRING,
       type: DataTypes.STRING,
-      cnpj: DataTypes.STRING(25)),
+      cnpj: DataTypes.STRING(25),
       ie: DataTypes.STRING(13),
       id_contact: DataTypes.INTEGER,
     }, {
@@ -19,4 +19,4 @@ class Worker extends Model {
   }
 }
 
-module.exports = Worker;
+module.exports = Company;

@@ -25,6 +25,6 @@ router.delete('/user/:userId', userController.allowIfLoggedin, userController.gr
 
 //router.get('/groups', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), groupController.getGroups);
 
-router.post('/user/:userId/worker', userController.allowIfLoggedin, workerController.addWorker);
+router.post('/user/:id_user/worker', userController.allowIfLoggedin, workerController.addWorker);
 
 module.exports = router;
