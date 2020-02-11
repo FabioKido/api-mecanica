@@ -3,7 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 class Group extends Model {
   static init(sequelize) {
     super.init({
-      function: DataTypes.STRING,
+      name: DataTypes.STRING,
       description: DataTypes.TEXT,
       enable:  DataTypes.BOOLEAN,
       created_by: DataTypes.INTEGER,

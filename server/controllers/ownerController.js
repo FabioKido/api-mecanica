@@ -26,6 +26,17 @@ module.exports = {
     });
 
     return res.json(owner);
-  }
+  },
+
+  //inner join
+  /*async getUsersOwners(req, res) {
+    const { id_user } = req.params;
+
+    const user = await User.findByPk(id_user, {
+      include: { association: 'owners' }
+    });
+
+    return res.json(user.owners);
+  }*/
 
 };

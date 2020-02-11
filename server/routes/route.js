@@ -6,6 +6,7 @@ const workerController = require('../controllers/workerController');
 const companyController = require('../controllers/companyController');
 const accessPlanController = require('../controllers/accessPlanController');
 const contactController = require('../controllers/contactController');
+const groupController = require('../controllers/groupController');
 
 router.post('/signup', userController.signup);
 
@@ -19,7 +20,7 @@ router.put('/user/:userId', userController.allowIfLoggedin, userController.grant
 
 router.delete('/user/:userId', userController.allowIfLoggedin, userController.grantAccess('deleteAny', 'profile'), userController.deleteUser);
 
-//router.post('/adicionar-grupo', groupController.addGroup);
+//router.post('/adicionar-grupo', groupController.createGroup);
 
 //router.post('/add-permissao', groupController.addPermission);
 
@@ -27,7 +28,8 @@ router.delete('/user/:userId', userController.allowIfLoggedin, userController.gr
 
 //router.get('/permission/:permissionId', userController.allowIfLoggedin, groupController.getPermission);
 
-//router.get('/groups', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), groupController.getGroups);
+router.get('/groups', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), groupController.getGroups);
+router.post('/users/:id_user/groups', userController.allowIfLoggedin, groupController.addUserInGroup);
 
 router.post('/user/:id_user/owner', userController.allowIfLoggedin, ownerController.addOwner);
 router.post('/user/:id_user/worker', userController.allowIfLoggedin, workerController.addWorker);
