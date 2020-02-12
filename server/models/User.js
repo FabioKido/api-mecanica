@@ -21,11 +21,11 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Owner, { foreignKey: 'id_user', as: 'owners' });
-    this.hasMany(models.Worker, { foreignKey: 'id_user', as: 'workers' });
-    this.hasMany(models.Company, { foreignKey: 'id_user', as: 'companies' });
+    //this.hasOne(models.Owner, { foreignKey: 'id_user', as: 'owners' });
+    //this.hasOne(models.Worker, { foreignKey: 'id_user', as: 'workers' });
+    //this.hasOne(models.Company, { foreignKey: 'id_user', as: 'companies' });
     this.belongsTo(models.AccessPlan, { foreignKey: 'id_access_plan', as: 'access_plans' });
-    this.belongsToMany(models.Group, { foreignKey: 'id_group', through: 'users_groups', as: 'groups' });
+    this.belongsToMany(models.Group, { foreignKey: 'id_user', through: 'user_groups', as: 'groups' });
   }
   
 }

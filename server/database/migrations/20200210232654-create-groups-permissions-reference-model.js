@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('groups_permissions', { 
+    return queryInterface.createTable('group_permissions', { 
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -35,6 +35,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('groups_permissions');
+    return queryInterface.dropTable('group_permissions');
   }
 };

@@ -14,8 +14,8 @@ class Group extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.User, { foreignKey: 'id_user', through: 'users_groups', as: 'users' });
-    this.belongsToMany(models.Permission, { foreignKey: 'id_permission', through: 'groups_permissions', as: 'permissions' });
+    this.belongsToMany(models.User, { foreignKey: 'id_group', through: 'user_groups', as: 'users' });
+    this.belongsToMany(models.Permission, { foreignKey: 'id_group', through: 'group_permissions', as: 'permissions' });
   }
 
 }

@@ -22,16 +22,14 @@ exports.getGroup = async (req, res, next) => {
   }
 }
 
-/*exports.createGroup = async (req, res, next) => {
+exports.createGroup = async (req, res, next) => {
   try {
-    const { function, description, enable } = req.body;
+    const { name, description, enable } = req.body;
 
     const newGroup = await Group.create({
-      function,
+      name,
       description,
       enable,
-      created_by,
-      updated_by,
     });
 
     res.json({
@@ -41,37 +39,24 @@ exports.getGroup = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-}*/
+}
 
-/*exports.addPermission = async (req, res, next) => {
-  try {
+exports.getUserInGroup = async (req, res) => {
 
-    const { id_group } = req.params;
-    const { name } = req.body;
+  const { id_user } = req.params;
 
-    const group = await User.findByPk(id_group);
-
-    if (!group) {
-      return res.status(400).json({ error: 'Grupo não encontrado' });
+  const user = await User.findByPk(id_user, {
+    include: { 
+      association: 'groups', 
+      attributes: ['name'], 
+      through: { 
+        attributes: []
+      } 
     }
+  })
 
-    const [ tech ] = await Permission.findOrCreate({
-      where: { name }
-    });
-
-    await group.addPermission();
-
-    const {  } = req.body
-    const newPermission = new Permission({  });
-    await newPermission.save();
-    res.json({
-      data: newPermission,
-      message: "Nova permissão adicionada"
-    })
-  } catch (error) {
-    next(error)
-  }
-}*/
+  return res.json(user.groups);
+}
 
 exports.addUserInGroup = async (req, res, next) => {
   try{
@@ -79,12 +64,11 @@ exports.addUserInGroup = async (req, res, next) => {
     const { id_group } = req.body;
 
     const user = await User.findByPk(id_user);
-	
+    const group = await Group.findByPk(id_group);
+
     if (!user) {
       return res.status(400).json({ error: 'User não encontrado' });
     }
-
-    const group = await Group.findByPk(id_group);
 
     await user.addGroup(group);
 
@@ -93,16 +77,36 @@ exports.addUserInGroup = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-}//Falta terminar de resolver os erros aqui 
+}
 
-exports.getPermission = async (req, res, next) => {
+exports.deleteUserInGroup = async (req, res, next) => {
+
+  const { id_user } = req.params;
+  const { id } = req.body;
+
+  const user = await User.findByPk(id_user);
+
+  if (!user) {
+    return res.status(400).json({ error: 'User não encontrado' });
+  }
+
+  const group = await Group.findOne({
+    where: { id }
+  });
+
+  await user.removeGroup(group);
+
+  return res.json({message: "Relacionamento deletado"});
+}
+
+exports.getPermissionInGroup = async (req, res, next) => {
   try {
     const permissionId = req.params.permissionId;
     const permission = await Permission.findByPk(permissionId);
-    if (!permission) return next(new Error('Permissão não existe'));
+    if (!permission) return next(new Error('Permission não existe'));
     res.status(200).json({
       data: permission
-    });
+    }); 
   } catch (error) {
     next(error)
   }

@@ -3,6 +3,16 @@ const Worker = require('../models/Worker');
 
 module.exports = {
 
+  async getWorkerContact(req, res) {
+    const { id_worker } = req.params;
+
+    const worker = await Worker.findByPk(id_worker, {
+      include: { association: 'contact' }
+    })
+
+    return res.json(worker.contact);
+  },
+
   async addWorker(req, res) {
 
     const { id_user } = req.params;

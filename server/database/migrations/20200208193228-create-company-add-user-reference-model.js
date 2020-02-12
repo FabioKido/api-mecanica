@@ -7,7 +7,7 @@ module.exports = {
         allowNull: false,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
     });
   },
 

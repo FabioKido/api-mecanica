@@ -29,7 +29,7 @@ Worker.associate(connection.models);
 Company.associate(connection.models);
 AccessPlan.associate(connection.models);
 Resource.associate(connection.models);
-Contact.associate(connection.models);
+//Contact.associate(connection.models);
 Group.associate(connection.models);
 Permission.associate(connection.models);
 

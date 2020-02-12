@@ -11,11 +11,11 @@ class Contact extends Model {
     })
   }
 
-  static associate(models) {
+  /*static associate(models) {
     this.hasMany(models.Owner, { foreignKey: 'id_contact', as: 'owners' });
     this.hasMany(models.Worker, { foreignKey: 'id_contact', as: 'workers' });
     this.hasMany(models.Company, { foreignKey: 'id_contact', as: 'companies' });
-  }
+  }*/
 
 }
 
