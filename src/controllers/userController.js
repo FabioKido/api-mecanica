@@ -147,7 +147,7 @@ exports.updateUser = async (req, res, next) => {
     });
 
     res.status(200).json({
-      data: user,
+      data: {user},
       message: 'Usuário foi atualizado'
     });
 
