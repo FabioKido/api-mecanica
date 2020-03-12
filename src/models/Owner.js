@@ -17,6 +17,7 @@ class Owner extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'id_user', as: 'user' });
     this.belongsTo(models.Contact, { foreignKey: 'id_contact', as: 'contact' });
+    this.belongsTo(models.Address, { foreignKey: 'id_address', as: 'address' });
   }
 }
 

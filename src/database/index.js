@@ -10,6 +10,7 @@ const Resource = require('../models/Resource');
 const Contact = require('../models/Contact');
 const Group = require('../models/Group');
 const Permission = require('../models/Permission');
+const Address = require('../models/Address');
 
 const connection = new Sequelize(dbConfig);
 
@@ -22,6 +23,7 @@ Resource.init(connection);
 Contact.init(connection);
 Group.init(connection);
 Permission.init(connection);
+Address.init(connection);
 
 User.associate(connection.models);
 Owner.associate(connection.models);
@@ -32,5 +34,6 @@ Resource.associate(connection.models);
 //Contact.associate(connection.models);
 Group.associate(connection.models);
 Permission.associate(connection.models);
+//Address.associate(connection.models);
 
 module.exports = connection;
