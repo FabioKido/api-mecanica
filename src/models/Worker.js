@@ -9,6 +9,19 @@ class Worker extends Model {
       rg: DataTypes.STRING(14),
       birthday: DataTypes.DATE,
       orgao_expeditor: DataTypes.STRING(30),
+      ctps: DataTypes.STRING(13),
+      salary_hour: DataTypes.DECIMAL(8, 2),
+      salary: DataTypes.DECIMAL(8, 2),
+      commission: DataTypes.DECIMAL(8, 2),
+      admission: DataTypes.DATE,
+      admission_exam: DataTypes.DATE,
+      next_exam: DataTypes.DATE,
+      last_vacation: DataTypes.DATE,
+      nest_vacation: DataTypes.DATE,
+      rescission: DataTypes.DATE,
+      rescission_exam: DataTypes.DATE,
+      rescission_reason: DataTypes.STRING,
+      observations: DataTypes.STRING,
     }, {
       sequelize
     })
