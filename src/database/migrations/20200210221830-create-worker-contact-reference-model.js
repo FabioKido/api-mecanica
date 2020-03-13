@@ -7,7 +7,7 @@ module.exports = {
         allowNull: true,
         references: { model: 'contacts', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
     });
   },
 
