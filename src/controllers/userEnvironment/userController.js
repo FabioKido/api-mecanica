@@ -1,12 +1,9 @@
-const User = require('../models/User');
+const User = require('../../models/userEntities/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const path = require('path');
 
-const { roles } = require('../roles')
-require("dotenv").config({
-  path: path.join(__dirname, "../.env")
-});
+const { roles } = require('../../roles');
 
 async function hashPassword(password) {
   return await bcrypt.hash(password, 10);
@@ -50,7 +47,7 @@ exports.signup = async (req, res, next) => {
   try {
     const { username, type, role, email, password, enable, accept_terms_privacy, id_access_plan } = req.body
     const hashedPassword = await hashPassword(password);
-    const newUser = new User({ username, email, password: hashedPassword, type, role: role || "basic", enable: enable || false, accept_terms_privacy, id_access_plan });
+    const newUser = new User({ username, email, password: hashedPassword, type, role: role || "user_basic", enable: enable || false, accept_terms_privacy, id_access_plan });
     const access_token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
       expiresIn: "1d"
     });
@@ -71,10 +68,10 @@ exports.login = async (req, res, next) => {
 
     const { email, password } = req.body;
 
-    const user = await User.findOne({ 
+    const user = await User.findOne({
       where: {
         email
-      } 
+      }
     });
 
     if (!user) return next(new Error('Email não existe'));
@@ -86,7 +83,7 @@ exports.login = async (req, res, next) => {
     const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: "1d"
     });
-    
+
     await user.update({ access_token, last_login: Date() })
 
     res.status(200).json({
@@ -128,8 +125,8 @@ exports.updateUser = async (req, res, next) => {
 
     const userId = req.params.userId;
     const { username, type, role, email, password, enable, accept_terms_privacy, id_access_plan } = req.body
-    
-    const user = await User.update( { 
+
+    const user = await User.update( {
       username,
       type,
       role,
@@ -140,10 +137,10 @@ exports.updateUser = async (req, res, next) => {
       accept_terms_privacy,
       id_access_plan
      },
-     { 
+     {
       where: {
         id: userId
-      } 
+      }
     });
 
     res.status(200).json({

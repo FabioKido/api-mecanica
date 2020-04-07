@@ -1,5 +1,5 @@
-const User = require('../models/User');
-const Company = require('../models/Company');
+const User = require('../../models/userEntities/User');
+const Company = require('../../models/userEntities/Company');
 
 module.exports = {
 

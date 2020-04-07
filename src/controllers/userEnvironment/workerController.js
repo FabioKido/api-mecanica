@@ -1,5 +1,5 @@
-const User = require('../models/User');
-const Worker = require('../models/Worker');
+const User = require('../../models/userEntities/User');
+const Worker = require('../../models/userEntities/Worker');
 
 module.exports = {
 

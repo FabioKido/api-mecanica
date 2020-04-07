@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
-const ownerController = require('../controllers/ownerController');
-const workerController = require('../controllers/workerController');
-const companyController = require('../controllers/companyController');
-const accessPlanController = require('../controllers/accessPlanController');
-const contactController = require('../controllers/contactController');
-const groupController = require('../controllers/groupController');
+const userController = require('../controllers/userEnvironment/userController');
+const ownerController = require('../controllers/userEnvironment/ownerController');
+const workerController = require('../controllers/userEnvironment/workerController');
+const companyController = require('../controllers/userEnvironment/companyController');
+const accessPlanController = require('../controllers/userEnvironment/accessPlanController');
+const contactController = require('../controllers/userEnvironment/contactController');
+const groupController = require('../controllers/userEnvironment/groupController');
 
 //User and Controll
 router.post('/signup', userController.signup);

@@ -1,5 +1,5 @@
-const AccessPlan = require('../models/AccessPlan');
-const Resource = require('../models/Resource');
+const AccessPlan = require('../../models/userEntities/AccessPlan');
+const Resource = require('../../models/userEntities/Resource');
 
 exports.getAccessPlans = async (req, res, next) => {
   const accessPlans = await AccessPlan.findAll();
@@ -25,15 +25,15 @@ exports.addAccessPlan = async (req, res, next) => {
   try {
     const { name, type, value, enable, created_by, updated_by } = req.body;
 
-    const accessPlan = await AccessPlan.create({ 
-      name, 
-      type, 
-      value, 
-      enable, 
-      created_by, 
+    const accessPlan = await AccessPlan.create({
+      name,
+      type,
+      value,
+      enable,
+      created_by,
       updated_by,
     });
-    
+
     res.json({
       data: accessPlan,
       message: "Plano de Acesso cadastrado com sucesso"
@@ -49,17 +49,17 @@ exports.updateAccessPlan = async (req, res, next) => {
 
     const planId = req.params.planId;
     const { name, type, value, enable } = req.body
-    
-    const accessPlan = await AccessPlan.update( { 
+
+    const accessPlan = await AccessPlan.update( {
       name,
       type,
       value,
       enable,
      },
-     { 
+     {
       where: {
         id: planId
-      } 
+      }
     });
 
     res.json({
@@ -74,7 +74,7 @@ exports.updateAccessPlan = async (req, res, next) => {
 
 exports.deleteAccessPlan = async (req, res, next) => {
   try {
-    
+
     const planId = req.params.planId;
 
     AccessPlan.destroy({
@@ -125,14 +125,14 @@ exports.addResource = async (req, res, next) => {
       return res.status(400).json({ error: 'Plano de Acesso não encontrado' });
     }
 
-    const resource = await Resource.create({ 
-      name, 
-      action, 
+    const resource = await Resource.create({
+      name,
+      action,
       enable,
       qtd,
       id_access_plan,
     });
-    
+
     res.json({
       data: resource,
       message: "Recurso cadastrado com sucesso"
@@ -148,17 +148,17 @@ exports.updateResource = async (req, res, next) => {
 
     const resourceId = req.params.resourceId;
     const { name, action, enable, qtd } = req.body;
-    
-    const resource = await Resource.update( { 
+
+    const resource = await Resource.update( {
       name,
       action,
       enable,
       qtd,
      },
-     { 
+     {
       where: {
         id: resourceId
-      } 
+      }
     });
 
     res.json({

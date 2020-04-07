@@ -1,5 +1,5 @@
-const User = require('../models/User');
-const Owner = require('../models/Owner');
+const User = require('../../models/userEntities/User');
+const Owner = require('../../models/userEntities/Owner');
 
 module.exports = {
 

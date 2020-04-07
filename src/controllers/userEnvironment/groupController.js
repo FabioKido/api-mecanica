@@ -1,6 +1,6 @@
-const User = require('../models/User');
-const Group = require('../models/Group');
-const Permission = require('../models/Permission');
+const User = require('../../models/userEntities/User');
+const Group = require('../../models/userEntities/Group');
+const Permission = require('../../models/userEntities/Permission');
 
 exports.getGroups = async (req, res, next) => {
   const groups = await Group.findAll();
@@ -46,12 +46,12 @@ exports.getUserInGroup = async (req, res) => {
   const { id_user } = req.params;
 
   const user = await User.findByPk(id_user, {
-    include: { 
-      association: 'groups', 
-      attributes: ['name'], 
-      through: { 
+    include: {
+      association: 'groups',
+      attributes: ['name'],
+      through: {
         attributes: []
-      } 
+      }
     }
   })
 
@@ -106,7 +106,7 @@ exports.getPermissionInGroup = async (req, res, next) => {
     if (!permission) return next(new Error('Permission não existe'));
     res.status(200).json({
       data: permission
-    }); 
+    });
   } catch (error) {
     next(error)
   }
