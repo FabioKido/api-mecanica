@@ -15,6 +15,11 @@ class Acquisition extends Model {
       sequelize
     })
   }
+
+  static associate(models) {
+    this.hasMany(models.ProductAcquisition, { foreignKey: 'id_acquisition', as: 'product_acquisitions' });
+    this.belongsTo(models.Provider, { foreignKey: 'id_provider', as: 'provider' });
+  }
 }
 
 module.exports = Acquisition;

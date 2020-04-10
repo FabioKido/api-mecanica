@@ -15,6 +15,12 @@ class Provider extends Model {
       sequelize
     })
   }
+
+  static associate(models) {
+    this.hasMany(models.Acquisition, { foreignKey: 'id_provider', as: 'acquisitions' });
+    this.belongsTo(models.Contact, { foreignKey: 'id_contact', as: 'contact' });
+    this.belongsTo(models.Address, { foreignKey: 'id_address', as: 'address' });
+  }
 }
 
 module.exports = Provider;

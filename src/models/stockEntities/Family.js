@@ -11,6 +11,10 @@ class Family extends Model {
       sequelize
     })
   }
+
+  static associate(models) {
+    this.hasMany(models.Product, { foreignKey: 'id_family', as: 'products' });
+  }
 }
 
 module.exports = Family;

@@ -20,8 +20,9 @@ class Customer extends Model {
       sequelize
     })
   }
-  
+
   static associate(models) {
+    this.hasMany(models.Vehicle, { foreignKey: 'id_customer', as: 'vehicles' });
     this.belongsTo(models.Contact, { foreignKey: 'id_contact', as: 'contact' });
     this.belongsTo(models.Address, { foreignKey: 'id_address', as: 'address' });
   }
