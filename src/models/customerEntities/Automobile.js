@@ -17,6 +17,9 @@ class Automobile extends Model {
     })
   }
 
+  static associate(models) {
+    this.belongsTo(models.Vehicle, { foreignKey: 'id_vehicle', as: 'vehicle' });
+  }
 }
 
 module.exports = Automobile;

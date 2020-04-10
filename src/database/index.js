@@ -12,6 +12,11 @@ const Group = require('../models/userEntities/Group');
 const Permission = require('../models/userEntities/Permission');
 const Address = require('../models/userEntities/Address');
 
+const Customer = require('../models/customerEntities/Customer');
+const Vehicle = require('../models/customerEntities/Vehicle');
+const Automobile = require('../models/customerEntities/Automobile');
+const Bicycle = require('../models/customerEntities/Bicycle');
+
 const connection = new Sequelize(dbConfig);
 
 User.init(connection);
@@ -35,5 +40,15 @@ Resource.associate(connection.models);
 Group.associate(connection.models);
 Permission.associate(connection.models);
 //Address.associate(connection.models);
+
+Customer.init(connection);
+Vehicle.init(connection);
+Automobile.init(connection);
+Bicycle.init(connection);
+
+Customer.associate(connection.models);
+Vehicle.associate(connection.models);
+Automobile.associate(connection.models);
+Bicycle.associate(connection.models);
 
 module.exports = connection;
