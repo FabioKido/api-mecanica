@@ -23,13 +23,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
-      id_diagnostic: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: { model: 'diagnostics', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-      },
       id_user: {
         type: Sequelize.INTEGER,
         allowNull: true,

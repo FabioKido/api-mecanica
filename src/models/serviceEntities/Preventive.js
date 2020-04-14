@@ -11,6 +11,10 @@ class Preventive extends Model {
     })
   }
 
+  static associate(models) {
+    this.belongsTo(models.Vehicle, { foreignKey: 'id_vehicle', as: 'vehicle' });
+    this.hasOne(models.Service, { foreignKey: 'id_service', as: 'service' });
+  }
 }
 
 module.exports = Preventive;

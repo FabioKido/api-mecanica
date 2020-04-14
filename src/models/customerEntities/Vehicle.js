@@ -18,6 +18,9 @@ class Vehicle extends Model {
   }
 
   static associate(models) {
+    this.hasMany(models.Schedule, { foreignKey: 'id_vehicle', as: 'schedules' });
+    this.hasMany(models.Preventive, { foreignKey: 'id_vehicle', as: 'preventives' });
+    this.hasMany(models.Order, { foreignKey: 'id_vehicle', as: 'orders' });
     this.belongsTo(models.Customer, { foreignKey: 'id_customer', as: 'customer' });
   }
 }

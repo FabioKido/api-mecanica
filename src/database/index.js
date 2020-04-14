@@ -26,6 +26,19 @@ const Provider = require('../models/stockEntities/Provider');
 const Acquisition = require('../models/stockEntities/Acquisition');
 const ProductAcquisition = require('../models/stockEntities/ProductAcquisition');
 
+// Import of serviceEntities
+const Diagnostic = require('../models/serviceEntities/Diagnostic');
+const Order = require('../models/serviceEntities/Order');
+const OrderProduct = require('../models/serviceEntities/OrderProduct');
+const OrderService = require('../models/serviceEntities/OrderService');
+const Payment = require('../models/serviceEntities/Payment');
+const Preventive = require('../models/serviceEntities/Preventive');
+const Schedule = require('../models/serviceEntities/Schedule');
+const Service = require('../models/serviceEntities/Service');
+const Checklist = require('../models/serviceEntities/Checklist');
+const Record = require('../models/serviceEntities/Record');
+const Timeline = require('../models/serviceEntities/Timeline');
+
 const connection = new Sequelize(dbConfig);
 
 // UserEntities
@@ -74,5 +87,27 @@ Product.associate(connection.models);
 Provider.associate(connection.models);
 Acquisition.associate(connection.models);
 ProductAcquisition.associate(connection.models);
+
+// ServiceEntities
+Diagnostic.init(connection);
+Order.init(connection);
+OrderProduct.init(connection);
+OrderService.init(connection);
+Payment.init(connection);
+Preventive.init(connection);
+Schedule.init(connection);
+Service.init(connection);
+Checklist.init(connection);
+Record.init(connection);
+Timeline.init(connection);
+
+Diagnostic.associate(connection.models);
+Order.associate(connection.models);
+OrderProduct.associate(connection.models);
+OrderService.associate(connection.models);
+Payment.associate(connection.models);
+Preventive.associate(connection.models);
+Schedule.associate(connection.models);
+Service.associate(connection.models);
 
 module.exports = connection;

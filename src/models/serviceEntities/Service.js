@@ -8,7 +8,10 @@ class Service extends Model {
       sequelize
     })
   }
-  
+
+  static associate(models) {
+    this.hasMany(models.OrderService, { foreignKey: 'id_service', as: 'order_services' });
+  }
 }
 
 module.exports = Service;
