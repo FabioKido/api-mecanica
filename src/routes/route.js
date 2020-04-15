@@ -7,6 +7,7 @@ const companyController = require('../controllers/userEnvironment/companyControl
 const accessPlanController = require('../controllers/userEnvironment/accessPlanController');
 const contactController = require('../controllers/userEnvironment/contactController');
 const groupController = require('../controllers/userEnvironment/groupController');
+const scheduleController = require('../controllers/serviceEnvironment/scheduleController');
 
 //User and Controll
 router.post('/signup', userController.signup);
@@ -46,5 +47,8 @@ router.get('/resource/:resourceId', userController.allowIfLoggedin, accessPlanCo
 router.get('/resources', userController.allowIfLoggedin, accessPlanController.getResources);
 router.put('/resource/:resourceId/update-resource', userController.allowIfLoggedin, accessPlanController.updateResource);
 router.delete('/resource/:resourceId/del-resource', userController.allowIfLoggedin, accessPlanController.deleteResource);
+
+router.post('/schedule', scheduleController.addSchedule);
+router.get('/schedules', scheduleController.getSchedules);
 
 module.exports = router;

@@ -11,7 +11,7 @@ class Diagnostic extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Checklist, { foreignKey: 'id_checklist', as: 'checklist' });
+    this.belongsTo(models.Checklist, { foreignKey: 'id_checklist', as: 'checklist' });
   }
 }
 

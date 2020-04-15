@@ -18,7 +18,7 @@ class Automobile extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Vehicle, { foreignKey: 'id_vehicle', as: 'vehicle' });
+    this.belongsTo(models.Vehicle, { foreignKey: 'id_vehicle', as: 'vehicle' });
   }
 }
 

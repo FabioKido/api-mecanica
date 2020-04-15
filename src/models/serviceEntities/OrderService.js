@@ -18,7 +18,7 @@ class OrderService extends Model {
     this.hasMany(models.OrderProduct, { foreignKey: 'id_order_service', as: 'order_products' });
     this.belongsTo(models.Service, { foreignKey: 'id_service', as: 'service' });
     this.belongsTo(models.Order, { foreignKey: 'id_order', as: 'order' });
-    this.hasOne(models.User, { foreignKey: 'id_user', as: 'user' });
+    this.belongsTo(models.User, { foreignKey: 'id_user', as: 'user' });
   }
 }
 

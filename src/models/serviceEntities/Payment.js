@@ -12,7 +12,7 @@ class Payment extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.Order, { foreignKey: 'id_order', as: 'order' });
+    this.belongsTo(models.Order, { foreignKey: 'id_order', as: 'order' });
   }
 }
 

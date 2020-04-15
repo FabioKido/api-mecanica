@@ -29,7 +29,7 @@ class Product extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.OrderProduct, { foreignKey: 'id_product', as: 'order_products' });
+    // this.hasMany(models.OrderProduct, { foreignKey: 'id_product', as: 'order_products' });
     this.hasMany(models.ProductAcquisition, { foreignKey: 'id_product', as: 'product_acquisitions' });
     this.belongsTo(models.Family, { foreignKey: 'id_family', as: 'family' });
   }
