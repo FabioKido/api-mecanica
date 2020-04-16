@@ -38,6 +38,17 @@ const Service = require('../models/serviceEntities/Service');
 const Checklist = require('../models/serviceEntities/Checklist');
 const Record = require('../models/serviceEntities/Record');
 const Timeline = require('../models/serviceEntities/Timeline');
+const Parcel = require('../models/serviceEntities/Parcel');
+
+// Import of financeEntities
+const Account = require('../models/financeEntities/Account');
+const Category = require('../models/financeEntities/Category');
+const Expense = require('../models/financeEntities/Expense');
+const ExpenseDetail = require('../models/financeEntities/ExpenseDetail');
+const PaymentMethod = require('../models/financeEntities/PaymentMethod');
+const Recipe = require('../models/financeEntities/Recipe');
+const RecipeDetail = require('../models/financeEntities/RecipeDetail');
+const Transfer = require('../models/financeEntities/Transfer');
 
 const connection = new Sequelize(dbConfig);
 
@@ -100,6 +111,7 @@ Service.init(connection);
 Checklist.init(connection);
 Record.init(connection);
 Timeline.init(connection);
+Parcel.init(connection);
 
 Diagnostic.associate(connection.models);
 Order.associate(connection.models);
@@ -109,5 +121,15 @@ Payment.associate(connection.models);
 Preventive.associate(connection.models);
 Schedule.associate(connection.models);
 Service.associate(connection.models);
+
+// FinanceEntities
+Account.init(connection);
+Category.init(connection);
+Expense.init(connection);
+ExpenseDetail.init(connection);
+PaymentMethod.init(connection);
+Recipe.init(connection);
+RecipeDetail.init(connection);
+Transfer.init(connection);
 
 module.exports = connection;
