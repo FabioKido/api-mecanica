@@ -121,6 +121,7 @@ Payment.associate(connection.models);
 Preventive.associate(connection.models);
 Schedule.associate(connection.models);
 Service.associate(connection.models);
+Parcel.associate(connection.models);
 
 // FinanceEntities
 Account.init(connection);
