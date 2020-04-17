@@ -14,6 +14,11 @@ class RecipeDetail extends Model {
     })
   }
 
+  static associate(models) {
+    this.belongsTo(models.PaymentMethod, { foreignKey: 'id_payment_method', as: 'payment_method' });
+    this.belongsTo(models.Account, { foreignKey: 'id_account_destiny', as: 'recipe_account_destiny' });
+    this.belongsTo(models.Recipe, { foreignKey: 'id_recipe', as: 'recipe' });
+  }
 }
 
 module.exports = RecipeDetail;

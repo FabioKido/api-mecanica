@@ -17,6 +17,9 @@ class Recipe extends Model {
     })
   }
 
+  static associate(models) {
+    this.belongsTo(models.Category, { foreignKey: 'id_category', as: 'category' });
+  }
 }
 
 module.exports = Recipe;

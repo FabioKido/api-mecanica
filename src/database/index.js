@@ -126,11 +126,20 @@ Parcel.associate(connection.models);
 // FinanceEntities
 Account.init(connection);
 Category.init(connection);
-Expense.init(connection);
-ExpenseDetail.init(connection);
 PaymentMethod.init(connection);
-Recipe.init(connection);
-RecipeDetail.init(connection);
 Transfer.init(connection);
+Recipe.init(connection);
+Expense.init(connection);
+RecipeDetail.init(connection);
+ExpenseDetail.init(connection);
+
+Account.associate(connection.models);
+Category.associate(connection.models);
+PaymentMethod.associate(connection.models);
+Transfer.associate(connection.models);
+Recipe.associate(connection.models);
+Expense.associate(connection.models);
+RecipeDetail.associate(connection.models);
+ExpenseDetail.associate(connection.models);
 
 module.exports = connection;

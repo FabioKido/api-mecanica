@@ -14,6 +14,13 @@ class Account extends Model {
     })
   }
 
+  static associate(models) {
+    this.hasMany(models.Parcel, { foreignKey: 'id_payment_method', as: 'parcels' });
+    this.hasMany(models.Transfer, { foreignKey: 'id_account_origin', as: 'origin_transfers' });
+    this.hasMany(models.Transfer, { foreignKey: 'id_account_destiny', as: 'destiny_transfers' });
+    this.hasMany(models.RecipeDetail, { foreignKey: 'id_account_destiny', as: 'destiny_recipes' });
+    this.hasMany(models.ExpenseDetail, { foreignKey: 'id_account_destiny', as: 'destiny_expenses' });
+  }
 }
 
 module.exports = Account;

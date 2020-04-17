@@ -14,6 +14,11 @@ class Transfer extends Model {
     })
   }
 
+  static associate(models) {
+    this.belongsTo(models.Category, { foreignKey: 'id_category', as: 'category' });
+    this.belongsTo(models.Account, { foreignKey: 'id_account_origin', as: 'transfer_account_origin' });
+    this.belongsTo(models.Account, { foreignKey: 'id_account_destiny', as: 'transfer_account_destiny' });
+  }
 }
 
 module.exports = Transfer;

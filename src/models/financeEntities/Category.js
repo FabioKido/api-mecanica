@@ -12,6 +12,11 @@ class Category extends Model {
     })
   }
 
+  static associate(models) {
+    this.hasMany(models.Transfer, { foreignKey: 'id_category', as: 'transfers' });
+    this.hasMany(models.Recipe, { foreignKey: 'id_category', as: 'recipes' });
+    this.hasMany(models.Expense, { foreignKey: 'id_category', as: 'expenses' });
+  }
 }
 
 module.exports = Category;

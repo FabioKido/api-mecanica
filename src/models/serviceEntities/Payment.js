@@ -12,6 +12,7 @@ class Payment extends Model {
   }
 
   static associate(models) {
+    this.hasMany(models.Parcel, { foreignKey: 'id_payment', as: 'payment_parcels' });
     this.belongsTo(models.Order, { foreignKey: 'id_order', as: 'order' });
   }
 }

@@ -14,6 +14,11 @@ class ExpenseDetail extends Model {
     })
   }
 
+  static associate(models) {
+    this.belongsTo(models.PaymentMethod, { foreignKey: 'id_payment_method', as: 'payment_method' });
+    this.belongsTo(models.Account, { foreignKey: 'id_account_destiny', as: 'expense_account_destiny' });
+    this.belongsTo(models.Expense, { foreignKey: 'id_expense', as: 'expense' });
+  }
 }
 
 module.exports = ExpenseDetail;

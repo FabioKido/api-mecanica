@@ -13,6 +13,11 @@ class PaymentMethod extends Model {
     })
   }
 
+  static associate(models) {
+    this.hasMany(models.Parcel, { foreignKey: 'id_payment_method', as: 'parcels' });
+    this.hasMany(models.RecipeDetail, { foreignKey: 'id_payment_method', as: 'recipe_details' });
+    this.hasMany(models.ExpenseDetail, { foreignKey: 'id_payment_method', as: 'expense_details' });
+  }
 }
 
 module.exports = PaymentMethod;

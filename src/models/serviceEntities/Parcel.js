@@ -16,8 +16,8 @@ class Parcel extends Model {
 
   static associate(models) {
     this.belongsTo(models.Payment, { foreignKey: 'id_payment', as: 'payment' });
-    this.belongsTo(models.PaymentMethod, { foreignKey: 'id_payment_method', as: 'payment_method' });
-    this.belongsTo(models.Account, { foreignKey: 'id_bank_account', as: 'bank_account' });
+    // this.belongsTo(models.PaymentMethod, { foreignKey: 'id_payment_method', as: 'payment_method' });
+    // this.belongsTo(models.Account, { foreignKey: 'id_bank_account', as: 'bank_account' });
   }
 }
 
