@@ -3,10 +3,30 @@ const Owner = require('../../models/userEntities/Owner');
 
 module.exports = {
 
+  async getOwnerContact(req, res) {
+    const { id_owner } = req.params;
+
+    const owner = await Owner.findByPk(id_owner, {
+      include: { association: 'contact' }
+    })
+
+    return res.json(owner.contact);
+  },
+
+  async getOwnerAddress(req, res) {
+    const { id_owner } = req.params;
+
+    const owner = await Owner.findByPk(id_owner, {
+      include: { association: 'address' }
+    })
+
+    return res.json(owner.address);
+  },
+
   async addOwner(req, res) {
 
     const { id_user } = req.params;
-    const { name, sex, cpf, rg, birthday, orgao_expeditor, id_contact } = req.body;
+    const { name, sex, cpf, rg, birthday, orgao_expeditor, id_contact, id_address } = req.body;
 
     const user = await User.findByPk(id_user);
 
@@ -22,6 +42,7 @@ module.exports = {
       birthday,
       orgao_expeditor,
       id_contact,
+      id_address,
       id_user,
     });
 
