@@ -27,7 +27,7 @@ class User extends Model {
     this.belongsTo(models.AccessPlan, { foreignKey: 'id_access_plan', as: 'access_plans' });
     this.belongsToMany(models.Group, { foreignKey: 'id_user', through: 'user_groups', as: 'groups' });
   }
-  
+
 }
 
 module.exports = User;
