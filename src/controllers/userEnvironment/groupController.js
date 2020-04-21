@@ -1,5 +1,4 @@
 const Group = require('../../models/userEntities/Group');
-const Permission = require('../../models/userEntities/Permission');
 
 exports.getGroups = async (req, res, next) => {
   const groups = await Group.findAll();

@@ -12,6 +12,7 @@ const addressController = require('../controllers/userEnvironment/addressControl
 const groupController = require('../controllers/userEnvironment/groupController');
 const userGroupController = require('../controllers/userEnvironment/userGroupController');
 const permissionGroupController = require('../controllers/userEnvironment/permissionGroupController');
+const permissionController = require('../controllers/userEnvironment/permissionController');
 const scheduleController = require('../controllers/serviceEnvironment/scheduleController');
 
 // User and Controll
@@ -28,9 +29,16 @@ router.get('/group/:groupId', userController.allowIfLoggedin, groupController.ge
 router.get('/groups', userController.allowIfLoggedin, userController.grantAccess('readAny', 'profile'), groupController.getGroups);
 router.delete('/group-del/:groupId', userController.allowIfLoggedin, groupController.deleteGroup);
 
+// Permission
+router.post('/add-permission', userController.allowIfLoggedin, permissionController.createPermission);
+router.get('/permission/:permissionId', userController.allowIfLoggedin, permissionController.getPermission);
+router.get('/permissions', userController.allowIfLoggedin, permissionController.getPermissions);
+router.delete('/permission-del/:permissionId', userController.allowIfLoggedin, permissionController.deletePermission);
+
 // Group and Permission
-// router.post('/add-permission', userController.allowIfLoggedin, permissionGroupController.addPermission);
-// router.get('/permission/:permissionId', userController.allowIfLoggedin, permissionGroupController.getPermission);
+router.post('/permissions/:id_permission/add-group', userController.allowIfLoggedin, permissionGroupController.addPermissionInGroup);
+router.get('/permissions/:id_permission/group', userController.allowIfLoggedin, permissionGroupController.getPermissionInGroup);
+router.delete('/permissions/:id_permission/del-group', userController.allowIfLoggedin, permissionGroupController.deletePermissionInGroup);
 
 // User and Group
 router.post('/users/:id_user/add-group', userController.allowIfLoggedin, userGroupController.addUserInGroup);

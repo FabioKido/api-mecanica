@@ -42,7 +42,7 @@ exports.addUserInGroup = async (req, res, next) => {
 exports.deleteUserInGroup = async (req, res, next) => {
 
   const { id_user } = req.params;
-  const { id } = req.body;
+  const { id } = req.query;
 
   const user = await User.findByPk(id_user);
 
