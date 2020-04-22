@@ -2,9 +2,9 @@ const Contact = require('../../models/userEntities/Contact');
 
 module.exports = {
 
-  async addContact(req, res) {
+  async addContact(data) {
 
-    const { phone, celphone, email } = req.body;
+    const { phone, celphone, email } = data;
 
     const contact = await Contact.create({
       phone,
@@ -12,7 +12,7 @@ module.exports = {
       email,
     });
 
-    return res.json(contact);
+    return contact;
   }
 
 };
