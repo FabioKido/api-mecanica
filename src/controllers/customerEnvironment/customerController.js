@@ -1,5 +1,6 @@
 const Customer = require('../../models/customerEntities/Customer');
 const { addContact } = require('../../controllers/userEnvironment/contactController');
+const { createAddress } = require('../../controllers/userEnvironment/addressController');
 
 exports.getGroups = async (req, res, next) => {
   const groups = await Group.findAll();
@@ -36,14 +37,24 @@ exports.addCustomer = async (req, res, next) => {
       inadimplente,
       phone,
       celphone,
-      email
+      email,
+      street,
+      neighborhood,
+      number,
+      city,
+      uf,
+      complement
     } = req.body;
 
     if(phone || celphone || email)
       contact = await addContact({ phone, celphone, email });
 
+    if(street || neighborhood || number || city || uf || complement)
+      address = await createAddress({ street, neighborhood, number, city, uf, complement });
+
     const newCustomer = await Customer.create({
       id_contact: contact.id,
+      id_address: address.id,
       name,
       sex,
       cpf,
@@ -60,7 +71,7 @@ exports.addCustomer = async (req, res, next) => {
     });
 
     res.json({
-      data: {newCustomer, contact},
+      data: {newCustomer, contact, address},
       message: "Customer cadastrado com sucesso"
     });
   } catch (error) {

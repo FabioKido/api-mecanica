@@ -2,9 +2,9 @@ const Address = require('../../models/userEntities/Address');
 
 module.exports = {
 
-  async createAddress(req, res) {
+  async createAddress(data) {
 
-    const { street, neighborhood, number, city, uf, complement } = req.body;
+    const { street, neighborhood, number, city, uf, complement } = data;
 
     const address = await Address.create({
       street,
@@ -15,7 +15,7 @@ module.exports = {
       complement,
     });
 
-    return res.json(address);
+    return address;
   }
-  
+
 };
