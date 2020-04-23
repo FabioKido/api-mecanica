@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+// Quebrar e dividir em vários
 const userController = require('../controllers/userEnvironment/userController');
 const ownerController = require('../controllers/userEnvironment/ownerController');
 const workerController = require('../controllers/userEnvironment/workerController');
@@ -14,7 +15,6 @@ const userGroupController = require('../controllers/userEnvironment/userGroupCon
 const permissionGroupController = require('../controllers/userEnvironment/permissionGroupController');
 const permissionController = require('../controllers/userEnvironment/permissionController');
 const scheduleController = require('../controllers/serviceEnvironment/scheduleController');
-const customerController = require('../controllers/customerEnvironment/customerController');
 
 // User and Controll
 router.post('/signup', userController.signup);
@@ -75,7 +75,5 @@ router.delete('/resource/:resourceId/del-resource', userController.allowIfLogged
 
 router.post('/schedule', scheduleController.addSchedule);
 router.get('/schedules', scheduleController.getSchedules);
-
-router.post('/customer', customerController.addCustomer);
 
 module.exports = router;

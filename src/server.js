@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const User = require('./models/userEntities/User');
-const routes = require('./routes/route.js');
+const routes = require('./routes');
 require('./database');
 require("dotenv").config({
   path: path.join(__dirname, "../.env")
@@ -12,7 +12,7 @@ require("dotenv").config({
 
 const app = express();
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3333;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 

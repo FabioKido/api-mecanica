@@ -1,21 +1,24 @@
 const Customer = require('../../models/customerEntities/Customer');
+const Contact = require('../../models/userEntities/Contact');
+const Address = require('../../models/userEntities/Address');
+
 const { addContact } = require('../../controllers/userEnvironment/contactController');
 const { createAddress } = require('../../controllers/userEnvironment/addressController');
 
-exports.getGroups = async (req, res, next) => {
-  const groups = await Group.findAll();
+exports.getCustomers = async (req, res, next) => {
+  const customers = await Customer.findAll();
   res.status(200).json({
-    data: groups
+    data: customers
   });
 }
 
-exports.getGroup = async (req, res, next) => {
+exports.getCustomer = async (req, res, next) => {
   try {
-    const groupId = req.params.groupId;
-    const group = await Group.findByPk(groupId);
-    if (!group) return next(new Error('Grupo não existe'));
+    const { id_customer } = req.params;
+    const customer = await Customer.findByPk(id_customer);
+    if (!customer) return next(new Error('Cliente não existe'));
     res.status(200).json({
-      data: group
+      data: customer
     });
   } catch (error) {
     next(error)
@@ -79,19 +82,74 @@ exports.addCustomer = async (req, res, next) => {
   }
 }
 
-exports.deleteGroup = async (req, res, next) => {
-  try {
-    const { groupId } = req.params;
+exports.updateCustomer = async (req, res, next) => {
 
-    Group.destroy({
+  try {
+
+    const { id_customer } = req.params;
+    const {
+      name,
+      sex,
+      cpf,
+      rg,
+      cnpj,
+      ie,
+      birthday,
+      observations,
+      status,
+      inadimplente,
+      active
+    } = req.body;
+
+    const customer = await Customer.update( {
+      name,
+      sex,
+      cpf,
+      rg,
+      cnpj,
+      ie,
+      birthday,
+      observations,
+      status,
+      inadimplente,
+      active
+     },
+     {
       where: {
-        id: groupId
+        id: id_customer
+      }
+    });
+
+    res.status(200).json({
+      data: {customer},
+      message: 'Cliente foi atualizado'
+    });
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.deleteCustomer = async (req, res, next) => {
+  try {
+    const { id_customer } = req.params;
+    const { id_contact, id_address } = await Customer.findByPk(id_customer);
+
+    if(id_contact)
+      Contact.destroy({ where: { id: id_contact } });
+
+    if(id_address)
+      Address.destroy({ where: { id: id_address } });
+
+    Customer.destroy({
+      where: {
+        id: id_customer
       }
     })
 
     res.status(200).json({
       data: null,
-      message: "Grupo deletado com sucesso"
+      message: "Cliente deletado com sucesso"
     });
   } catch (error) {
     next(error)
