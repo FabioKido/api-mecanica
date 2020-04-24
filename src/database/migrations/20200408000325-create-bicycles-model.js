@@ -11,13 +11,13 @@ module.exports = {
       },
       id_vehicle: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: { model: 'vehicles', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
       hand_brake: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.STRING(3),
         allowNull: false,
       },
       created_at: {

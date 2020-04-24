@@ -1,8 +1,8 @@
 const Vehicle = require('../../models/customerEntities/Vehicle');
 const Customer = require('../../models/customerEntities/Customer');
 
-const { addAutomobile } = require('./automobileController');
-const { addBicycle } = require('./bicycleController');
+const { addAutomobile, updateAutomobile } = require('./automobileController');
+const { addBicycle, updateBicycle } = require('./bicycleController');
 
 module.exports = {
 
@@ -63,6 +63,74 @@ module.exports = {
     res.json({
       data: {vehicle},
       message: "Veículo cadastrado com sucesso"
+    });
+  },
+
+  async updateVehicle(req, res) {
+
+    const { id_vehicle } = req.params;
+    const {
+      fabricator,
+      model,
+      year_fab,
+      year_model,
+      color,
+      observations,
+      enable,
+      board,
+      motor,
+      fuel,
+      car_exchange,
+      direction,
+      doors,
+      chassis,
+      renavam,
+      ar,
+      hand_brake
+    } = req.body;
+
+    const vehicle = await Vehicle.update( {
+      fabricator,
+      model,
+      year_fab,
+      year_model,
+      color,
+      observations,
+      enable
+     },
+     {
+      where: {
+        id: id_vehicle
+      }
+    });
+
+    // Resolver o problema de enviar um único atributo no caso um 'Booleno com valor false'.
+    // Isto faz, com que, não se possa chamar o IF...
+    // ES20 resolve isso eu acho... tem um vídeo falando disso.
+    if(board || motor || fuel || car_exchange || direction || doors || chassis || renavam || ar)
+      await updateAutomobile({ id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
+
+    if(hand_brake)
+      await updateBicycle({ id_vehicle, hand_brake });
+
+    res.status(200).json({
+      data: {vehicle},
+      message: 'Veículo foi atualizado'
+    });
+  },
+
+  async deleteVehicle(req, res) {
+    const { id_vehicle } = req.params;
+
+    Vehicle.destroy({
+      where: {
+        id: id_vehicle
+      }
+    })
+
+    res.status(200).json({
+      data: null,
+      message: "Veículo deletado com sucesso"
     });
   }
 };
