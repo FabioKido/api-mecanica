@@ -35,18 +35,21 @@ module.exports = {
 
     const { id_vehicle, hand_brake } = data;
 
-    const { id } = await Bicycle.findOne({
+    const bike = await Bicycle.findOne({
       where: {
         id_vehicle
       }
     });
+
+    if(!bike)
+      return;
 
     const bicycle = await Bicycle.update( {
       hand_brake
      },
      {
       where: {
-        id
+        id: bike.id
       }
     });
 

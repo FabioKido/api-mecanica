@@ -43,11 +43,14 @@ module.exports = {
 
     const { id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar } = data;
 
-    const { id } = await Automobile.findOne({
+    const auto = await Automobile.findOne({
       where: {
         id_vehicle
       }
     });
+
+    if(!auto)
+      return;
 
     const automobile = await Automobile.update( {
       board,
@@ -62,7 +65,7 @@ module.exports = {
      },
      {
       where: {
-        id
+        id: auto.id
       }
     });
 

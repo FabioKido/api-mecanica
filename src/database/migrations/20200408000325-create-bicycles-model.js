@@ -17,7 +17,7 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       hand_brake: {
-        type: Sequelize.STRING(3),
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
       created_at: {

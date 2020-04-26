@@ -54,6 +54,7 @@ module.exports = {
       updated_by: null
     });
 
+    // Resolver o Mesmo problema aqui!!!
     if(board || motor || fuel || car_exchange || direction || doors || chassis || renavam || ar)
       await addAutomobile({ id_vehicle: vehicle.id, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
 
@@ -104,14 +105,9 @@ module.exports = {
       }
     });
 
-    // Resolver o problema de enviar um único atributo no caso um 'Booleno com valor false'.
-    // Isto faz, com que, não se possa chamar o IF...
-    // ES20 resolve isso eu acho... tem um vídeo falando disso.
-    if(board || motor || fuel || car_exchange || direction || doors || chassis || renavam || ar)
-      await updateAutomobile({ id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
+    await updateAutomobile({ id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
 
-    if(hand_brake)
-      await updateBicycle({ id_vehicle, hand_brake });
+    await updateBicycle({ id_vehicle, hand_brake });
 
     res.status(200).json({
       data: {vehicle},
