@@ -26,7 +26,7 @@ module.exports = {
       },
       fuel: {
         type: Sequelize.STRING(60),
-        allowNull: true,
+        allowNull: false,
       },
       car_exchange: {
         type: Sequelize.STRING(60),

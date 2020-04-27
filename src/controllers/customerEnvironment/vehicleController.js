@@ -53,13 +53,12 @@ module.exports = {
       created_by: null,
       updated_by: null
     });
-
-    // Resolver o Mesmo problema aqui!!!
-    if(board || motor || fuel || car_exchange || direction || doors || chassis || renavam || ar)
+    
+    if(fuel){
       await addAutomobile({ id_vehicle: vehicle.id, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
-
-    if(hand_brake)
+    }else{
       await addBicycle({ id_vehicle: vehicle.id, hand_brake });
+    }
 
     res.json({
       data: {vehicle},
