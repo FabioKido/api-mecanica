@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const customersRouters = require('./customersRouters');
 const vehiclesRouters = require('./vehiclesRouters');
+const stockRouters = require('./stockRouters');
 
 const routes = Router();
 
@@ -9,5 +10,6 @@ const routes = Router();
 
 routes.use('/customers', customersRouters);
 routes.use('/vehicles', vehiclesRouters);
+routes.use('/stock', stockRouters);
 
 module.exports = routes;

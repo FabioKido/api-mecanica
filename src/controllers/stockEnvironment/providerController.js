@@ -1,43 +1,38 @@
-const Customer = require('../../models/customerEntities/Customer');
+const Provider = require('../../models/stockEntities/Provider');
 const Contact = require('../../models/userEntities/Contact');
 const Address = require('../../models/userEntities/Address');
 
-const { addContact } = require('../../controllers/userEnvironment/contactController');
-const { createAddress } = require('../../controllers/userEnvironment/addressController');
+const { addContact, updateContact } = require('../../controllers/userEnvironment/contactController');
+const { createAddress, updateAddress } = require('../../controllers/userEnvironment/addressController');
 
-exports.getCustomers = async (req, res, next) => {
-  const customers = await Customer.findAll();
+exports.getProviders = async (req, res, next) => {
+  const providers = await Provider.findAll();
   res.status(200).json({
-    data: customers
+    data: providers
   });
 }
 
-exports.getCustomer = async (req, res, next) => {
+exports.getProvider = async (req, res, next) => {
   try {
-    const { id_customer } = req.params;
-    const customer = await Customer.findByPk(id_customer);
-    if (!customer) return next(new Error('Cliente não existe'));
+    const { id_provider } = req.params;
+    const provider = await Provider.findByPk(id_provider);
+    if (!provider) return next(new Error('Fornecedor não existe'));
     res.status(200).json({
-      data: customer
+      data: provider
     });
   } catch (error) {
     next(error)
   }
 }
 
-exports.addCustomer = async (req, res, next) => {
+exports.addProvider = async (req, res, next) => {
   try {
     const {
       name,
-      sex,
-      cpf,
-      rg,
       cnpj,
       ie,
-      birthday,
       observations,
-      status,
-      inadimplente,
+      product_provider,
       phone,
       celphone,
       email,
@@ -55,49 +50,39 @@ exports.addCustomer = async (req, res, next) => {
     if(city || uf)
       address = await createAddress({ street, neighborhood, number, city, uf, complement });
 
-    const newCustomer = await Customer.create({
+    const provider = await Provider.create({
       id_contact: contact.id,
       id_address: address.id,
       name,
-      sex,
-      cpf,
-      rg,
       cnpj,
       ie,
-      birthday,
       observations,
-      status,
-      inadimplente,
+      product_provider,
       active: true,
       created_by: null,
-      updated_by: null
+      updated_by: null,
     });
 
     res.json({
-      data: {newCustomer, contact, address},
-      message: "Customer cadastrado com sucesso"
-    });
+      data: provider,
+      message: "Fornecedor cadastrado com sucesso"
+    })
+
   } catch (error) {
     next(error)
   }
 }
 
-exports.updateCustomer = async (req, res, next) => {
-
+exports.updateProvider = async (req, res, next) => {
   try {
 
-    const { id_customer } = req.params;
+    const { id_provider } = req.params;
     const {
       name,
-      sex,
-      cpf,
-      rg,
       cnpj,
       ie,
-      birthday,
       observations,
-      status,
-      inadimplente,
+      product_provider,
       active,
       phone,
       celphone,
@@ -110,24 +95,19 @@ exports.updateCustomer = async (req, res, next) => {
       complement
     } = req.body;
 
-    const { id_contact, id_address } = await Customer.findByPk(id_customer);
+    const { id_contact, id_address } = await Provider.findByPk(id_provider);
 
-    const customer = await Customer.update( {
+    const provider = await Provider.update( {
       name,
-      sex,
-      cpf,
-      rg,
       cnpj,
       ie,
-      birthday,
       observations,
-      status,
-      inadimplente,
+      product_provider,
       active
      },
      {
       where: {
-        id: id_customer
+        id: id_provider
       }
     });
 
@@ -156,20 +136,21 @@ exports.updateCustomer = async (req, res, next) => {
       }
     });
 
-    res.status(200).json({
-      data: {customer},
-      message: 'Cliente foi atualizado'
-    });
+    res.json({
+      data: provider,
+      message: "Fornecedor atualizado com sucesso"
+    })
 
   } catch (error) {
     next(error)
   }
 }
 
-exports.deleteCustomer = async (req, res, next) => {
+exports.deleteProvider = async (req, res, next) => {
   try {
-    const { id_customer } = req.params;
-    const { id_contact, id_address } = await Customer.findByPk(id_customer);
+
+    const { id_provider } = req.params;
+    const { id_contact, id_address } = await Provider.findByPk(id_provider);
 
     if(id_contact)
       Contact.destroy({ where: { id: id_contact } });
@@ -177,16 +158,17 @@ exports.deleteCustomer = async (req, res, next) => {
     if(id_address)
       Address.destroy({ where: { id: id_address } });
 
-    Customer.destroy({
+    Provider.destroy({
       where: {
-        id: id_customer
+        id: id_provider
       }
     })
 
     res.status(200).json({
       data: null,
-      message: "Cliente deletado com sucesso"
+      message: 'Fornecedor foi deletado'
     });
+
   } catch (error) {
     next(error)
   }

@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('addresses', { 
+    return queryInterface.createTable('addresses', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -23,11 +23,11 @@ module.exports = {
       },
       city: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       uf: {
         type: Sequelize.STRING(2),
-        allowNull: true,
+        allowNull: false,
       },
       complement: {
         type: Sequelize.STRING,
