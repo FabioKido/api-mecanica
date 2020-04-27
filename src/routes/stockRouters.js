@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const providerController = require('../controllers/stockEnvironment/providerController');
 const familyController = require('../controllers/stockEnvironment/familyController');
+const acquisitionController = require('../controllers/stockEnvironment/acquisitionController');
 
 const stockRouter = Router();
 
@@ -16,5 +17,11 @@ stockRouter.get('/families', familyController.getFamilies);
 stockRouter.get('/family/:id_family', familyController.getFamily);
 stockRouter.put('/family/:id_family', familyController.updateFamily);
 stockRouter.delete('/family/:id_family', familyController.deleteFamily);
+
+
+
+stockRouter.post('/acquisition/:id_product', acquisitionController.addAcquisition);
+stockRouter.get('/acquisitions', acquisitionController.getAcquisitions);
+stockRouter.get('/acquisition/:id_acquisition', acquisitionController.getAcquisition);
 
 module.exports = stockRouter;
