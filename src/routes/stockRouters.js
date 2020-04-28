@@ -2,7 +2,9 @@ const { Router } = require('express');
 
 const providerController = require('../controllers/stockEnvironment/providerController');
 const familyController = require('../controllers/stockEnvironment/familyController');
+const productController = require('../controllers/stockEnvironment/productController');
 const acquisitionController = require('../controllers/stockEnvironment/acquisitionController');
+const productAcquisitionController = require('../controllers/stockEnvironment/productAcquisitionController');
 
 const stockRouter = Router();
 
@@ -18,12 +20,18 @@ stockRouter.get('/family/:id_family', familyController.getFamily);
 stockRouter.put('/family/:id_family', familyController.updateFamily);
 stockRouter.delete('/family/:id_family', familyController.deleteFamily);
 
+stockRouter.post('/product', productController.addProduct);
+stockRouter.get('/products', productController.getProducts);
+stockRouter.get('/product/:id_product', productController.getProduct);
+stockRouter.put('/product/:id_product', productController.updateProduct);
+stockRouter.delete('/product/:id_product', productController.deleteProduct);
 
-
-stockRouter.post('/acquisition/:id_product', acquisitionController.addAcquisition);
+stockRouter.post('/acquisition', acquisitionController.addAcquisition);
 stockRouter.get('/acquisitions', acquisitionController.getAcquisitions);
 stockRouter.get('/acquisition/:id_acquisition', acquisitionController.getAcquisition);
 stockRouter.put('/acquisition/:id_acquisition', acquisitionController.updateAcquisition);
 stockRouter.delete('/acquisition/:id_acquisition', acquisitionController.deleteAcquisition);
+
+stockRouter.get('/product/acquisition/:id_prod_acq', productAcquisitionController.getProductAcquisition);
 
 module.exports = stockRouter;

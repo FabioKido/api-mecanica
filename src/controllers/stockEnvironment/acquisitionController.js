@@ -1,4 +1,5 @@
 const Acquisition = require('../../models/stockEntities/Acquisition');
+const ProductAcquisition = require('../../models/stockEntities/ProductAcquisition');
 
 exports.getAcquisitions = async (req, res, next) => {
   const acquisitions = await Acquisition.findAll();
@@ -32,7 +33,11 @@ exports.addAcquisition = async (req, res, next) => {
       total_qtd,
       nef_key,
       nef_number,
-      approved
+      approved,
+      qtd,
+      unity_cost,
+      discount,
+      id_product
     } = req.body;
 
     const acq = await Acquisition.create({
@@ -47,8 +52,16 @@ exports.addAcquisition = async (req, res, next) => {
       updated_by: null,
     });
 
+    const productAcquisition = await ProductAcquisition.create({
+      id_product,
+      id_acquisition: acq.id,
+      qtd,
+      unity_cost,
+      discount,
+    });
+
     res.json({
-      data: acq,
+      data: { acq, productAcquisition },
       message: "Aquisição cadastrada com sucesso"
     })
 

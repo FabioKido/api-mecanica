@@ -19,7 +19,7 @@ module.exports = {
       id_acquisition: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: { model: 'families', key: 'id' },
+        references: { model: 'acquisitions', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
