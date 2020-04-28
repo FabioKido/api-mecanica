@@ -56,3 +56,61 @@ exports.addAcquisition = async (req, res, next) => {
     next(error)
   }
 }
+
+exports.updateAcquisition = async (req, res, next) => {
+  try {
+
+    const { id_acquisition } = req.params;
+    const {
+      acquisition,
+      total_sale,
+      total_qtd,
+      nef_key,
+      nef_number,
+      approved
+    } = req.body;
+
+    const acq = await Acquisition.update( {
+      acquisition,
+      total_sale,
+      total_qtd,
+      nef_key,
+      nef_number,
+      approved
+     },
+     {
+      where: {
+        id: id_acquisition
+      }
+    });
+
+    res.json({
+      data: acq,
+      message: "Aquisição atualizada com sucesso"
+    })
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.deleteAcquisition = async (req, res, next) => {
+  try {
+
+    const { id_acquisition } = req.params;
+
+    Acquisition.destroy({
+      where: {
+        id: id_acquisition
+      }
+    })
+
+    res.status(200).json({
+      data: null,
+      message: 'Aquisição foi deletada'
+    });
+
+  } catch (error) {
+    next(error)
+  }
+}

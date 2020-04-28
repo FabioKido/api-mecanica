@@ -23,5 +23,7 @@ stockRouter.delete('/family/:id_family', familyController.deleteFamily);
 stockRouter.post('/acquisition/:id_product', acquisitionController.addAcquisition);
 stockRouter.get('/acquisitions', acquisitionController.getAcquisitions);
 stockRouter.get('/acquisition/:id_acquisition', acquisitionController.getAcquisition);
+stockRouter.put('/acquisition/:id_acquisition', acquisitionController.updateAcquisition);
+stockRouter.delete('/acquisition/:id_acquisition', acquisitionController.deleteAcquisition);
 
 module.exports = stockRouter;
