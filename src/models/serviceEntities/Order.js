@@ -9,6 +9,8 @@ class Order extends Model {
       prevision_exit: DataTypes.DATE,
       observations: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
+      created_by: DataTypes.INTEGER,
+      updated_by: DataTypes.INTEGER,
     }, {
       sequelize
     })

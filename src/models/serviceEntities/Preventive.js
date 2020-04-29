@@ -6,6 +6,8 @@ class Preventive extends Model {
       date: DataTypes.DATE,
       status: DataTypes.STRING(25),
       enable: DataTypes.BOOLEAN,
+      created_by: DataTypes.INTEGER,
+      updated_by: DataTypes.INTEGER,
     }, {
       sequelize
     })

@@ -7,6 +7,8 @@ class Schedule extends Model {
       status: DataTypes.STRING(25),
       observations: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,
+      created_by: DataTypes.INTEGER,
+      updated_by: DataTypes.INTEGER,
     }, {
       sequelize
     })
