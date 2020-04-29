@@ -56,8 +56,8 @@ exports.addCustomer = async (req, res, next) => {
       address = await createAddress({ street, neighborhood, number, city, uf, complement });
 
     const newCustomer = await Customer.create({
-      id_contact: contact.id,
-      id_address: address.id,
+      id_contact: contact.id || null,
+      id_address: address.id || null,
       name,
       sex,
       cpf,

@@ -26,7 +26,7 @@ exports.getSchedule = async (req, res, next) => {
 
 exports.addSchedule = async (req, res, next) => {
   try {
-    const { date, status, enable, observations, id_vehicle } = req.body;
+    const { date, status, observations, id_vehicle } = req.body;
 
     const schedule = await Schedule.create({
       id_vehicle,
@@ -56,13 +56,15 @@ exports.updateSchedule = async (req, res, next) => {
     const {
       date,
       status,
-      observations
+      observations,
+      enable
     } = req.body;
 
     const schedule = await Schedule.update( {
       date,
       status,
-      observations
+      observations,
+      enable
      },
      {
       where: {

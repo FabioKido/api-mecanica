@@ -24,6 +24,9 @@ exports.getChecklist = async (req, res, next) => {
   }
 }
 
+// Erro de Regra de Negócio: Tem que adcionar vários Titles e Checked.
+// Como um Objeto(Array com eles) ou Collection... tem que ver qual forma.
+// Ficar atento! Outros controllers podem ter este mesmo erro de planejamento.
 exports.addChecklist = async (req, res, next) => {
   try {
     const { title, checked } = req.body;
