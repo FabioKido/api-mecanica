@@ -9,13 +9,6 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      id_checklist: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: { model: 'checklists', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-      },
       value: {
         type: Sequelize.DECIMAL(8, 2),
         allowNull: false,

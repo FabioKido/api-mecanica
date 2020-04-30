@@ -11,10 +11,7 @@ class Diagnostic extends Model {
       sequelize
     })
   }
-
-  static associate(models) {
-    this.belongsTo(models.Checklist, { foreignKey: 'id_checklist', as: 'checklist' });
-  }
+  
 }
 
 module.exports = Diagnostic;

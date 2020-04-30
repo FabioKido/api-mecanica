@@ -100,7 +100,6 @@ Acquisition.associate(connection.models);
 ProductAcquisition.associate(connection.models);
 
 // ServiceEntities
-Diagnostic.init(connection);
 Order.init(connection);
 OrderProduct.init(connection);
 OrderService.init(connection);
@@ -109,11 +108,11 @@ Preventive.init(connection);
 Schedule.init(connection);
 Service.init(connection);
 Checklist.init(connection);
+Diagnostic.init(connection);
 Record.init(connection);
 Timeline.init(connection);
 Parcel.init(connection);
 
-Diagnostic.associate(connection.models);
 Order.associate(connection.models);
 OrderProduct.associate(connection.models);
 OrderService.associate(connection.models);
@@ -121,6 +120,7 @@ Payment.associate(connection.models);
 Preventive.associate(connection.models);
 Schedule.associate(connection.models);
 Service.associate(connection.models);
+Checklist.associate(connection.models);
 Parcel.associate(connection.models);
 
 // FinanceEntities

@@ -10,6 +10,9 @@ class Checklist extends Model {
     })
   }
 
+  static associate(models) {
+    this.belongsTo(models.Diagnostic, { foreignKey: 'id_diagnostic', as: 'diagnostic' });
+  }
 }
 
 module.exports = Checklist;
