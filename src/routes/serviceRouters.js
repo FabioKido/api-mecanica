@@ -22,17 +22,17 @@ serviceRouter.get('/schedule/:id_schedule', scheduleController.getSchedule);
 serviceRouter.put('/schedule/:id_schedule', scheduleController.updateSchedule);
 serviceRouter.delete('/schedule/:id_schedule', scheduleController.deleteSchedule);
 
-serviceRouter.post('/checklist', checklistController.addChecklist);
-serviceRouter.get('/checklists', checklistController.getChecklists);
-serviceRouter.get('/checklist/:id_checklist', checklistController.getChecklist);
-serviceRouter.put('/checklist/:id_checklist', checklistController.updateChecklist);
-serviceRouter.delete('/checklist/:id_checklist', checklistController.deleteChecklist);
-
-serviceRouter.post('/diagnostic/:id_checklist', diagnosticController.addDiagnostic);
+serviceRouter.post('/diagnostic', diagnosticController.addDiagnostic);
 serviceRouter.get('/diagnostics', diagnosticController.getDiagnostics);
 serviceRouter.get('/diagnostic/:id_diagnostic', diagnosticController.getDiagnostic);
 serviceRouter.put('/diagnostic/:id_diagnostic', diagnosticController.updateDiagnostic);
 serviceRouter.delete('/diagnostic/:id_diagnostic', diagnosticController.deleteDiagnostic);
+
+serviceRouter.post('/checklist/:id_diagnostic', checklistController.addChecklist);
+serviceRouter.get('/checklists', checklistController.getChecklists);
+serviceRouter.get('/checklist/:id_checklist', checklistController.getChecklist);
+serviceRouter.put('/checklist/:id_checklist', checklistController.updateChecklist);
+serviceRouter.delete('/checklist/:id_checklist', checklistController.deleteChecklist);
 
 serviceRouter.post('/preventive', preventiveController.addPreventive);
 serviceRouter.get('/preventives', preventiveController.getPreventives);

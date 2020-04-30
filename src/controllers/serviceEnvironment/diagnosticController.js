@@ -26,13 +26,12 @@ exports.getDiagnostic = async (req, res, next) => {
 
 exports.addDiagnostic = async (req, res, next) => {
   try {
-    const { value, approved } = req.body;
-    const { id_checklist } = req.params;
+    const { value, approved, observations } = req.body;
 
     const diagnostic = await Diagnostic.create({
-      id_checklist: id_checklist || null,
       value,
       approved,
+      observations,
       created_by: null,
       updated_by: null
     });
@@ -54,12 +53,14 @@ exports.updateDiagnostic = async (req, res, next) => {
     const { id_diagnostic } = req.params;
     const {
       value,
-      approved
+      approved,
+      observations
     } = req.body;
 
     const diagnostic = await Diagnostic.update( {
       value,
-      approved
+      approved,
+      observations
      },
      {
       where: {

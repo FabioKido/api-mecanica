@@ -9,6 +9,13 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
+      id_vehicle: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'vehicles', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
       value: {
         type: Sequelize.DECIMAL(8, 2),
         allowNull: false,
@@ -16,6 +23,10 @@ module.exports = {
       approved: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
+      },
+      observations: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,

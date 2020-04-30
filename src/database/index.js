@@ -107,8 +107,8 @@ Payment.init(connection);
 Preventive.init(connection);
 Schedule.init(connection);
 Service.init(connection);
-Checklist.init(connection);
 Diagnostic.init(connection);
+Checklist.init(connection);
 Record.init(connection);
 Timeline.init(connection);
 Parcel.init(connection);
@@ -120,6 +120,7 @@ Payment.associate(connection.models);
 Preventive.associate(connection.models);
 Schedule.associate(connection.models);
 Service.associate(connection.models);
+Diagnostic.associate(connection.models);
 Checklist.associate(connection.models);
 Parcel.associate(connection.models);
 

@@ -26,9 +26,11 @@ exports.getChecklist = async (req, res, next) => {
 
 exports.addChecklist = async (req, res, next) => {
   try {
+    const { id_diagnostic } = req.params;
     const { title, checked } = req.body;
 
     const checklist = await Checklist.create({
+      id_diagnostic,
       title,
       checked
     });
