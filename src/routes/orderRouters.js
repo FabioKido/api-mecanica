@@ -3,7 +3,8 @@ const { Router } = require('express');
 const orderController = require('../controllers/serviceEnvironment/orderController');
 const orderServiceController = require('../controllers/serviceEnvironment/orderServiceController');
 const orderProductController = require('../controllers/serviceEnvironment/orderProductController');
-// const paymentController = require('../controllers/serviceEnvironment/paymentController');
+const paymentController = require('../controllers/serviceEnvironment/paymentController');
+const parcelController = require('../controllers/serviceEnvironment/parcelController');
 
 const orderServiceRouter = Router();
 
@@ -22,5 +23,16 @@ orderServiceRouter.post('/order-product/:id_os', orderProductController.addOrder
 orderServiceRouter.get('/order-products', orderProductController.getOrderProducts);
 orderServiceRouter.put('/order-product/:id_op', orderProductController.updateOrderProduct);
 orderServiceRouter.delete('/order-product/:id_op', orderProductController.deleteOrderProduct);
+
+orderServiceRouter.post('/payment/:id_order', paymentController.addPayment);
+orderServiceRouter.get('/payments', paymentController.getPayments);
+orderServiceRouter.get('/payment/:id_payment', paymentController.getPayment);
+orderServiceRouter.put('/payment/:id_payment', paymentController.updatePayment);
+orderServiceRouter.delete('/payment/:id_payment', paymentController.deletePayment);
+
+orderServiceRouter.post('/parcel/:id_payment', parcelController.addParcel);
+orderServiceRouter.get('/parcels', parcelController.getParcels);
+orderServiceRouter.put('/parcel/:id_parcel', parcelController.updateParcel);
+orderServiceRouter.delete('/parcel/:id_parcel', parcelController.deleteParcel);
 
 module.exports = orderServiceRouter;

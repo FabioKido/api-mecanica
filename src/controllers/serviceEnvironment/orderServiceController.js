@@ -42,7 +42,7 @@ exports.addOrderService = async (req, res, next) => {
 
     res.json({
       data: orderService,
-      message: "Item de Serviço cadastrada com sucesso"
+      message: "Item de Serviço cadastrado com sucesso"
     })
 
   } catch (error) {
@@ -80,7 +80,7 @@ exports.updateOrderService = async (req, res, next) => {
 
     res.json({
       data: orderService,
-      message: "Item de Serviço atualizada com sucesso"
+      message: "Item de Serviço atualizado com sucesso"
     })
 
   } catch (error) {

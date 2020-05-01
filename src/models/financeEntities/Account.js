@@ -15,7 +15,7 @@ class Account extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.Parcel, { foreignKey: 'id_payment_method', as: 'parcels' });
+    this.hasMany(models.Parcel, { foreignKey: 'id_bank_account', as: 'parcels' });
     this.hasMany(models.Transfer, { foreignKey: 'id_account_origin', as: 'origin_transfers' });
     this.hasMany(models.Transfer, { foreignKey: 'id_account_destiny', as: 'destiny_transfers' });
     this.hasMany(models.RecipeDetail, { foreignKey: 'id_account_destiny', as: 'destiny_recipes' });

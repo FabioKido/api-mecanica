@@ -42,7 +42,7 @@ exports.addOrderProduct = async (req, res, next) => {
 
     res.json({
       data: orderProduct,
-      message: "Item de Produto cadastrada com sucesso"
+      message: "Item de Produto cadastrado com sucesso"
     })
 
   } catch (error) {
@@ -80,7 +80,7 @@ exports.updateOrderProduct = async (req, res, next) => {
 
     res.json({
       data: orderProduct,
-      message: "Item de Produto atualizada com sucesso"
+      message: "Item de Produto atualizado com sucesso"
     })
 
   } catch (error) {

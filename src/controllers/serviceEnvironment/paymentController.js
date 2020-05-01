@@ -1,75 +1,110 @@
-const Automobile = require('../../models/serviceEntities/Automobile');
+const Payment = require('../../models/serviceEntities/Payment');
 
-module.exports = {
+exports.getPayments = async (req, res) => {
+  const { id_order } = req.query;
 
-  async getAutomobiles(req, res) {
-    const automobiles = await Automobile.findAll();
+  const payments = await Payment.findAll({
+    where: {
+      id_order
+    }
+  });
+
+  res.status(200).json({
+    data: payments
+  });
+}
+
+exports.getPayment = async (req, res, next) => {
+  try {
+    const { id_payment } = req.params;
+
+    const payment = await Payment.findByPk(id_payment);
+
+    if (!payment) return next(new Error('Pagamento não existe'));
+
     res.status(200).json({
-      data: automobiles
+      data: payment
     });
-  },
+  } catch (error) {
+    next(error)
+  }
+}
 
-  async getAutomobile(req, res) {
-    const { id_automobile } = req.params;
+exports.addPayment = async (req, res, next) => {
+  try {
+    const { id_order } = req.params;
+    const {
+      date,
+      parcels,
+      status
+    } = req.body;
 
-    const automobile = await Automobile.findByPk(id_automobile, {
-      include: { association: 'vehicle' }
+    const payment = await Payment.create({
+      id_order: id_order || null,
+      date,
+      parcels,
+      status
+    });
+
+    res.json({
+      data: payment,
+      message: "Pagamento cadastrado com sucesso"
     })
 
-    return res.json(automobile);
-  },
+  } catch (error) {
+    next(error)
+  }
+}
 
-  async addAutomobile(data) {
 
-    const { id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar } = data;
+exports.updatePayment = async (req, res, next) => {
+  try {
 
-    const automobile = await Automobile.create({
-      id_vehicle,
-      board,
-      motor,
-      fuel,
-      car_exchange,
-      direction,
-      doors,
-      chassis,
-      renavam,
-      ar
-    });
+    const { id_payment } = req.params;
+    const {
+      date,
+      parcels,
+      status
+    } = req.body;
 
-    return automobile;
-  },
-
-  async updateAutomobile(data) {
-
-    const { id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar } = data;
-
-    const auto = await Automobile.findOne({
-      where: {
-        id_vehicle
-      }
-    });
-
-    if(!auto)
-      return;
-
-    const automobile = await Automobile.update( {
-      board,
-      motor,
-      fuel,
-      car_exchange,
-      direction,
-      doors,
-      chassis,
-      renavam,
-      ar
+    const payment = await Payment.update( {
+      date,
+      parcels,
+      status
      },
      {
       where: {
-        id: auto.id
+        id: id_payment
       }
     });
 
-    return automobile;
-  }
+    res.json({
+      data: payment,
+      message: "Pagamento atualizado com sucesso"
+    })
 
-};
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.deletePayment = async (req, res, next) => {
+  try {
+
+    const { id_payment } = req.params;
+
+    Payment.destroy({
+      where: {
+        id: id_payment
+      }
+    })
+
+    res.status(200).json({
+      data: null,
+      message: 'Pagamento foi deletado'
+    });
+
+  } catch (error) {
+    next(error)
+  }
+}

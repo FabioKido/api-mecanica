@@ -1,75 +1,110 @@
-const Automobile = require('../../models/serviceEntities/Automobile');
+const Parcel = require('../../models/serviceEntities/Parcel');
 
-module.exports = {
+exports.getParcels = async (req, res) => {
+  const { id_payment } = req.query;
 
-  async getAutomobiles(req, res) {
-    const automobiles = await Automobile.findAll();
-    res.status(200).json({
-      data: automobiles
+  const parcels = await Parcel.findAll({
+    where: {
+      id_payment
+    }
+  });
+
+  res.status(200).json({
+    data: parcels
+  });
+}
+
+exports.addParcel = async (req, res, next) => {
+  try {
+    const { id_payment } = req.params;
+    const {
+      id_payment_method,
+      id_bank_account,
+      value,
+      vencimento,
+      document_number,
+      taxa_ajuste,
+      observations,
+      paid_out
+    } = req.body;
+
+    const parcel = await Parcel.create({
+      id_payment: id_payment || null,
+      id_payment_method: id_payment_method || null,
+      id_bank_account: id_bank_account || null,
+      value,
+      vencimento,
+      document_number,
+      taxa_ajuste,
+      observations,
+      paid_out
     });
-  },
 
-  async getAutomobile(req, res) {
-    const { id_automobile } = req.params;
-
-    const automobile = await Automobile.findByPk(id_automobile, {
-      include: { association: 'vehicle' }
+    res.json({
+      data: parcel,
+      message: "Parcela cadastrada com sucesso"
     })
 
-    return res.json(automobile);
-  },
+  } catch (error) {
+    next(error)
+  }
+}
 
-  async addAutomobile(data) {
 
-    const { id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar } = data;
+exports.updateParcel = async (req, res, next) => {
+  try {
 
-    const automobile = await Automobile.create({
-      id_vehicle,
-      board,
-      motor,
-      fuel,
-      car_exchange,
-      direction,
-      doors,
-      chassis,
-      renavam,
-      ar
-    });
+    const { id_parcel } = req.params;
+    const {
+      value,
+      vencimento,
+      document_number,
+      taxa_ajuste,
+      observations,
+      paid_out
+    } = req.body;
 
-    return automobile;
-  },
-
-  async updateAutomobile(data) {
-
-    const { id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar } = data;
-
-    const auto = await Automobile.findOne({
-      where: {
-        id_vehicle
-      }
-    });
-
-    if(!auto)
-      return;
-
-    const automobile = await Automobile.update( {
-      board,
-      motor,
-      fuel,
-      car_exchange,
-      direction,
-      doors,
-      chassis,
-      renavam,
-      ar
+    const parcel = await Parcel.update( {
+      value,
+      vencimento,
+      document_number,
+      taxa_ajuste,
+      observations,
+      paid_out
      },
      {
       where: {
-        id: auto.id
+        id: id_parcel
       }
     });
 
-    return automobile;
-  }
+    res.json({
+      data: parcel,
+      message: "Parcela atualizada com sucesso"
+    })
 
-};
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.deleteParcel = async (req, res, next) => {
+  try {
+
+    const { id_parcel } = req.params;
+
+    Parcel.destroy({
+      where: {
+        id: id_parcel
+      }
+    })
+
+    res.status(200).json({
+      data: null,
+      message: 'Parcela foi deletada'
+    });
+
+  } catch (error) {
+    next(error)
+  }
+}
