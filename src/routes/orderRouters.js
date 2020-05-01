@@ -18,10 +18,9 @@ orderServiceRouter.get('/order-services', orderServiceController.getOrderService
 orderServiceRouter.put('/order-service/:id_os', orderServiceController.updateOrderService);
 orderServiceRouter.delete('/order-service/:id_os', orderServiceController.deleteOrderService);
 
-// orderServiceRouter.post('/os', orderController.addOrder);
-// orderServiceRouter.get('/os-all', orderController.getOrders);
-// orderServiceRouter.get('/os/:id_order', orderController.getOrder);
-// orderServiceRouter.put('/os/:id_order', orderController.updateOrder);
-// orderServiceRouter.delete('/os/:id_order', orderController.deleteOrder);
+orderServiceRouter.post('/order-product/:id_os', orderProductController.addOrderProduct);
+orderServiceRouter.get('/order-products', orderProductController.getOrderProducts);
+orderServiceRouter.put('/order-product/:id_op', orderProductController.updateOrderProduct);
+orderServiceRouter.delete('/order-product/:id_op', orderProductController.deleteOrderProduct);
 
 module.exports = orderServiceRouter;

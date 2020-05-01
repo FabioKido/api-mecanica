@@ -101,7 +101,7 @@ exports.deleteOrderService = async (req, res, next) => {
 
     res.status(200).json({
       data: null,
-      message: 'Item de Serviço foi deletada'
+      message: 'Item de Serviço foi deletado'
     });
 
   } catch (error) {
