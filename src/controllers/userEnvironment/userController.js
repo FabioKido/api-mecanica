@@ -1,100 +1,6 @@
 const User = require('../../models/userEntities/User');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const path = require('path');
-
-const { roles } = require('../../roles');
-
-async function hashPassword(password) {
-  return await bcrypt.hash(password, 10);
-}
-
-async function validatePassword(plainPassword, hashedPassword) {
-  return await bcrypt.compare(plainPassword, hashedPassword);
-}
-
-exports.grantAccess = function(action, resource) {
-  return async (req, res, next) => {
-    try {
-      const permission = roles.can(req.user.role)[action](resource);
-      if (!permission.granted) {
-        return res.status(401).json({
-          error: "Vocẽ não tem permissão para acessar"
-        });
-      }
-      next()
-    } catch (error) {
-      next(error)
-    }
-  }
-}
-
-exports.allowIfLoggedin = async (req, res, next) => {
-  try {
-    const user = res.locals.loggedInUser;
-    if (!user)
-      return res.status(401).json({
-        error: "Você precisa estar logado para acessar essa página"
-      });
-    req.user = user;
-    next();
-  } catch (error) {
-    next(error);
-  }
-}
-
-exports.signup = async (req, res, next) => {
-  try {
-    const { username, type, role, email, password, enable, accept_terms_privacy, id_access_plan } = req.body
-    const hashedPassword = await hashPassword(password);
-    const newUser = new User({ username, email, password: hashedPassword, type, role: role || "user_basic", enable: enable || false, accept_terms_privacy, id_access_plan });
-    const access_token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
-      expiresIn: "1d"
-    });
-    newUser.access_token = access_token;
-    await newUser.save();
-    res.json({
-      data: newUser,
-      message: "Você foi cadastrado com sucesso"
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
-exports.login = async (req, res, next) => {
-
-  try {
-
-    const { email, password } = req.body;
-
-    const user = await User.findOne({
-      where: {
-        email
-      }
-    });
-
-    if (!user) return next(new Error('Email não existe'));
-
-    const validPassword = await validatePassword(password, user.password);
-
-    if (!validPassword) return next(new Error('Senha incorreta'));
-
-    const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1d"
-    });
-
-    await user.update({ access_token, last_login: Date() })
-
-    res.status(200).json({
-      data: { email: user.email, role: user.role, id: user.id, last_login: user.last_login },
-      access_token
-    })
-
-  } catch (error) {
-    next(error);
-  }
-}
+const Contact = require('../../models/userEntities/Contact');
+const Address = require('../../models/userEntities/Address');
 
 exports.getUsers = async (req, res, next) => {
 
@@ -119,12 +25,51 @@ exports.getUser = async (req, res, next) => {
   }
 }
 
+exports.getUserInfo = async (req, res, next) => {
+  try {
+    const { id_user } = req.params;
+
+    const infoAdd = await User.findByPk(id_user, {
+      include: { association: 'address' }
+    })
+
+    const infoCont = await User.findByPk(id_user, {
+      include: { association: 'contact' }
+    })
+
+    res.json({
+      data: { infoCont.contact, infoAdd.address},
+      message: "Informações de Endereço e Contato"
+    });
+  } catch (error) {
+    next(error)
+  }
+}
+
 exports.updateUser = async (req, res, next) => {
 
   try {
 
     const userId = req.params.userId;
-    const { username, type, role, email, password, enable, accept_terms_privacy, id_access_plan } = req.body
+    const {
+      username,
+      type,
+      role,
+      email,
+      password,
+      enable,
+      accept_terms_privacy,
+      id_access_plan,
+      phone,
+      celphone,
+      email,
+      street,
+      neighborhood,
+      number,
+      city,
+      uf,
+      complement
+    } = req.body
 
     const user = await User.update( {
       username,
@@ -140,6 +85,31 @@ exports.updateUser = async (req, res, next) => {
      {
       where: {
         id: userId
+      }
+    });
+
+    await Contact.update( {
+      phone,
+      celphone,
+      email
+     },
+     {
+      where: {
+        id: id_contact
+      }
+    });
+
+    await Address.update( {
+      street,
+      neighborhood,
+      number,
+      city,
+      uf,
+      complement
+     },
+     {
+      where: {
+        id: id_address
       }
     });
 

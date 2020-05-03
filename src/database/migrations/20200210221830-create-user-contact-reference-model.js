@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('owners', 'id_contact', { 
+    return queryInterface.addColumn('users', 'id_contact', {
       type: Sequelize.INTEGER,
         allowNull: true,
         references: { model: 'contacts', key: 'id' },
@@ -12,7 +12,7 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('owners');
+    return queryInterface.dropTable('users');
   }
 
 };
