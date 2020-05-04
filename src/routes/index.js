@@ -1,5 +1,7 @@
 const { Router } = require('express');
 
+const sessionRouters = require('./sessionRouters');
+const userRouters = require('./userRouters');
 const customersRouters = require('./customersRouters');
 const vehiclesRouters = require('./vehiclesRouters');
 const stockRouters = require('./stockRouters');
@@ -10,6 +12,8 @@ const routes = Router();
 
 // Lembrar de fazer a autenticação
 
+routes.use('/session', sessionRouters);
+routes.use('/user', userRouters);
 routes.use('/customers', customersRouters);
 routes.use('/vehicles', vehiclesRouters);
 routes.use('/stock', stockRouters);

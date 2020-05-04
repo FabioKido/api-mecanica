@@ -62,7 +62,6 @@ exports.signup = async (req, res, next) => {
       id_access_plan,
       phone,
       celphone,
-      email,
       street,
       neighborhood,
       number,

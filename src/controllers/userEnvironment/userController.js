@@ -29,16 +29,16 @@ exports.getUserInfo = async (req, res, next) => {
   try {
     const { id_user } = req.params;
 
-    const infoAdd = await User.findByPk(id_user, {
+    const { address } = await User.findByPk(id_user, {
       include: { association: 'address' }
     })
 
-    const infoCont = await User.findByPk(id_user, {
+    const { contact } = await User.findByPk(id_user, {
       include: { association: 'contact' }
     })
 
     res.json({
-      data: { infoCont.contact, infoAdd.address},
+      data: { contact, address},
       message: "Informações de Endereço e Contato"
     });
   } catch (error) {
@@ -62,7 +62,6 @@ exports.updateUser = async (req, res, next) => {
       id_access_plan,
       phone,
       celphone,
-      email,
       street,
       neighborhood,
       number,
