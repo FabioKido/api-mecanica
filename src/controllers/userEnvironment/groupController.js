@@ -28,6 +28,8 @@ exports.createGroup = async (req, res, next) => {
       name,
       description,
       enable,
+      created_by: null,
+      updated_by: null
     });
 
     res.json({

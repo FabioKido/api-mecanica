@@ -45,9 +45,17 @@ userRouter.delete('/in/group/:id_user', sessionController.allowIfLoggedin, userG
 
 // Type of Users and Contact-Address
 userRouter.post('/owner/:id_user', sessionController.allowIfLoggedin, ownerController.addOwner);
+userRouter.get('/owner/:id_owner', sessionController.allowIfLoggedin, ownerController.getOwner);
+userRouter.put('/owner/:id_owner', sessionController.allowIfLoggedin, ownerController.updateOwner);
+
 userRouter.post('/worker/:id_user', sessionController.allowIfLoggedin, workerController.addWorker);
-userRouter.post('/workers/:id_user', sessionController.allowIfLoggedin, workerController.getUsersWorkers);
+userRouter.get('/workers/:id_user', sessionController.allowIfLoggedin, workerController.getUsersWorkers);
+userRouter.get('/worker/:id_worker', sessionController.allowIfLoggedin, workerController.getWorker);
+userRouter.put('/worker/:id_worker', sessionController.allowIfLoggedin, workerController.updateWorker);
+
 userRouter.post('/company/:id_user', sessionController.allowIfLoggedin, companyController.addCompany);
+userRouter.get('/company/:id_company', sessionController.allowIfLoggedin, companyController.getCompany);
+userRouter.put('/company/:id_company', sessionController.allowIfLoggedin, companyController.updateCompany);
 
 // Access Plan
 userRouter.post('/plan', sessionController.allowIfLoggedin, accessPlanController.addAccessPlan);

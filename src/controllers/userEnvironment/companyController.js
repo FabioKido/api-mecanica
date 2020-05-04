@@ -3,6 +3,14 @@ const Company = require('../../models/userEntities/Company');
 
 module.exports = {
 
+  async getCompany(req, res) {
+    const { id_company } = req.params;
+
+    const company = await Company.findByPk(id_company);
+
+    return res.json(company);
+  },
+
   async addCompany(req, res) {
 
     const { id_user } = req.params;
@@ -24,6 +32,35 @@ module.exports = {
     });
 
     return res.json(company);
+  },
+
+  async updateCompany(req, res) {
+    const { id_company } = req.params;
+    const {
+      name,
+      nome_fantasia,
+      type,
+      cnpj,
+      ie
+    } = req.body;
+
+    const company = await Company.update( {
+      name,
+      nome_fantasia,
+      type,
+      cnpj,
+      ie
+     },
+     {
+      where: {
+        id: id_company
+      }
+    });
+
+    res.json({
+      data: company,
+      message: "Empresa atualizada com sucesso"
+    })
   }
 
 };

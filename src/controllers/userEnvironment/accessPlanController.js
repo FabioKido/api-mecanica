@@ -29,8 +29,8 @@ exports.addAccessPlan = async (req, res, next) => {
       type,
       value,
       enable,
-      created_by,
-      updated_by,
+      created_by: null,
+      updated_by: null
     });
 
     res.json({

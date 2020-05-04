@@ -28,6 +28,8 @@ exports.createPermission = async (req, res, next) => {
       name,
       action,
       enable,
+      created_by: null,
+      updated_by: null
     });
 
     res.json({

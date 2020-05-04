@@ -17,6 +17,9 @@ exports.getUser = async (req, res, next) => {
     const userId = req.params.userId;
     const user = await User.findByPk(userId);
     if (!user) return next(new Error('Usuário não existe'));
+
+    user.password = "";
+
     res.status(200).json({
       data: user
     });
@@ -87,6 +90,8 @@ exports.updateUser = async (req, res, next) => {
       }
     });
 
+    const { id_contact, id_address } = await User.findByPk(userId);
+
     await Contact.update( {
       phone,
       celphone,
@@ -127,6 +132,13 @@ exports.deleteUser = async (req, res, next) => {
   try {
 
     const userId = req.params.userId;
+    const { id_contact, id_address } = await User.findByPk(userId);
+
+    if(id_contact)
+      Contact.destroy({ where: { id: id_contact } });
+
+    if(id_address)
+      Address.destroy({ where: { id: id_address } });
 
     User.destroy({
       where: {

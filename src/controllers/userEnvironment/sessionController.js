@@ -86,7 +86,11 @@ exports.signup = async (req, res, next) => {
       role: role || "user_basic",
       enable: enable || false,
       accept_terms_privacy,
-      id_access_plan
+      id_access_plan: id_access_plan || null,
+      id_contact: contact.id || null,
+      id_address: address.id || null,
+      created_by: null,
+      updated_by: null
     });
 
     const access_token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
@@ -96,6 +100,8 @@ exports.signup = async (req, res, next) => {
     newUser.access_token = access_token;
 
     await newUser.save();
+
+    newUser.password = "";
 
     res.json({
       data: {newUser, contact, address},
