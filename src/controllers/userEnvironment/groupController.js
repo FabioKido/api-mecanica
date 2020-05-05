@@ -1,13 +1,13 @@
 const Group = require('../../models/userEntities/Group');
 
-exports.getGroups = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const groups = await Group.findAll();
   res.status(200).json({
     data: groups
   });
 }
 
-exports.getGroup = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const groupId = req.params.groupId;
     const group = await Group.findByPk(groupId);
@@ -20,7 +20,7 @@ exports.getGroup = async (req, res, next) => {
   }
 }
 
-exports.createGroup = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { name, description, enable } = req.body;
 
@@ -41,7 +41,7 @@ exports.createGroup = async (req, res, next) => {
   }
 }
 
-exports.deleteGroup = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
     const { groupId } = req.params;
 

@@ -1,7 +1,7 @@
 const User = require('../../models/userEntities/User');
 const Group = require('../../models/userEntities/Group');
 
-exports.getUserInGroup = async (req, res) => {
+exports.show = async (req, res) => {
 
   const { id_user } = req.params;
 
@@ -18,7 +18,7 @@ exports.getUserInGroup = async (req, res) => {
   return res.json(user.groups);
 }
 
-exports.addUserInGroup = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try{
     const { id_user } = req.params;
     const { id_group } = req.body;
@@ -39,7 +39,7 @@ exports.addUserInGroup = async (req, res, next) => {
   }
 }
 
-exports.deleteUserInGroup = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
 
   const { id_user } = req.params;
   const { id } = req.query;
@@ -56,5 +56,5 @@ exports.deleteUserInGroup = async (req, res, next) => {
 
   await user.removeGroup(group);
 
-  return res.json({message: "Relacionamento deletado"});
+  return res.json({message: "Usuário retirado do Grupo"});
 }

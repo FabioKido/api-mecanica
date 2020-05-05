@@ -2,17 +2,17 @@ const Provider = require('../../models/stockEntities/Provider');
 const Contact = require('../../models/userEntities/Contact');
 const Address = require('../../models/userEntities/Address');
 
-const { addContact, updateContact } = require('../../controllers/userEnvironment/contactController');
-const { createAddress, updateAddress } = require('../../controllers/userEnvironment/addressController');
+const { createContact } = require('../../services/contactService');
+const { createAddress } = require('../../services/addressService');
 
-exports.getProviders = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const providers = await Provider.findAll();
   res.status(200).json({
     data: providers
   });
 }
 
-exports.getProvider = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_provider } = req.params;
     const provider = await Provider.findByPk(id_provider);
@@ -25,7 +25,7 @@ exports.getProvider = async (req, res, next) => {
   }
 }
 
-exports.addProvider = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       name,
@@ -45,7 +45,7 @@ exports.addProvider = async (req, res, next) => {
     } = req.body;
 
     if(celphone)
-      contact = await addContact({ phone, celphone, email });
+      contact = await createContact({ phone, celphone, email });
 
     if(city || uf)
       address = await createAddress({ street, neighborhood, number, city, uf, complement });
@@ -73,7 +73,7 @@ exports.addProvider = async (req, res, next) => {
   }
 }
 
-exports.updateProvider = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_provider } = req.params;
@@ -146,7 +146,7 @@ exports.updateProvider = async (req, res, next) => {
   }
 }
 
-exports.deleteProvider = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_provider } = req.params;

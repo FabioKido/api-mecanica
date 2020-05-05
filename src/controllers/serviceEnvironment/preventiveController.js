@@ -1,6 +1,6 @@
 const Preventive = require('../../models/serviceEntities/Preventive');
 
-exports.getPreventives = async (req, res) => {
+exports.index = async (req, res) => {
   const preventives = await Preventive.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getPreventives = async (req, res) => {
   });
 }
 
-exports.getPreventive = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_preventive } = req.params;
 
@@ -24,7 +24,7 @@ exports.getPreventive = async (req, res, next) => {
   }
 }
 
-exports.addPreventive = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       date,
@@ -54,7 +54,7 @@ exports.addPreventive = async (req, res, next) => {
 }
 
 
-exports.updatePreventive = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_preventive } = req.params;
@@ -85,7 +85,7 @@ exports.updatePreventive = async (req, res, next) => {
   }
 }
 
-exports.deletePreventive = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_preventive } = req.params;

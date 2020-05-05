@@ -3,7 +3,7 @@ const Owner = require('../../models/userEntities/Owner');
 
 module.exports = {
 
-  async getOwner(req, res) {
+  async show(req, res) {
     const { id_owner } = req.params;
 
     const owner = await Owner.findByPk(id_owner);
@@ -11,7 +11,7 @@ module.exports = {
     return res.json(owner);
   },
 
-  async addOwner(req, res) {
+  async store(req, res) {
 
     const { id_user } = req.params;
     const { name, sex, cpf, rg, birthday, orgao_expeditor } = req.body;
@@ -35,7 +35,7 @@ module.exports = {
     return res.json(owner);
   },
 
-  async updateOwner(req, res) {
+  async update(req, res) {
     const { id_owner } = req.params;
     const {
       name,

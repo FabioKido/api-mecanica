@@ -1,6 +1,6 @@
 const Parcel = require('../../models/serviceEntities/Parcel');
 
-exports.getParcels = async (req, res) => {
+exports.index = async (req, res) => {
   const { id_payment } = req.query;
 
   const parcels = await Parcel.findAll({
@@ -14,7 +14,7 @@ exports.getParcels = async (req, res) => {
   });
 }
 
-exports.addParcel = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { id_payment } = req.params;
     const {
@@ -51,7 +51,7 @@ exports.addParcel = async (req, res, next) => {
 }
 
 
-exports.updateParcel = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_parcel } = req.params;
@@ -88,7 +88,7 @@ exports.updateParcel = async (req, res, next) => {
   }
 }
 
-exports.deleteParcel = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_parcel } = req.params;

@@ -3,7 +3,7 @@ const Company = require('../../models/userEntities/Company');
 
 module.exports = {
 
-  async getCompany(req, res) {
+  async show(req, res) {
     const { id_company } = req.params;
 
     const company = await Company.findByPk(id_company);
@@ -11,7 +11,7 @@ module.exports = {
     return res.json(company);
   },
 
-  async addCompany(req, res) {
+  async store(req, res) {
 
     const { id_user } = req.params;
     const { name, nome_fantasia, type, cnpj, ie } = req.body;
@@ -34,7 +34,7 @@ module.exports = {
     return res.json(company);
   },
 
-  async updateCompany(req, res) {
+  async update(req, res) {
     const { id_company } = req.params;
     const {
       name,

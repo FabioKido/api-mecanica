@@ -1,17 +1,17 @@
 const Permission = require('../../models/userEntities/Permission');
 
-exports.getPermissions = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const permissions = await Permission.findAll();
   res.status(200).json({
     data: permissions
   });
 }
 
-exports.getPermission = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { permissionId } = req.params;
     const permission = await Permission.findByPk(permissionId);
-    if (!permission) return next(new Error('Permission não existe'));
+    if (!permission) return next(new Error('Permissão não existe'));
     res.status(200).json({
       data: permission
     });
@@ -20,7 +20,7 @@ exports.getPermission = async (req, res, next) => {
   }
 }
 
-exports.createPermission = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { name, action, enable } = req.body;
 
@@ -41,7 +41,7 @@ exports.createPermission = async (req, res, next) => {
   }
 }
 
-exports.deletePermission = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
     const { permissionId } = req.params;
 
@@ -53,7 +53,7 @@ exports.deletePermission = async (req, res, next) => {
 
     res.status(200).json({
       data: null,
-      message: "Permission deletada com sucesso"
+      message: "Permissão deletada com sucesso"
     });
   } catch (error) {
     next(error)

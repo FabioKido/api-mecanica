@@ -1,6 +1,6 @@
 const Timeline = require('../../models/serviceEntities/Timeline');
 
-exports.getTimelines = async (req, res) => {
+exports.index = async (req, res) => {
   const timelines = await Timeline.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getTimelines = async (req, res) => {
   });
 }
 
-exports.getTimeline = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_timeline } = req.params;
 
@@ -24,7 +24,7 @@ exports.getTimeline = async (req, res, next) => {
   }
 }
 
-exports.addTimeline = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { title } = req.body;
 
@@ -43,7 +43,7 @@ exports.addTimeline = async (req, res, next) => {
 }
 
 
-exports.updateTimeline = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_timeline } = req.params;
@@ -68,7 +68,7 @@ exports.updateTimeline = async (req, res, next) => {
   }
 }
 
-exports.deleteTimeline = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_timeline } = req.params;

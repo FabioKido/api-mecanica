@@ -2,17 +2,17 @@ const Customer = require('../../models/customerEntities/Customer');
 const Contact = require('../../models/userEntities/Contact');
 const Address = require('../../models/userEntities/Address');
 
-const { addContact } = require('../../controllers/userEnvironment/contactController');
-const { createAddress } = require('../../controllers/userEnvironment/addressController');
+const { createContact } = require('../../services/contactService');
+const { createAddress } = require('../../services/addressService');
 
-exports.getCustomers = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const customers = await Customer.findAll();
   res.status(200).json({
     data: customers
   });
 }
 
-exports.getCustomer = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_customer } = req.params;
     const customer = await Customer.findByPk(id_customer);
@@ -25,7 +25,7 @@ exports.getCustomer = async (req, res, next) => {
   }
 }
 
-exports.addCustomer = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       name,
@@ -50,7 +50,7 @@ exports.addCustomer = async (req, res, next) => {
     } = req.body;
 
     if(celphone)
-      contact = await addContact({ phone, celphone, email });
+      contact = await createContact({ phone, celphone, email });
 
     if(city || uf)
       address = await createAddress({ street, neighborhood, number, city, uf, complement });
@@ -82,7 +82,7 @@ exports.addCustomer = async (req, res, next) => {
   }
 }
 
-exports.updateCustomer = async (req, res, next) => {
+exports.update = async (req, res, next) => {
 
   try {
 
@@ -166,7 +166,7 @@ exports.updateCustomer = async (req, res, next) => {
   }
 }
 
-exports.deleteCustomer = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
     const { id_customer } = req.params;
     const { id_contact, id_address } = await Customer.findByPk(id_customer);

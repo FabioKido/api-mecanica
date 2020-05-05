@@ -1,6 +1,6 @@
 const OrderService = require('../../models/serviceEntities/OrderService');
 
-exports.getOrderServices = async (req, res) => {
+exports.index = async (req, res) => {
   const { id_order } = req.query;
 
   const orderServices = await OrderService.findAll({
@@ -14,7 +14,7 @@ exports.getOrderServices = async (req, res) => {
   });
 }
 
-exports.addOrderService = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { id_order } = req.params;
     const {
@@ -51,7 +51,7 @@ exports.addOrderService = async (req, res, next) => {
 }
 
 
-exports.updateOrderService = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_os } = req.params;
@@ -88,7 +88,7 @@ exports.updateOrderService = async (req, res, next) => {
   }
 }
 
-exports.deleteOrderService = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_os } = req.params;

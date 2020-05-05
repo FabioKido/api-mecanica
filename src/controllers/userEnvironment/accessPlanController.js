@@ -1,13 +1,13 @@
 const AccessPlan = require('../../models/userEntities/AccessPlan');
 
-exports.getAccessPlans = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const accessPlans = await AccessPlan.findAll();
   res.status(200).json({
     data: accessPlans
   });
 }
 
-exports.getAccessPlan = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const planId = req.params.planId;
     const accessPlan = await AccessPlan.findByPk(planId);
@@ -20,7 +20,7 @@ exports.getAccessPlan = async (req, res, next) => {
   }
 }
 
-exports.addAccessPlan = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { name, type, value, enable, created_by, updated_by } = req.body;
 
@@ -43,7 +43,7 @@ exports.addAccessPlan = async (req, res, next) => {
   }
 }
 
-exports.updateAccessPlan = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const planId = req.params.planId;
@@ -71,7 +71,7 @@ exports.updateAccessPlan = async (req, res, next) => {
   }
 }
 
-exports.deleteAccessPlan = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const planId = req.params.planId;

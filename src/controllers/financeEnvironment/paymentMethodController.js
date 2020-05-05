@@ -1,6 +1,6 @@
 const PaymentMethod = require('../../models/financeEntities/PaymentMethod');
 
-exports.getPaymentMethods = async (req, res) => {
+exports.index = async (req, res) => {
   const payment_methods = await PaymentMethod.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getPaymentMethods = async (req, res) => {
   });
 }
 
-exports.getPaymentMethod = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_payment_method } = req.params;
 
@@ -24,7 +24,7 @@ exports.getPaymentMethod = async (req, res, next) => {
   }
 }
 
-exports.addPaymentMethod = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       method,
@@ -51,7 +51,7 @@ exports.addPaymentMethod = async (req, res, next) => {
 }
 
 
-exports.updatePaymentMethod = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_payment_method } = req.params;
@@ -82,7 +82,7 @@ exports.updatePaymentMethod = async (req, res, next) => {
   }
 }
 
-exports.deletePaymentMethod = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_payment_method } = req.params;

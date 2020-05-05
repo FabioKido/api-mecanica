@@ -1,6 +1,6 @@
 const Checklist = require('../../models/serviceEntities/Checklist');
 
-exports.getChecklists = async (req, res) => {
+exports.index = async (req, res) => {
   const checklists = await Checklist.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getChecklists = async (req, res) => {
   });
 }
 
-exports.getChecklist = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_checklist } = req.params;
 
@@ -24,7 +24,7 @@ exports.getChecklist = async (req, res, next) => {
   }
 }
 
-exports.addChecklist = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { id_diagnostic } = req.params;
     const { title, checked } = req.body;
@@ -46,7 +46,7 @@ exports.addChecklist = async (req, res, next) => {
 }
 
 
-exports.updateChecklist = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_checklist } = req.params;
@@ -72,7 +72,7 @@ exports.updateChecklist = async (req, res, next) => {
   }
 }
 
-exports.deleteChecklist = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_checklist } = req.params;

@@ -1,4 +1,4 @@
-const Address = require('../../models/userEntities/Address');
+const Address = require('../models/userEntities/Address');
 
 module.exports = {
 

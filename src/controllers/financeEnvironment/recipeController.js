@@ -1,6 +1,6 @@
 const Recipe = require('../../models/financeEntities/Recipe');
 
-exports.getRecipes = async (req, res) => {
+exports.index = async (req, res) => {
   const recipes = await Recipe.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getRecipes = async (req, res) => {
   });
 }
 
-exports.getRecipe = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_recipe } = req.params;
 
@@ -24,7 +24,7 @@ exports.getRecipe = async (req, res, next) => {
   }
 }
 
-exports.addRecipe = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       id_category,
@@ -61,7 +61,7 @@ exports.addRecipe = async (req, res, next) => {
 }
 
 
-exports.updateRecipe = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_recipe } = req.params;
@@ -100,7 +100,7 @@ exports.updateRecipe = async (req, res, next) => {
   }
 }
 
-exports.deleteRecipe = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_recipe } = req.params;

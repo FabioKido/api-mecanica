@@ -10,45 +10,45 @@ const timelineController = require('../controllers/serviceEnvironment/timelineCo
 
 const serviceRouter = Router();
 
-serviceRouter.post('/add', serviceController.addService);
-serviceRouter.get('/all', serviceController.getServices);
-serviceRouter.get('/one/:id_service', serviceController.getService);
-serviceRouter.put('/one/:id_service', serviceController.updateService);
-serviceRouter.delete('/one/:id_service', serviceController.deleteService);
+serviceRouter.post('/add', serviceController.store);
+serviceRouter.get('/all', serviceController.index);
+serviceRouter.get('/one/:id_service', serviceController.show);
+serviceRouter.put('/one/:id_service', serviceController.update);
+serviceRouter.delete('/one/:id_service', serviceController.destroy);
 
-serviceRouter.post('/schedule', scheduleController.addSchedule);
-serviceRouter.get('/schedules', scheduleController.getSchedules);
-serviceRouter.get('/schedule/:id_schedule', scheduleController.getSchedule);
-serviceRouter.put('/schedule/:id_schedule', scheduleController.updateSchedule);
-serviceRouter.delete('/schedule/:id_schedule', scheduleController.deleteSchedule);
+serviceRouter.post('/schedule', scheduleController.store);
+serviceRouter.get('/schedules', scheduleController.index);
+serviceRouter.get('/schedule/:id_schedule', scheduleController.show);
+serviceRouter.put('/schedule/:id_schedule', scheduleController.update);
+serviceRouter.delete('/schedule/:id_schedule', scheduleController.destroy);
 
-serviceRouter.post('/diagnostic', diagnosticController.addDiagnostic);
-serviceRouter.get('/diagnostics', diagnosticController.getDiagnostics);
-serviceRouter.get('/diagnostic/:id_diagnostic', diagnosticController.getDiagnostic);
-serviceRouter.put('/diagnostic/:id_diagnostic', diagnosticController.updateDiagnostic);
-serviceRouter.delete('/diagnostic/:id_diagnostic', diagnosticController.deleteDiagnostic);
+serviceRouter.post('/diagnostic', diagnosticController.store);
+serviceRouter.get('/diagnostics', diagnosticController.index);
+serviceRouter.get('/diagnostic/:id_diagnostic', diagnosticController.show);
+serviceRouter.put('/diagnostic/:id_diagnostic', diagnosticController.update);
+serviceRouter.delete('/diagnostic/:id_diagnostic', diagnosticController.destroy);
 
-serviceRouter.post('/checklist/:id_diagnostic', checklistController.addChecklist);
-serviceRouter.get('/checklists', checklistController.getChecklists);
-serviceRouter.get('/checklist/:id_checklist', checklistController.getChecklist);
-serviceRouter.put('/checklist/:id_checklist', checklistController.updateChecklist);
-serviceRouter.delete('/checklist/:id_checklist', checklistController.deleteChecklist);
+serviceRouter.post('/checklist/:id_diagnostic', checklistController.store);
+serviceRouter.get('/checklists', checklistController.index);
+serviceRouter.get('/checklist/:id_checklist', checklistController.show);
+serviceRouter.put('/checklist/:id_checklist', checklistController.update);
+serviceRouter.delete('/checklist/:id_checklist', checklistController.destroy);
 
-serviceRouter.post('/preventive', preventiveController.addPreventive);
-serviceRouter.get('/preventives', preventiveController.getPreventives);
-serviceRouter.get('/preventive/:id_preventive', preventiveController.getPreventive);
-serviceRouter.put('/preventive/:id_preventive', preventiveController.updatePreventive);
-serviceRouter.delete('/preventive/:id_preventive', preventiveController.deletePreventive);
+serviceRouter.post('/preventive', preventiveController.store);
+serviceRouter.get('/preventives', preventiveController.index);
+serviceRouter.get('/preventive/:id_preventive', preventiveController.show);
+serviceRouter.put('/preventive/:id_preventive', preventiveController.update);
+serviceRouter.delete('/preventive/:id_preventive', preventiveController.destroy);
 
-serviceRouter.post('/record', recordController.addRecord);
-serviceRouter.get('/records', recordController.getRecords);
-serviceRouter.get('/record/:id_record', recordController.getRecord);
-serviceRouter.delete('/record/:id_record', recordController.deleteRecord);
+serviceRouter.post('/record', recordController.store);
+serviceRouter.get('/records', recordController.index);
+serviceRouter.get('/record/:id_record', recordController.show);
+serviceRouter.delete('/record/:id_record', recordController.destroy);
 
-serviceRouter.post('/timeline', timelineController.addTimeline);
-serviceRouter.get('/timelines', timelineController.getTimelines);
-serviceRouter.get('/timeline/:id_timeline', timelineController.getTimeline);
-serviceRouter.put('/timeline/:id_timeline', timelineController.updateTimeline);
-serviceRouter.delete('/timeline/:id_timeline', timelineController.deleteTimeline);
+serviceRouter.post('/timeline', timelineController.store);
+serviceRouter.get('/timelines', timelineController.index);
+serviceRouter.get('/timeline/:id_timeline', timelineController.show);
+serviceRouter.put('/timeline/:id_timeline', timelineController.update);
+serviceRouter.delete('/timeline/:id_timeline', timelineController.destroy);
 
 module.exports = serviceRouter;

@@ -1,6 +1,6 @@
 const Schedule = require('../../models/serviceEntities/Schedule');
 
-exports.getSchedules = async (req, res) => {
+exports.index = async (req, res) => {
   const schedules = await Schedule.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getSchedules = async (req, res) => {
   });
 }
 
-exports.getSchedule = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_schedule } = req.params;
 
@@ -24,7 +24,7 @@ exports.getSchedule = async (req, res, next) => {
   }
 }
 
-exports.addSchedule = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { date, status, observations, id_vehicle } = req.body;
 
@@ -49,7 +49,7 @@ exports.addSchedule = async (req, res, next) => {
 }
 
 
-exports.updateSchedule = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_schedule } = req.params;
@@ -82,7 +82,7 @@ exports.updateSchedule = async (req, res, next) => {
   }
 }
 
-exports.deleteSchedule = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_schedule } = req.params;

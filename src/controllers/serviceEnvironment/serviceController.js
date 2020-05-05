@@ -1,6 +1,6 @@
 const Service = require('../../models/serviceEntities/Service');
 
-exports.getServices = async (req, res) => {
+exports.index = async (req, res) => {
   const services = await Service.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getServices = async (req, res) => {
   });
 }
 
-exports.getService = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_service } = req.params;
 
@@ -24,7 +24,7 @@ exports.getService = async (req, res, next) => {
   }
 }
 
-exports.addService = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { name } = req.body;
 
@@ -43,7 +43,7 @@ exports.addService = async (req, res, next) => {
 }
 
 
-exports.updateService = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_service } = req.params;
@@ -68,7 +68,7 @@ exports.updateService = async (req, res, next) => {
   }
 }
 
-exports.deleteService = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_service } = req.params;

@@ -1,8 +1,8 @@
-const Contact = require('../../models/userEntities/Contact');
+const Contact = require('../models/userEntities/Contact');
 
 module.exports = {
 
-  async addContact(data) {
+  async createContact(data) {
 
     const { phone, celphone, email } = data;
 

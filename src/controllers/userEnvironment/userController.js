@@ -2,7 +2,7 @@ const User = require('../../models/userEntities/User');
 const Contact = require('../../models/userEntities/Contact');
 const Address = require('../../models/userEntities/Address');
 
-exports.getUsers = async (req, res, next) => {
+exports.index = async (req, res, next) => {
 
   const users = await User.findAll();
 
@@ -12,7 +12,7 @@ exports.getUsers = async (req, res, next) => {
 
 }
 
-exports.getUser = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const user = await User.findByPk(userId);
@@ -28,28 +28,7 @@ exports.getUser = async (req, res, next) => {
   }
 }
 
-exports.getUserInfo = async (req, res, next) => {
-  try {
-    const { id_user } = req.params;
-
-    const { address } = await User.findByPk(id_user, {
-      include: { association: 'address' }
-    })
-
-    const { contact } = await User.findByPk(id_user, {
-      include: { association: 'contact' }
-    })
-
-    res.json({
-      data: { contact, address},
-      message: "Informações de Endereço e Contato"
-    });
-  } catch (error) {
-    next(error)
-  }
-}
-
-exports.updateUser = async (req, res, next) => {
+exports.update = async (req, res, next) => {
 
   try {
 
@@ -127,7 +106,7 @@ exports.updateUser = async (req, res, next) => {
   }
 }
 
-exports.deleteUser = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
 
   try {
 

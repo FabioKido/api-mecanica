@@ -1,14 +1,14 @@
 const AccessPlan = require('../../models/userEntities/AccessPlan');
 const Resource = require('../../models/userEntities/Resource');
 
-exports.getResources = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const resource = await Resource.findAll();
   res.status(200).json({
     data: resource
   });
 }
 
-exports.getResource = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const resourceId = req.params.resourceId;
     const resource = await Resource.findByPk(resourceId);
@@ -21,7 +21,7 @@ exports.getResource = async (req, res, next) => {
   }
 }
 
-exports.addResource = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
 
     const { id_access_plan } = req.params;
@@ -51,7 +51,7 @@ exports.addResource = async (req, res, next) => {
   }
 }
 
-exports.updateResource = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const resourceId = req.params.resourceId;
@@ -79,7 +79,7 @@ exports.updateResource = async (req, res, next) => {
   }
 }
 
-exports.deleteResource = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const resourceId = req.params.resourceId;

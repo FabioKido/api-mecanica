@@ -1,6 +1,6 @@
 const OrderProduct = require('../../models/serviceEntities/OrderProduct');
 
-exports.getOrderProducts = async (req, res) => {
+exports.index = async (req, res) => {
   const { id_os } = req.query;
 
   const orderProducts = await OrderProduct.findAll({
@@ -14,7 +14,7 @@ exports.getOrderProducts = async (req, res) => {
   });
 }
 
-exports.addOrderProduct = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { id_os } = req.params;
     const {
@@ -51,7 +51,7 @@ exports.addOrderProduct = async (req, res, next) => {
 }
 
 
-exports.updateOrderProduct = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_op } = req.params;
@@ -88,7 +88,7 @@ exports.updateOrderProduct = async (req, res, next) => {
   }
 }
 
-exports.deleteOrderProduct = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_op } = req.params;

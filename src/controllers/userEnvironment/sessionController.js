@@ -6,8 +6,8 @@ const User = require('../../models/userEntities/User');
 const Contact = require('../../models/userEntities/Contact');
 const Address = require('../../models/userEntities/Address');
 
-const { addContact } = require('../../controllers/userEnvironment/contactController');
-const { createAddress } = require('../../controllers/userEnvironment/addressController');
+const { createContact } = require('../../services/contactService');
+const { createAddress } = require('../../services/addressService');
 
 const { roles } = require('../../roles');
 
@@ -73,7 +73,7 @@ exports.signup = async (req, res, next) => {
     const hashedPassword = await hashPassword(password);
 
     if(celphone)
-      contact = await addContact({ phone, celphone, email });
+      contact = await createContact({ phone, celphone, email });
 
     if(city || uf)
       address = await createAddress({ street, neighborhood, number, city, uf, complement });
@@ -112,7 +112,7 @@ exports.signup = async (req, res, next) => {
   }
 }
 
-exports.login = async (req, res, next) => {
+exports.signin = async (req, res, next) => {
 
   try {
 

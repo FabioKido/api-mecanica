@@ -1,6 +1,6 @@
 const Payment = require('../../models/serviceEntities/Payment');
 
-exports.getPayments = async (req, res) => {
+exports.index = async (req, res) => {
   const { id_order } = req.query;
 
   const payments = await Payment.findAll({
@@ -14,7 +14,7 @@ exports.getPayments = async (req, res) => {
   });
 }
 
-exports.getPayment = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_payment } = req.params;
 
@@ -30,7 +30,7 @@ exports.getPayment = async (req, res, next) => {
   }
 }
 
-exports.addPayment = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { id_order } = req.params;
     const {
@@ -57,7 +57,7 @@ exports.addPayment = async (req, res, next) => {
 }
 
 
-exports.updatePayment = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_payment } = req.params;
@@ -88,7 +88,7 @@ exports.updatePayment = async (req, res, next) => {
   }
 }
 
-exports.deletePayment = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_payment } = req.params;

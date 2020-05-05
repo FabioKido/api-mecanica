@@ -1,7 +1,7 @@
 const Group = require('../../models/userEntities/Group');
 const Permission = require('../../models/userEntities/Permission');
 
-exports.getPermissionInGroup = async (req, res) => {
+exports.show = async (req, res) => {
 
   const { id_permission } = req.params;
 
@@ -18,7 +18,7 @@ exports.getPermissionInGroup = async (req, res) => {
   return res.json(permission.groups);
 }
 
-exports.addPermissionInGroup = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try{
     const { id_permission } = req.params;
     const { id_group } = req.body;
@@ -27,7 +27,7 @@ exports.addPermissionInGroup = async (req, res, next) => {
     const group = await Group.findByPk(id_group);
 
     if (!permission) {
-      return res.status(400).json({ error: 'Permission não encontrada' });
+      return res.status(400).json({ error: 'Permissão não encontrada' });
     }
 
     await permission.addGroup(group);
@@ -39,7 +39,7 @@ exports.addPermissionInGroup = async (req, res, next) => {
   }
 }
 
-exports.deletePermissionInGroup = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
 
   const { id_permission } = req.params;
   const { id } = req.query;
@@ -47,7 +47,7 @@ exports.deletePermissionInGroup = async (req, res, next) => {
   const permission = await Permission.findByPk(id_permission);
 
   if (!permission) {
-    return res.status(400).json({ error: 'Permission não encontrada' });
+    return res.status(400).json({ error: 'Permissão não encontrada' });
   }
 
   const group = await Group.findOne({
@@ -56,5 +56,5 @@ exports.deletePermissionInGroup = async (req, res, next) => {
 
   await permission.removeGroup(group);
 
-  return res.json({message: "Relacionamento deletado"});
+  return res.json({message: "Permissão retirada do Grupo"});
 }

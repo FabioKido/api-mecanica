@@ -1,19 +1,19 @@
 const Vehicle = require('../../models/customerEntities/Vehicle');
 const Customer = require('../../models/customerEntities/Customer');
 
-const { addAutomobile, updateAutomobile } = require('./automobileController');
-const { addBicycle, updateBicycle } = require('./bicycleController');
+const { createAutomobile, updateAutomobile} = require('../../services/contactService');
+const { createBicycle, updateBicycle } = require('../../services/addressService');
 
 module.exports = {
 
-  async getVehicles(req, res) {
+  async index(req, res) {
     const vehicles = await Vehicle.findAll();
     res.status(200).json({
       data: vehicles
     });
   },
 
-  async addVehicle(req, res) {
+  async store(req, res) {
 
     const { id_customer } = req.params;
     const {
@@ -53,11 +53,11 @@ module.exports = {
       created_by: null,
       updated_by: null
     });
-    
+
     if(fuel){
-      await addAutomobile({ id_vehicle: vehicle.id, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
+      await createAutomobile({ id_vehicle: vehicle.id, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
     }else{
-      await addBicycle({ id_vehicle: vehicle.id, hand_brake });
+      await createBicycle({ id_vehicle: vehicle.id, hand_brake });
     }
 
     res.json({
@@ -66,7 +66,7 @@ module.exports = {
     });
   },
 
-  async updateVehicle(req, res) {
+  async update(req, res) {
 
     const { id_vehicle } = req.params;
     const {
@@ -114,7 +114,7 @@ module.exports = {
     });
   },
 
-  async deleteVehicle(req, res) {
+  async destroy(req, res) {
     const { id_vehicle } = req.params;
 
     Vehicle.destroy({

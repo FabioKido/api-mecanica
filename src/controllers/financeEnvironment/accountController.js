@@ -1,6 +1,6 @@
 const Account = require('../../models/financeEntities/Account');
 
-exports.getAccounts = async (req, res) => {
+exports.index = async (req, res) => {
   const accounts = await Account.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getAccounts = async (req, res) => {
   });
 }
 
-exports.getAccount = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_account } = req.params;
 
@@ -24,7 +24,7 @@ exports.getAccount = async (req, res, next) => {
   }
 }
 
-exports.addAccount = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       title,
@@ -53,7 +53,7 @@ exports.addAccount = async (req, res, next) => {
 }
 
 
-exports.updateAccount = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_account } = req.params;
@@ -86,7 +86,7 @@ exports.updateAccount = async (req, res, next) => {
   }
 }
 
-exports.deleteAccount = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_account } = req.params;

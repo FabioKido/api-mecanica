@@ -1,6 +1,6 @@
 const Expense = require('../../models/financeEntities/Expense');
 
-exports.getExpenses = async (req, res) => {
+exports.index = async (req, res) => {
   const expenses = await Expense.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getExpenses = async (req, res) => {
   });
 }
 
-exports.getExpense = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_expense } = req.params;
 
@@ -24,7 +24,7 @@ exports.getExpense = async (req, res, next) => {
   }
 }
 
-exports.addExpense = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       id_category,
@@ -63,7 +63,7 @@ exports.addExpense = async (req, res, next) => {
 }
 
 
-exports.updateExpense = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_expense } = req.params;
@@ -104,7 +104,7 @@ exports.updateExpense = async (req, res, next) => {
   }
 }
 
-exports.deleteExpense = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_expense } = req.params;

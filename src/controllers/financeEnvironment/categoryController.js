@@ -1,6 +1,6 @@
 const Category = require('../../models/financeEntities/Category');
 
-exports.getCategories = async (req, res) => {
+exports.index = async (req, res) => {
   const categorys = await Category.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getCategories = async (req, res) => {
   });
 }
 
-exports.getCategory = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_category } = req.params;
 
@@ -24,7 +24,7 @@ exports.getCategory = async (req, res, next) => {
   }
 }
 
-exports.addCategory = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       description,
@@ -49,7 +49,7 @@ exports.addCategory = async (req, res, next) => {
 }
 
 
-exports.updateCategory = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_category } = req.params;
@@ -78,7 +78,7 @@ exports.updateCategory = async (req, res, next) => {
   }
 }
 
-exports.deleteCategory = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_category } = req.params;

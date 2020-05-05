@@ -1,6 +1,6 @@
 const Record = require('../../models/serviceEntities/Record');
 
-exports.getRecords = async (req, res) => {
+exports.index = async (req, res) => {
   const records = await Record.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getRecords = async (req, res) => {
   });
 }
 
-exports.getRecord = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_record } = req.params;
 
@@ -24,7 +24,7 @@ exports.getRecord = async (req, res, next) => {
   }
 }
 
-exports.addRecord = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { audio } = req.body;
 
@@ -44,7 +44,7 @@ exports.addRecord = async (req, res, next) => {
   }
 }
 
-exports.deleteRecord = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_record } = req.params;

@@ -3,7 +3,7 @@ const Worker = require('../../models/userEntities/Worker');
 
 module.exports = {
 
-  async getUsersWorkers(req, res) {
+  async index(req, res) {
     const { id_user } = req.params;
 
     const user = await User.findByPk(id_user, {
@@ -13,7 +13,7 @@ module.exports = {
     return res.json(user.workers);
   },
 
-  async getWorker(req, res) {
+  async show(req, res) {
     const { id_worker } = req.params;
 
     const worker = await Worker.findByPk(id_worker);
@@ -21,7 +21,7 @@ module.exports = {
     return res.json(worker);
   },
 
-  async addWorker(req, res) {
+  async store(req, res) {
 
     const { id_user } = req.params;
     const {
@@ -78,7 +78,7 @@ module.exports = {
     return res.json(worker);
   },
 
-  async updateWorker(req, res) {
+  async update(req, res) {
     const { id_worker } = req.params;
     const {
       name,

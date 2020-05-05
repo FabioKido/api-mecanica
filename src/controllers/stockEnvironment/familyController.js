@@ -1,13 +1,13 @@
 const Family = require('../../models/stockEntities/Family');
 
-exports.getFamilies = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const families = await Family.findAll();
   res.status(200).json({
     data: families
   });
 }
 
-exports.getFamily = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_family } = req.params;
     const family = await Family.findByPk(id_family);
@@ -20,7 +20,7 @@ exports.getFamily = async (req, res, next) => {
   }
 }
 
-exports.addFamily = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { name, description } = req.body;
 
@@ -41,7 +41,7 @@ exports.addFamily = async (req, res, next) => {
   }
 }
 
-exports.updateFamily = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_family } = req.params;
@@ -70,7 +70,7 @@ exports.updateFamily = async (req, res, next) => {
   }
 }
 
-exports.deleteFamily = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_family } = req.params;

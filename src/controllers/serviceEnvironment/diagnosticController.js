@@ -1,6 +1,6 @@
 const Diagnostic = require('../../models/serviceEntities/Diagnostic');
 
-exports.getDiagnostics = async (req, res) => {
+exports.index = async (req, res) => {
   const diagnostics = await Diagnostic.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getDiagnostics = async (req, res) => {
   });
 }
 
-exports.getDiagnostic = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_diagnostic } = req.params;
 
@@ -24,7 +24,7 @@ exports.getDiagnostic = async (req, res, next) => {
   }
 }
 
-exports.addDiagnostic = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const { value, approved, observations } = req.body;
 
@@ -47,7 +47,7 @@ exports.addDiagnostic = async (req, res, next) => {
 }
 
 
-exports.updateDiagnostic = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_diagnostic } = req.params;
@@ -78,7 +78,7 @@ exports.updateDiagnostic = async (req, res, next) => {
   }
 }
 
-exports.deleteDiagnostic = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_diagnostic } = req.params;

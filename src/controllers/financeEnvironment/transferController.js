@@ -1,6 +1,6 @@
 const Transfer = require('../../models/financeEntities/Transfer');
 
-exports.getTransfers = async (req, res) => {
+exports.index = async (req, res) => {
   const transfers = await Transfer.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getTransfers = async (req, res) => {
   });
 }
 
-exports.getTransfer = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_transfer } = req.params;
 
@@ -24,7 +24,7 @@ exports.getTransfer = async (req, res, next) => {
   }
 }
 
-exports.addTransfer = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       id_category,
@@ -61,7 +61,7 @@ exports.addTransfer = async (req, res, next) => {
 }
 
 
-exports.updateTransfer = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_transfer } = req.params;
@@ -96,7 +96,7 @@ exports.updateTransfer = async (req, res, next) => {
   }
 }
 
-exports.deleteTransfer = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_transfer } = req.params;

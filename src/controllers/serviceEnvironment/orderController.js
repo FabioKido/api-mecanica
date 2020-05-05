@@ -1,6 +1,6 @@
 const Order = require('../../models/serviceEntities/Order');
 
-exports.getOrders = async (req, res) => {
+exports.index = async (req, res) => {
   const orders = await Order.findAll();
 
   res.status(200).json({
@@ -8,7 +8,7 @@ exports.getOrders = async (req, res) => {
   });
 }
 
-exports.getOrder = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_order } = req.params;
 
@@ -24,7 +24,7 @@ exports.getOrder = async (req, res, next) => {
   }
 }
 
-exports.addOrder = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       id_vehicle,
@@ -69,7 +69,7 @@ exports.addOrder = async (req, res, next) => {
 }
 
 
-exports.updateOrder = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_order } = req.params;
@@ -106,7 +106,7 @@ exports.updateOrder = async (req, res, next) => {
   }
 }
 
-exports.deleteOrder = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_order } = req.params;

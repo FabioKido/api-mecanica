@@ -6,13 +6,15 @@ const bicycleController = require('../controllers/customerEnvironment/bicycleCon
 
 const vehiclesRouter = Router();
 
-vehiclesRouter.post('/:id_customer/add', vehicleController.addVehicle);
-vehiclesRouter.get('/', vehicleController.getVehicles);
-vehiclesRouter.get('/automobile/:id_automobile', automobileController.getAutomobile);
-vehiclesRouter.get('/bicycle/:id_bicycle', bicycleController.getBicycle);
-vehiclesRouter.get('/automobiles', automobileController.getAutomobiles);
-vehiclesRouter.get('/bicycles', bicycleController.getBicycles);
-vehiclesRouter.put('/:id_vehicle', vehicleController.updateVehicle);
-vehiclesRouter.delete('/:id_vehicle', vehicleController.deleteVehicle);
+vehiclesRouter.post('/:id_customer/add', vehicleController.store);
+vehiclesRouter.get('/', vehicleController.index);
+vehiclesRouter.put('/:id_vehicle', vehicleController.update);
+vehiclesRouter.delete('/:id_vehicle', vehicleController.destroy);
+
+vehiclesRouter.get('/automobile/:id_automobile', automobileController.show);
+vehiclesRouter.get('/automobiles', automobileController.index);
+
+vehiclesRouter.get('/bicycle/:id_bicycle', bicycleController.show);
+vehiclesRouter.get('/bicycles', bicycleController.index);
 
 module.exports = vehiclesRouter;

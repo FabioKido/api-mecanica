@@ -4,10 +4,10 @@ const customerController = require('../controllers/customerEnvironment/customerC
 
 const customersRouter = Router();
 
-customersRouter.post('/add', customerController.addCustomer);
-customersRouter.get('/', customerController.getCustomers);
-customersRouter.get('/:id_customer', customerController.getCustomer);
-customersRouter.put('/:id_customer', customerController.updateCustomer);
-customersRouter.delete('/:id_customer', customerController.deleteCustomer);
+customersRouter.post('/add', customerController.store);
+customersRouter.get('/', customerController.index);
+customersRouter.get('/:id_customer', customerController.show);
+customersRouter.put('/:id_customer', customerController.update);
+customersRouter.delete('/:id_customer', customerController.destroy);
 
 module.exports = customersRouter;

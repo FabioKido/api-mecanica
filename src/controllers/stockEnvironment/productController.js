@@ -1,13 +1,13 @@
 const Product = require('../../models/stockEntities/Product');
 
-exports.getProducts = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   const products = await Product.findAll();
   res.status(200).json({
     data: products
   });
 }
 
-exports.getProduct = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_product } = req.params;
     const product = await Product.findByPk(id_product);
@@ -20,7 +20,7 @@ exports.getProduct = async (req, res, next) => {
   }
 }
 
-exports.addProduct = async (req, res, next) => {
+exports.store = async (req, res, next) => {
   try {
     const {
       image,
@@ -78,7 +78,7 @@ exports.addProduct = async (req, res, next) => {
   }
 }
 
-exports.updateProduct = async (req, res, next) => {
+exports.update = async (req, res, next) => {
   try {
 
     const { id_product } = req.params;
@@ -141,7 +141,7 @@ exports.updateProduct = async (req, res, next) => {
   }
 }
 
-exports.deleteProduct = async (req, res, next) => {
+exports.destroy = async (req, res, next) => {
   try {
 
     const { id_product } = req.params;

@@ -1,6 +1,6 @@
 const ProductAcquisition = require('../../models/stockEntities/ProductAcquisition');
 
-exports.getProductAcquisition = async (req, res, next) => {
+exports.show = async (req, res, next) => {
   try {
     const { id_prod_acq } = req.params;
     const prod_acq = await ProductAcquisition.findByPk(id_prod_acq, {

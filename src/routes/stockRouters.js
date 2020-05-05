@@ -8,30 +8,30 @@ const productAcquisitionController = require('../controllers/stockEnvironment/pr
 
 const stockRouter = Router();
 
-stockRouter.post('/provider', providerController.addProvider);
-stockRouter.get('/providers', providerController.getProviders);
-stockRouter.get('/provider/:id_provider', providerController.getProvider);
-stockRouter.put('/provider/:id_provider', providerController.updateProvider);
-stockRouter.delete('/provider/:id_provider', providerController.deleteProvider);
+stockRouter.post('/provider', providerController.store);
+stockRouter.get('/providers', providerController.index);
+stockRouter.get('/provider/:id_provider', providerController.show);
+stockRouter.put('/provider/:id_provider', providerController.update);
+stockRouter.delete('/provider/:id_provider', providerController.destroy);
 
-stockRouter.post('/family', familyController.addFamily);
-stockRouter.get('/families', familyController.getFamilies);
-stockRouter.get('/family/:id_family', familyController.getFamily);
-stockRouter.put('/family/:id_family', familyController.updateFamily);
-stockRouter.delete('/family/:id_family', familyController.deleteFamily);
+stockRouter.post('/family', familyController.store);
+stockRouter.get('/families', familyController.index);
+stockRouter.get('/family/:id_family', familyController.show);
+stockRouter.put('/family/:id_family', familyController.update);
+stockRouter.delete('/family/:id_family', familyController.destroy);
 
-stockRouter.post('/product', productController.addProduct);
-stockRouter.get('/products', productController.getProducts);
-stockRouter.get('/product/:id_product', productController.getProduct);
-stockRouter.put('/product/:id_product', productController.updateProduct);
-stockRouter.delete('/product/:id_product', productController.deleteProduct);
+stockRouter.post('/product', productController.store);
+stockRouter.get('/products', productController.index);
+stockRouter.get('/product/:id_product', productController.show);
+stockRouter.put('/product/:id_product', productController.update);
+stockRouter.delete('/product/:id_product', productController.destroy);
 
-stockRouter.post('/acquisition', acquisitionController.addAcquisition);
-stockRouter.get('/acquisitions', acquisitionController.getAcquisitions);
-stockRouter.get('/acquisition/:id_acquisition', acquisitionController.getAcquisition);
-stockRouter.put('/acquisition/:id_acquisition', acquisitionController.updateAcquisition);
-stockRouter.delete('/acquisition/:id_acquisition', acquisitionController.deleteAcquisition);
+stockRouter.post('/acquisition', acquisitionController.store);
+stockRouter.get('/acquisitions', acquisitionController.index);
+stockRouter.get('/acquisition/:id_acquisition', acquisitionController.show);
+stockRouter.put('/acquisition/:id_acquisition', acquisitionController.update);
+stockRouter.delete('/acquisition/:id_acquisition', acquisitionController.destroy);
 
-stockRouter.get('/product/acquisition/:id_prod_acq', productAcquisitionController.getProductAcquisition);
+stockRouter.get('/product/acquisition/:id_prod_acq', productAcquisitionController.show);
 
 module.exports = stockRouter;
