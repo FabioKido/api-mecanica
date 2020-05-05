@@ -70,6 +70,18 @@ exports.signup = async (req, res, next) => {
       complement
     } = req.body
 
+    const user = await User.findOne({
+      where: {
+        email
+      }
+    });
+
+    if(user){
+      return res.json({
+        message: "Usuário já cadastrado"
+      })
+    }
+
     const hashedPassword = await hashPassword(password);
 
     if(celphone)
