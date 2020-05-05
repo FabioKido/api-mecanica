@@ -1,6 +1,6 @@
 const Category = require('../../models/financeEntities/Category');
 
-exports.getCategorys = async (req, res) => {
+exports.getCategories = async (req, res) => {
   const categorys = await Category.findAll();
 
   res.status(200).json({

@@ -7,6 +7,7 @@ const vehiclesRouters = require('./vehiclesRouters');
 const stockRouters = require('./stockRouters');
 const serviceRouters = require('./serviceRouters');
 const orderRouters = require('./orderRouters');
+const financeRouters = require('./financeRouters');
 
 const routes = Router();
 
@@ -19,5 +20,6 @@ routes.use('/vehicles', vehiclesRouters);
 routes.use('/stock', stockRouters);
 routes.use('/service', serviceRouters);
 routes.use('/order', orderRouters);
+routes.use('/finance', financeRouters);
 
 module.exports = routes;
