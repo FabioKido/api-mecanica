@@ -1,8 +1,8 @@
 const Vehicle = require('../../models/customerEntities/Vehicle');
 const Customer = require('../../models/customerEntities/Customer');
 
-const { createAutomobile, updateAutomobile} = require('../../services/contactService');
-const { createBicycle, updateBicycle } = require('../../services/addressService');
+const { createAutomobile, updateAutomobile} = require('../../services/automobileService');
+const { createBicycle, updateBicycle } = require('../../services/bicycleService');
 
 module.exports = {
 
