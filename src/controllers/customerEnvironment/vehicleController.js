@@ -14,7 +14,7 @@ module.exports = {
   },
 
   async store(req, res) {
-
+    const userId = req.user.id;
     const { id_customer } = req.params;
     const {
       fabricator,
@@ -50,8 +50,7 @@ module.exports = {
       color,
       observations,
       enable: true,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     if(fuel){
@@ -67,7 +66,7 @@ module.exports = {
   },
 
   async update(req, res) {
-
+    const userId = req.user.id;
     const { id_vehicle } = req.params;
     const {
       fabricator,
@@ -96,7 +95,8 @@ module.exports = {
       year_model,
       color,
       observations,
-      enable
+      enable,
+      updated_by: userId
      },
      {
       where: {

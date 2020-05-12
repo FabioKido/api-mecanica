@@ -26,6 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const {
       date,
       status,
@@ -39,8 +40,7 @@ exports.store = async (req, res, next) => {
       date,
       status,
       enable: true,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -56,7 +56,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_preventive } = req.params;
     const {
       date,
@@ -67,7 +67,8 @@ exports.update = async (req, res, next) => {
     const preventive = await Preventive.update( {
       date,
       status,
-      enable
+      enable,
+      updated_by: userId
      },
      {
       where: {

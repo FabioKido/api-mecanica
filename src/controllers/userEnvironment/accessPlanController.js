@@ -22,6 +22,8 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+
+    const userId = req.user.id;
     const { name, type, value, enable, created_by, updated_by } = req.body;
 
     const accessPlan = await AccessPlan.create({
@@ -29,8 +31,7 @@ exports.store = async (req, res, next) => {
       type,
       value,
       enable,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -46,6 +47,7 @@ exports.store = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
 
+    const userId = req.user.id;
     const planId = req.params.planId;
     const { name, type, value, enable } = req.body
 
@@ -54,6 +56,7 @@ exports.update = async (req, res, next) => {
       type,
       value,
       enable,
+      updated_by: userId
      },
      {
       where: {

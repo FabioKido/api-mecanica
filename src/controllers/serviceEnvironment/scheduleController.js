@@ -26,6 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const { date, status, observations, id_vehicle } = req.body;
 
     const schedule = await Schedule.create({
@@ -34,8 +35,7 @@ exports.store = async (req, res, next) => {
       status,
       observations,
       enable: true,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -51,7 +51,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_schedule } = req.params;
     const {
       date,
@@ -64,7 +64,8 @@ exports.update = async (req, res, next) => {
       date,
       status,
       observations,
-      enable
+      enable,
+      updated_by: userId
      },
      {
       where: {

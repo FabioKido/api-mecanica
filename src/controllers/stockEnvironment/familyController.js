@@ -22,13 +22,13 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const { name, description } = req.body;
 
     const family = await Family.create({
       name,
       description,
-      created_by: null,
-      updated_by: null,
+      created_by: userId
     });
 
     res.json({
@@ -43,7 +43,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_family } = req.params;
     const {
       name,
@@ -52,7 +52,8 @@ exports.update = async (req, res, next) => {
 
     const family = await Family.update( {
       name,
-      description
+      description,
+      updated_by: userId
      },
      {
       where: {

@@ -26,6 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const {
       description,
       indicator
@@ -34,8 +35,7 @@ exports.store = async (req, res, next) => {
     const category = await Category.create({
       description,
       indicator,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -51,7 +51,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_category } = req.params;
     const {
       description,
@@ -60,7 +60,8 @@ exports.update = async (req, res, next) => {
 
     const category = await Category.update( {
       description,
-      indicator
+      indicator,
+      updated_by: userId
      },
      {
       where: {

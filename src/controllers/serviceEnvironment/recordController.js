@@ -26,12 +26,12 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const { audio } = req.body;
 
     const record = await Record.create({
       audio,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({

@@ -26,6 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const {
       id_vehicle,
       id_timeline,
@@ -54,8 +55,7 @@ exports.store = async (req, res, next) => {
       prevision_exit,
       observations,
       active,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -71,7 +71,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_order } = req.params;
     const {
       km,
@@ -88,7 +88,8 @@ exports.update = async (req, res, next) => {
       internal_control,
       prevision_exit,
       observations,
-      active
+      active,
+      updated_by: userId
      },
      {
       where: {

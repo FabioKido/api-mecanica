@@ -22,14 +22,15 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+
+    const userId = req.user.id;
     const { name, action, enable } = req.body;
 
     const newPermission = await Permission.create({
       name,
       action,
       enable,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({

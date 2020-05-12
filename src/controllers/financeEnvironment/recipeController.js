@@ -26,6 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const {
       id_category,
       total_value,
@@ -46,8 +47,7 @@ exports.store = async (req, res, next) => {
       options,
       observations,
       enable,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -63,7 +63,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_recipe } = req.params;
     const {
       total_value,
@@ -82,7 +82,8 @@ exports.update = async (req, res, next) => {
       date,
       options,
       observations,
-      enable
+      enable,
+      updated_by: userId
      },
      {
       where: {

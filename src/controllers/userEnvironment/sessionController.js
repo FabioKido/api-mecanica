@@ -95,7 +95,7 @@ exports.signup = async (req, res, next) => {
       email,
       password: hashedPassword,
       type,
-      role: role || "user_basic",
+      role: role || "user_admin",
       enable: enable || false,
       accept_terms_privacy,
       id_access_plan: id_access_plan || null,
@@ -155,5 +155,59 @@ exports.signin = async (req, res, next) => {
 
   } catch (error) {
     next(error);
+  }
+}
+
+exports.signupWorker = async (req, res, next) => {
+  try {
+    const {
+      username,
+      email,
+      password
+    } = req.body
+
+    const user = await User.findOne({
+      where: {
+        email
+      }
+    });
+
+    if(user){
+      return res.json({
+        message: "Usuário já cadastrado"
+      })
+    }
+
+    const id_user = req.user.id;
+
+    const hashedPassword = await hashPassword(password);
+
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      type: "user_basic",
+      role: "user_basic",
+      enable: true,
+      accept_terms_privacy: true,
+      created_by: id_user
+    });
+
+    const access_token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
+      expiresIn: "1d"
+    });
+
+    newUser.access_token = access_token;
+
+    await newUser.save();
+
+    newUser.password = "";
+
+    res.json({
+      data: {newUser},
+      message: "Colaborador cadastrado com sucesso"
+    })
+  } catch (error) {
+    next(error)
   }
 }

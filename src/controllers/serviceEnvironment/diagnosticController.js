@@ -26,14 +26,14 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const { value, approved, observations } = req.body;
 
     const diagnostic = await Diagnostic.create({
       value,
       approved,
       observations,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -49,7 +49,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_diagnostic } = req.params;
     const {
       value,
@@ -60,7 +60,8 @@ exports.update = async (req, res, next) => {
     const diagnostic = await Diagnostic.update( {
       value,
       approved,
-      observations
+      observations,
+      updated_by: userId
      },
      {
       where: {

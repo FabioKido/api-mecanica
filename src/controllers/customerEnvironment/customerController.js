@@ -27,6 +27,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const {
       name,
       sex,
@@ -69,8 +70,7 @@ exports.store = async (req, res, next) => {
       status,
       inadimplente,
       active: true,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -85,7 +85,7 @@ exports.store = async (req, res, next) => {
 exports.update = async (req, res, next) => {
 
   try {
-
+    const userId = req.user.id;
     const { id_customer } = req.params;
     const {
       name,
@@ -123,7 +123,8 @@ exports.update = async (req, res, next) => {
       observations,
       status,
       inadimplente,
-      active
+      active,
+      updated_by: userId
      },
      {
       where: {

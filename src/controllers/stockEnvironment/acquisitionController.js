@@ -26,6 +26,7 @@ exports.show = async (req, res, next) => {
 // Se o produto ja existir e irmos na página de edição/visualização dele, pode se então, criar uma aquisição nova pra ele.
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const {
       id_provider,
       acquisition,
@@ -48,8 +49,7 @@ exports.store = async (req, res, next) => {
       nef_key,
       nef_number,
       approved,
-      created_by: null,
-      updated_by: null,
+      created_by: userId
     });
 
     const productAcquisition = await ProductAcquisition.create({
@@ -72,7 +72,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_acquisition } = req.params;
     const {
       acquisition,
@@ -89,7 +89,8 @@ exports.update = async (req, res, next) => {
       total_qtd,
       nef_key,
       nef_number,
-      approved
+      approved,
+      updated_by: userId
      },
      {
       where: {

@@ -7,5 +7,6 @@ const sessionController = require('../controllers/userEnvironment/sessionControl
 // User and Controll
 sessionRouter.post('/signup', sessionController.signup);
 sessionRouter.post('/signin', sessionController.signin);
+sessionRouter.post('/create', sessionController.allowIfLoggedin, sessionController.signupWorker);
 
 module.exports = sessionRouter;

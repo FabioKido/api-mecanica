@@ -26,6 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user.id;
     const {
       title,
       type,
@@ -38,8 +39,7 @@ exports.store = async (req, res, next) => {
       type,
       description,
       initial_value,
-      created_by: null,
-      updated_by: null
+      created_by: userId
     });
 
     res.json({
@@ -55,7 +55,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-
+    const userId = req.user.id;
     const { id_account } = req.params;
     const {
       title,
@@ -68,7 +68,8 @@ exports.update = async (req, res, next) => {
       title,
       type,
       description,
-      initial_value
+      initial_value,
+      updated_by: userId
      },
      {
       where: {
