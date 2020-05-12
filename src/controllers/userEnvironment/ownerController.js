@@ -13,7 +13,8 @@ module.exports = {
 
   async store(req, res) {
 
-    const { id_user } = req.params;
+    const id_user = req.user.id;
+
     const { name, sex, cpf, rg, birthday, orgao_expeditor } = req.body;
 
     const user = await User.findByPk(id_user);

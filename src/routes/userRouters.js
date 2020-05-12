@@ -16,13 +16,13 @@ const permissionGroupController = require('../controllers/userEnvironment/permis
 const permissionController = require('../controllers/userEnvironment/permissionController');
 
 // User
-userRouter.get('/info/:userId', sessionController.allowIfLoggedin, userController.show);
+userRouter.get('/info', sessionController.allowIfLoggedin, userController.show);
 userRouter.get('/infos', sessionController.allowIfLoggedin, sessionController.grantAccess('readAny', 'profile'), userController.index);
 userRouter.put('/info/:userId', sessionController.allowIfLoggedin, sessionController.grantAccess('updateAny', 'profile'), userController.update);
 userRouter.delete('/info/:userId', sessionController.allowIfLoggedin, sessionController.grantAccess('deleteAny', 'profile'), userController.destroy);
 
 // User Info
-userRouter.get('/infos/:id_user', sessionController.allowIfLoggedin, userInfoController.show);
+userRouter.get('/inf', sessionController.allowIfLoggedin, userInfoController.show);
 
 // Group
 userRouter.post('/group', sessionController.allowIfLoggedin, sessionController.grantAccess('deleteAny', 'profile'), groupController.store);
@@ -61,16 +61,16 @@ userRouter.get('/permission/group/:id_permission', sessionController.allowIfLogg
 userRouter.delete('/permission/group/:id_permission', sessionController.allowIfLoggedin, permissionGroupController.destroy);
 
 // Type of Users
-userRouter.post('/owner/:id_user', sessionController.allowIfLoggedin, ownerController.store);
+userRouter.post('/owner', sessionController.allowIfLoggedin, ownerController.store);
 userRouter.get('/owner/:id_owner', sessionController.allowIfLoggedin, ownerController.show);
 userRouter.put('/owner/:id_owner', sessionController.allowIfLoggedin, ownerController.update);
 
-userRouter.post('/worker/:id_user', sessionController.allowIfLoggedin, workerController.store);
+userRouter.post('/worker', sessionController.allowIfLoggedin, workerController.store);
 userRouter.get('/worker/:id_worker', sessionController.allowIfLoggedin, workerController.show);
-userRouter.get('/workers/:id_user', sessionController.allowIfLoggedin, workerController.index);
+userRouter.get('/workers', sessionController.allowIfLoggedin, workerController.index);
 userRouter.put('/worker/:id_worker', sessionController.allowIfLoggedin, workerController.update);
 
-userRouter.post('/company/:id_user', sessionController.allowIfLoggedin, companyController.store);
+userRouter.post('/company', sessionController.allowIfLoggedin, companyController.store);
 userRouter.get('/company/:id_company', sessionController.allowIfLoggedin, companyController.show);
 userRouter.put('/company/:id_company', sessionController.allowIfLoggedin, companyController.update);
 

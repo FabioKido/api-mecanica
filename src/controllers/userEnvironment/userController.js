@@ -14,8 +14,9 @@ exports.index = async (req, res, next) => {
 
 exports.show = async (req, res, next) => {
   try {
-    const userId = req.params.userId;
-    const user = await User.findByPk(userId);
+    const { id } = req.user;
+
+    const user = await User.findByPk(id);
     if (!user) return next(new Error('Usuário não existe'));
 
     user.password = "";

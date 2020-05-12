@@ -2,13 +2,14 @@ const User = require('../../models/userEntities/User');
 
 exports.show = async (req, res, next) => {
   try {
-    const { id_user } = req.params;
+    // User recebido pelo Token
+    const user = req.user;
 
-    const { address } = await User.findByPk(id_user, {
+    const { address } = await User.findByPk(user.id, {
       include: { association: 'address' }
     })
 
-    const { contact } = await User.findByPk(id_user, {
+    const { contact } = await User.findByPk(user.id, {
       include: { association: 'contact' }
     })
 
