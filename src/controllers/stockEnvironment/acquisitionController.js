@@ -21,9 +21,6 @@ exports.show = async (req, res, next) => {
   }
 }
 
-// Fazer separados mesmo:
-// Se o produto for novo, salva ele e pode criar uma aquisição(compra) para melhor registrá-lo... ou não!
-// Se o produto ja existir e irmos na página de edição/visualização dele, pode se então, criar uma aquisição nova pra ele.
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user.id;
