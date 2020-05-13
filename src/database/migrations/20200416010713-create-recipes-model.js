@@ -16,6 +16,13 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
+      id_payment: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: { model: 'payments', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      },
       total_value: {
         type: Sequelize.DECIMAL(8, 2),
         allowNull: false,

@@ -29,6 +29,7 @@ exports.store = async (req, res, next) => {
     const userId = req.user.id;
     const {
       id_category,
+      id_payment,
       total_value,
       description,
       parcels,
@@ -40,6 +41,7 @@ exports.store = async (req, res, next) => {
 
     const recipe = await Recipe.create({
       id_category: id_category || null,
+      id_payment: id_payment || null,
       total_value,
       description,
       parcels,

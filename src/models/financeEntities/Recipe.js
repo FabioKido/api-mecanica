@@ -19,6 +19,7 @@ class Recipe extends Model {
 
   static associate(models) {
     this.belongsTo(models.Category, { foreignKey: 'id_category', as: 'category' });
+    this.belongsTo(models.Payment, { foreignKey: 'id_payment', as: 'payment' });
   }
 }
 
