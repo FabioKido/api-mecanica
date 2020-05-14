@@ -26,41 +26,17 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
-    const { title } = req.body;
+    const userId = req.user.id;
+    const { enable } = req.body;
 
     const timeline = await Timeline.create({
-      title
+      enable,
+      created_by: userId
     });
 
     res.json({
       data: timeline,
       message: "Timeline do Serviço cadastrada com sucesso"
-    })
-
-  } catch (error) {
-    next(error)
-  }
-}
-
-
-exports.update = async (req, res, next) => {
-  try {
-
-    const { id_timeline } = req.params;
-    const { title } = req.body;
-
-    const timeline = await Timeline.update( {
-      title
-     },
-     {
-      where: {
-        id: id_timeline
-      }
-    });
-
-    res.json({
-      data: timeline,
-      message: "Timeline do Serviço atualizada com sucesso"
     })
 
   } catch (error) {

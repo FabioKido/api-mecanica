@@ -2,15 +2,22 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('timelines', {
+    return queryInterface.createTable('timeline_details', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      enable: {
-        type: Sequelize.BOOLEAN,
+      id_timeline: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'timelines', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      title: {
+        type: Sequelize.STRING(60),
         allowNull: false,
       },
       created_at: {
@@ -21,18 +28,10 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      created_by: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      updated_by: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('timelines');
+    return queryInterface.dropTable('timeline_details');
   }
 };

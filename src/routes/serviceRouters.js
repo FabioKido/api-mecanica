@@ -8,6 +8,7 @@ const diagnosticController = require('../controllers/serviceEnvironment/diagnost
 const preventiveController = require('../controllers/serviceEnvironment/preventiveController');
 const recordController = require('../controllers/serviceEnvironment/recordController');
 const timelineController = require('../controllers/serviceEnvironment/timelineController');
+const timelineDetailController = require('../controllers/serviceEnvironment/timelineDetailController');
 
 const serviceRouter = Router();
 
@@ -49,7 +50,11 @@ serviceRouter.delete('/record/:id_record', sessionController.allowIfLoggedin, re
 serviceRouter.post('/timeline', sessionController.allowIfLoggedin, timelineController.store);
 serviceRouter.get('/timelines', sessionController.allowIfLoggedin, timelineController.index);
 serviceRouter.get('/timeline/:id_timeline', sessionController.allowIfLoggedin, timelineController.show);
-serviceRouter.put('/timeline/:id_timeline', sessionController.allowIfLoggedin, timelineController.update);
 serviceRouter.delete('/timeline/:id_timeline', sessionController.allowIfLoggedin, timelineController.destroy);
+
+serviceRouter.post('/timeline/detail/:id_timeline', sessionController.allowIfLoggedin, timelineDetailController.store);
+serviceRouter.get('/timeline-details', sessionController.allowIfLoggedin, timelineDetailController.index);
+serviceRouter.put('/timeline/detail/:id_time_detail', sessionController.allowIfLoggedin, timelineDetailController.update);
+serviceRouter.delete('/timeline/detail/:id_time_detail', sessionController.allowIfLoggedin, timelineDetailController.destroy);
 
 module.exports = serviceRouter;
