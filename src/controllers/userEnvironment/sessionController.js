@@ -59,15 +59,7 @@ exports.signup = async (req, res, next) => {
       password,
       enable,
       accept_terms_privacy,
-      id_access_plan,
-      phone,
-      celphone,
-      street,
-      neighborhood,
-      number,
-      city,
-      uf,
-      complement
+      id_access_plan
     } = req.body
 
     const user = await User.findOne({
@@ -84,11 +76,9 @@ exports.signup = async (req, res, next) => {
 
     const hashedPassword = await hashPassword(password);
 
-    if(celphone)
-      contact = await createContact({ phone, celphone, email });
+    contact = await createContact({ celphone: '(00) 90000-0000' });
 
-    if(city || uf)
-      address = await createAddress({ street, neighborhood, number, city, uf, complement });
+    address = await createAddress({ city: 'Cidade', uf: 'UF' });
 
     const newUser = new User({
       username,
@@ -116,7 +106,7 @@ exports.signup = async (req, res, next) => {
     newUser.password = "";
 
     res.json({
-      data: {newUser, contact, address},
+      data: newUser,
       message: "Você foi cadastrado com sucesso"
     })
   } catch (error) {
