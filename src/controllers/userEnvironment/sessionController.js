@@ -139,7 +139,7 @@ exports.signin = async (req, res, next) => {
     await user.update({ access_token, last_login: Date() })
 
     res.status(200).json({
-      data: { email: user.email, role: user.role, id: user.id, last_login: user.last_login },
+      user,
       access_token
     })
 
