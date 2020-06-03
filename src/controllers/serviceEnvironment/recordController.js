@@ -26,7 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { audio } = req.body;
 
     const record = await Record.create({

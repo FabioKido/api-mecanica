@@ -14,7 +14,7 @@ module.exports = {
   },
 
   async store(req, res) {
-    const userId = req.user.id;
+    const userId = req.user;
     const { id_customer } = req.params;
     const {
       fabricator,
@@ -66,7 +66,7 @@ module.exports = {
   },
 
   async update(req, res) {
-    const userId = req.user.id;
+    const userId = req.user;
     const { id_vehicle } = req.params;
     const {
       fabricator,

@@ -26,7 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { enable } = req.body;
 
     const timeline = await Timeline.create({

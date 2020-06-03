@@ -23,7 +23,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const {
       id_provider,
       acquisition,
@@ -69,7 +69,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { id_acquisition } = req.params;
     const {
       acquisition,

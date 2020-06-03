@@ -13,7 +13,7 @@ module.exports = {
 
   async store(req, res) {
 
-    const id_user = req.user.id;
+    const id_user = req.user;
 
     const { name, sex, cpf, rg, birthday, orgao_expeditor } = req.body;
 

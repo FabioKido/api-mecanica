@@ -26,7 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { value, approved, observations } = req.body;
 
     const diagnostic = await Diagnostic.create({
@@ -49,7 +49,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { id_diagnostic } = req.params;
     const {
       value,

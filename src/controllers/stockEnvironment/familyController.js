@@ -22,7 +22,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { name, description } = req.body;
 
     const family = await Family.create({
@@ -43,7 +43,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { id_family } = req.params;
     const {
       name,

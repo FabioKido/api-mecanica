@@ -2,7 +2,8 @@ const { Router } = require('express');
 
 const userRouter = Router();
 
-const sessionController = require('../controllers/userEnvironment/sessionController');
+const authMiddleware = require('../middlewares/auth');
+
 const userController = require('../controllers/userEnvironment/userController');
 const userInfoController = require('../controllers/userEnvironment/userInfoController');
 const ownerController = require('../controllers/userEnvironment/ownerController');
@@ -16,62 +17,62 @@ const permissionGroupController = require('../controllers/userEnvironment/permis
 const permissionController = require('../controllers/userEnvironment/permissionController');
 
 // User
-userRouter.get('/info', sessionController.allowIfLoggedin, userController.show);
-userRouter.get('/infos', sessionController.allowIfLoggedin, sessionController.grantAccess('readAny', 'profile'), userController.index);
-userRouter.put('/info/:userId', sessionController.allowIfLoggedin, sessionController.grantAccess('updateAny', 'profile'), userController.update);
-userRouter.delete('/info/:userId', sessionController.allowIfLoggedin, sessionController.grantAccess('deleteAny', 'profile'), userController.destroy);
+userRouter.get('/info', authMiddleware, userController.show);
+userRouter.get('/infos', authMiddleware, userController.index);
+userRouter.put('/info/:userId', authMiddleware, userController.update);
+userRouter.delete('/info/:userId', authMiddleware, userController.destroy);
 
 // User Info
-userRouter.get('/inf', sessionController.allowIfLoggedin, userInfoController.show);
+userRouter.get('/inf', authMiddleware, userInfoController.show);
 
 // Group
-userRouter.post('/group', sessionController.allowIfLoggedin, sessionController.grantAccess('deleteAny', 'profile'), groupController.store);
-userRouter.get('/group/:groupId', sessionController.allowIfLoggedin, groupController.show);
-userRouter.get('/groups', sessionController.allowIfLoggedin, sessionController.grantAccess('readAny', 'profile'), groupController.index);
-userRouter.delete('/group/:groupId', sessionController.allowIfLoggedin, groupController.destroy);
+userRouter.post('/group', authMiddleware, groupController.store);
+userRouter.get('/group/:groupId', authMiddleware, groupController.show);
+userRouter.get('/groups', authMiddleware, groupController.index);
+userRouter.delete('/group/:groupId', authMiddleware, groupController.destroy);
 
 // Permission
-userRouter.post('/permission', sessionController.allowIfLoggedin, permissionController.store);
-userRouter.get('/permission/:permissionId', sessionController.allowIfLoggedin, permissionController.show);
-userRouter.get('/permissions', sessionController.allowIfLoggedin, permissionController.index);
-userRouter.delete('/permission/:permissionId', sessionController.allowIfLoggedin, permissionController.destroy);
+userRouter.post('/permission', authMiddleware, permissionController.store);
+userRouter.get('/permission/:permissionId', authMiddleware, permissionController.show);
+userRouter.get('/permissions', authMiddleware, permissionController.index);
+userRouter.delete('/permission/:permissionId', authMiddleware, permissionController.destroy);
 
 // Access Plan
-userRouter.post('/plan', sessionController.allowIfLoggedin, accessPlanController.store);
-userRouter.get('/plan/:planId', sessionController.allowIfLoggedin, accessPlanController.show);
-userRouter.get('/plans', sessionController.allowIfLoggedin, accessPlanController.index);
-userRouter.put('/plan/:planId', sessionController.allowIfLoggedin, accessPlanController.update);
-userRouter.delete('/plan/:planId', sessionController.allowIfLoggedin, accessPlanController.destroy);
+userRouter.post('/plan', authMiddleware, accessPlanController.store);
+userRouter.get('/plan/:planId', authMiddleware, accessPlanController.show);
+userRouter.get('/plans', authMiddleware, accessPlanController.index);
+userRouter.put('/plan/:planId', authMiddleware, accessPlanController.update);
+userRouter.delete('/plan/:planId', authMiddleware, accessPlanController.destroy);
 
 // Resources
-userRouter.post('/resource/:id_access_plan', sessionController.allowIfLoggedin, resourceController.store);
-userRouter.get('/resource/:resourceId', sessionController.allowIfLoggedin, resourceController.show);
-userRouter.get('/resources', sessionController.allowIfLoggedin, resourceController.index);
-userRouter.put('/resource/:resourceId', sessionController.allowIfLoggedin, resourceController.update);
-userRouter.delete('/resource/:resourceId', sessionController.allowIfLoggedin, resourceController.destroy);
+userRouter.post('/resource/:id_access_plan', authMiddleware, resourceController.store);
+userRouter.get('/resource/:resourceId', authMiddleware, resourceController.show);
+userRouter.get('/resources', authMiddleware, resourceController.index);
+userRouter.put('/resource/:resourceId', authMiddleware, resourceController.update);
+userRouter.delete('/resource/:resourceId', authMiddleware, resourceController.destroy);
 
 // User and Group
-userRouter.post('/in/group/:id_user', sessionController.allowIfLoggedin, userGroupController.store);
-userRouter.get('/in/group/:id_user', sessionController.allowIfLoggedin, userGroupController.show);
-userRouter.delete('/in/group/:id_user', sessionController.allowIfLoggedin, userGroupController.destroy);
+userRouter.post('/in/group/:id_user', authMiddleware, userGroupController.store);
+userRouter.get('/in/group/:id_user', authMiddleware, userGroupController.show);
+userRouter.delete('/in/group/:id_user', authMiddleware, userGroupController.destroy);
 
 // Group and Permission
-userRouter.post('/permission/group/:id_permission', sessionController.allowIfLoggedin, permissionGroupController.store);
-userRouter.get('/permission/group/:id_permission', sessionController.allowIfLoggedin, permissionGroupController.show);
-userRouter.delete('/permission/group/:id_permission', sessionController.allowIfLoggedin, permissionGroupController.destroy);
+userRouter.post('/permission/group/:id_permission', authMiddleware, permissionGroupController.store);
+userRouter.get('/permission/group/:id_permission', authMiddleware, permissionGroupController.show);
+userRouter.delete('/permission/group/:id_permission', authMiddleware, permissionGroupController.destroy);
 
 // Type of Users
-userRouter.post('/owner', sessionController.allowIfLoggedin, ownerController.store);
-userRouter.get('/owner/:id_owner', sessionController.allowIfLoggedin, ownerController.show);
-userRouter.put('/owner/:id_owner', sessionController.allowIfLoggedin, ownerController.update);
+userRouter.post('/owner', authMiddleware, ownerController.store);
+userRouter.get('/owner/:id_owner', authMiddleware, ownerController.show);
+userRouter.put('/owner/:id_owner', authMiddleware, ownerController.update);
 
-userRouter.post('/worker', sessionController.allowIfLoggedin, workerController.store);
-userRouter.get('/worker/:id_worker', sessionController.allowIfLoggedin, workerController.show);
-userRouter.get('/workers', sessionController.allowIfLoggedin, workerController.index);
-userRouter.put('/worker/:id_worker', sessionController.allowIfLoggedin, workerController.update);
+userRouter.post('/worker', authMiddleware, workerController.store);
+userRouter.get('/worker/:id_worker', authMiddleware, workerController.show);
+userRouter.get('/workers', authMiddleware, workerController.index);
+userRouter.put('/worker/:id_worker', authMiddleware, workerController.update);
 
-userRouter.post('/company', sessionController.allowIfLoggedin, companyController.store);
-userRouter.get('/company/:id_company', sessionController.allowIfLoggedin, companyController.show);
-userRouter.put('/company/:id_company', sessionController.allowIfLoggedin, companyController.update);
+userRouter.post('/company', authMiddleware, companyController.store);
+userRouter.get('/company/:id_company', authMiddleware, companyController.show);
+userRouter.put('/company/:id_company', authMiddleware, companyController.update);
 
 module.exports = userRouter;

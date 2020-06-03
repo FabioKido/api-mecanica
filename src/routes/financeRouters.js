@@ -1,6 +1,7 @@
 const { Router } = require('express');
 
-const sessionController = require('../controllers/userEnvironment/sessionController');
+const authMiddleware = require('../middlewares/auth');
+
 const categoryController = require('../controllers/financeEnvironment/categoryController');
 const accountController = require('../controllers/financeEnvironment/accountController');
 const paymentMethodController = require('../controllers/financeEnvironment/paymentMethodController');
@@ -12,50 +13,50 @@ const expenseDetailController = require('../controllers/financeEnvironment/expen
 
 const financeRouter = Router();
 
-financeRouter.post('/category', sessionController.allowIfLoggedin, categoryController.store);
-financeRouter.get('/categories', sessionController.allowIfLoggedin, categoryController.index);
-financeRouter.get('/category/:id_category', sessionController.allowIfLoggedin, categoryController.show);
-financeRouter.put('/category/:id_category', sessionController.allowIfLoggedin, categoryController.update);
-financeRouter.delete('/category/:id_category', sessionController.allowIfLoggedin, categoryController.destroy);
+financeRouter.post('/category', authMiddleware, categoryController.store);
+financeRouter.get('/categories', authMiddleware, categoryController.index);
+financeRouter.get('/category/:id_category', authMiddleware, categoryController.show);
+financeRouter.put('/category/:id_category', authMiddleware, categoryController.update);
+financeRouter.delete('/category/:id_category', authMiddleware, categoryController.destroy);
 
-financeRouter.post('/account', sessionController.allowIfLoggedin, accountController.store);
-financeRouter.get('/accounts', sessionController.allowIfLoggedin, accountController.index);
-financeRouter.get('/account/:id_account', sessionController.allowIfLoggedin, accountController.show);
-financeRouter.put('/account/:id_account', sessionController.allowIfLoggedin, accountController.update);
-financeRouter.delete('/account/:id_account', sessionController.allowIfLoggedin, accountController.destroy);
+financeRouter.post('/account', authMiddleware, accountController.store);
+financeRouter.get('/accounts', authMiddleware, accountController.index);
+financeRouter.get('/account/:id_account', authMiddleware, accountController.show);
+financeRouter.put('/account/:id_account', authMiddleware, accountController.update);
+financeRouter.delete('/account/:id_account', authMiddleware, accountController.destroy);
 
-financeRouter.post('/method', sessionController.allowIfLoggedin, paymentMethodController.store);
-financeRouter.get('/methods', sessionController.allowIfLoggedin, paymentMethodController.index);
-financeRouter.get('/method/:id_payment_method', sessionController.allowIfLoggedin, paymentMethodController.show);
-financeRouter.put('/method/:id_payment_method', sessionController.allowIfLoggedin, paymentMethodController.update);
-financeRouter.delete('/method/:id_payment_method', sessionController.allowIfLoggedin, paymentMethodController.destroy);
+financeRouter.post('/method', authMiddleware, paymentMethodController.store);
+financeRouter.get('/methods', authMiddleware, paymentMethodController.index);
+financeRouter.get('/method/:id_payment_method', authMiddleware, paymentMethodController.show);
+financeRouter.put('/method/:id_payment_method', authMiddleware, paymentMethodController.update);
+financeRouter.delete('/method/:id_payment_method', authMiddleware, paymentMethodController.destroy);
 
-financeRouter.post('/transfer', sessionController.allowIfLoggedin, transferController.store);
-financeRouter.get('/transfers', sessionController.allowIfLoggedin, transferController.index);
-financeRouter.get('/transfer/:id_transfer', sessionController.allowIfLoggedin, transferController.show);
-financeRouter.put('/transfer/:id_transfer', sessionController.allowIfLoggedin, transferController.update);
-financeRouter.delete('/transfer/:id_transfer', sessionController.allowIfLoggedin, transferController.destroy);
+financeRouter.post('/transfer', authMiddleware, transferController.store);
+financeRouter.get('/transfers', authMiddleware, transferController.index);
+financeRouter.get('/transfer/:id_transfer', authMiddleware, transferController.show);
+financeRouter.put('/transfer/:id_transfer', authMiddleware, transferController.update);
+financeRouter.delete('/transfer/:id_transfer', authMiddleware, transferController.destroy);
 
-financeRouter.post('/recipe', sessionController.allowIfLoggedin, recipeController.store);
-financeRouter.get('/recipes', sessionController.allowIfLoggedin, recipeController.index);
-financeRouter.get('/recipe/:id_recipe', sessionController.allowIfLoggedin, recipeController.show);
-financeRouter.put('/recipe/:id_recipe', sessionController.allowIfLoggedin, recipeController.update);
-financeRouter.delete('/recipe/:id_recipe', sessionController.allowIfLoggedin, recipeController.destroy);
+financeRouter.post('/recipe', authMiddleware, recipeController.store);
+financeRouter.get('/recipes', authMiddleware, recipeController.index);
+financeRouter.get('/recipe/:id_recipe', authMiddleware, recipeController.show);
+financeRouter.put('/recipe/:id_recipe', authMiddleware, recipeController.update);
+financeRouter.delete('/recipe/:id_recipe', authMiddleware, recipeController.destroy);
 
-financeRouter.post('/expense', sessionController.allowIfLoggedin, expenseController.store);
-financeRouter.get('/expenses', sessionController.allowIfLoggedin, expenseController.index);
-financeRouter.get('/expense/:id_expense', sessionController.allowIfLoggedin, expenseController.show);
-financeRouter.put('/expense/:id_expense', sessionController.allowIfLoggedin, expenseController.update);
-financeRouter.delete('/expense/:id_expense', sessionController.allowIfLoggedin, expenseController.destroy);
+financeRouter.post('/expense', authMiddleware, expenseController.store);
+financeRouter.get('/expenses', authMiddleware, expenseController.index);
+financeRouter.get('/expense/:id_expense', authMiddleware, expenseController.show);
+financeRouter.put('/expense/:id_expense', authMiddleware, expenseController.update);
+financeRouter.delete('/expense/:id_expense', authMiddleware, expenseController.destroy);
 
-financeRouter.post('/recipe-detail/:id_recipe', sessionController.allowIfLoggedin, recipeDetailController.store);
-financeRouter.get('/recipe-details', sessionController.allowIfLoggedin, recipeDetailController.index);
-financeRouter.put('/recipe-detail/:id_recipe_detail', sessionController.allowIfLoggedin, recipeDetailController.update);
-financeRouter.delete('/recipe-detail/:id_recipe_detail', sessionController.allowIfLoggedin, recipeDetailController.destroy);
+financeRouter.post('/recipe-detail/:id_recipe', authMiddleware, recipeDetailController.store);
+financeRouter.get('/recipe-details', authMiddleware, recipeDetailController.index);
+financeRouter.put('/recipe-detail/:id_recipe_detail', authMiddleware, recipeDetailController.update);
+financeRouter.delete('/recipe-detail/:id_recipe_detail', authMiddleware, recipeDetailController.destroy);
 
-financeRouter.post('/expense-detail/:id_expense', sessionController.allowIfLoggedin, expenseDetailController.store);
-financeRouter.get('/expense-details', sessionController.allowIfLoggedin, expenseDetailController.index);
-financeRouter.put('/expense-detail/:id_expense_detail', sessionController.allowIfLoggedin, expenseDetailController.update);
-financeRouter.delete('/expense-detail/:id_expense_detail', sessionController.allowIfLoggedin, expenseDetailController.destroy);
+financeRouter.post('/expense-detail/:id_expense', authMiddleware, expenseDetailController.store);
+financeRouter.get('/expense-details', authMiddleware, expenseDetailController.index);
+financeRouter.put('/expense-detail/:id_expense_detail', authMiddleware, expenseDetailController.update);
+financeRouter.delete('/expense-detail/:id_expense_detail', authMiddleware, expenseDetailController.destroy);
 
 module.exports = financeRouter;

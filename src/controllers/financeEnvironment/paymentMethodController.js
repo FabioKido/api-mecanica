@@ -26,7 +26,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const {
       method,
       operator,
@@ -53,7 +53,7 @@ exports.store = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { id_payment_method } = req.params;
     const {
       method,

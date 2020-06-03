@@ -4,7 +4,7 @@ const Worker = require('../../models/userEntities/Worker');
 module.exports = {
 
   async index(req, res) {
-    const id_user = req.user.id;
+    const id_user = req.user;
 
     const user = await User.findByPk(id_user, {
       include: { association: 'workers' }
@@ -23,7 +23,7 @@ module.exports = {
 
   async store(req, res) {
 
-    const id_user = req.user.id;
+    const id_user = req.user;
     const {
       name,
       sex,

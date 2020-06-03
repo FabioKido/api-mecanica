@@ -1,6 +1,7 @@
 const { Router } = require('express');
 
-const sessionController = require('../controllers/userEnvironment/sessionController');
+const authMiddleware = require('../middlewares/auth');
+
 const providerController = require('../controllers/stockEnvironment/providerController');
 const familyController = require('../controllers/stockEnvironment/familyController');
 const productController = require('../controllers/stockEnvironment/productController');
@@ -9,30 +10,30 @@ const productAcquisitionController = require('../controllers/stockEnvironment/pr
 
 const stockRouter = Router();
 
-stockRouter.post('/provider', sessionController.allowIfLoggedin, providerController.store);
-stockRouter.get('/providers', sessionController.allowIfLoggedin, providerController.index);
-stockRouter.get('/provider/:id_provider', sessionController.allowIfLoggedin, providerController.show);
-stockRouter.put('/provider/:id_provider', sessionController.allowIfLoggedin, providerController.update);
-stockRouter.delete('/provider/:id_provider', sessionController.allowIfLoggedin, providerController.destroy);
+stockRouter.post('/provider', authMiddleware, providerController.store);
+stockRouter.get('/providers', authMiddleware, providerController.index);
+stockRouter.get('/provider/:id_provider', authMiddleware, providerController.show);
+stockRouter.put('/provider/:id_provider', authMiddleware, providerController.update);
+stockRouter.delete('/provider/:id_provider', authMiddleware, providerController.destroy);
 
-stockRouter.post('/family', sessionController.allowIfLoggedin, familyController.store);
-stockRouter.get('/families', sessionController.allowIfLoggedin, familyController.index);
-stockRouter.get('/family/:id_family', sessionController.allowIfLoggedin, familyController.show);
-stockRouter.put('/family/:id_family', sessionController.allowIfLoggedin, familyController.update);
-stockRouter.delete('/family/:id_family', sessionController.allowIfLoggedin, familyController.destroy);
+stockRouter.post('/family', authMiddleware, familyController.store);
+stockRouter.get('/families', authMiddleware, familyController.index);
+stockRouter.get('/family/:id_family', authMiddleware, familyController.show);
+stockRouter.put('/family/:id_family', authMiddleware, familyController.update);
+stockRouter.delete('/family/:id_family', authMiddleware, familyController.destroy);
 
-stockRouter.post('/product', sessionController.allowIfLoggedin, productController.store);
-stockRouter.get('/products', sessionController.allowIfLoggedin, productController.index);
-stockRouter.get('/product/:id_product', sessionController.allowIfLoggedin, productController.show);
-stockRouter.put('/product/:id_product', sessionController.allowIfLoggedin, productController.update);
-stockRouter.delete('/product/:id_product', sessionController.allowIfLoggedin, productController.destroy);
+stockRouter.post('/product', authMiddleware, productController.store);
+stockRouter.get('/products', authMiddleware, productController.index);
+stockRouter.get('/product/:id_product', authMiddleware, productController.show);
+stockRouter.put('/product/:id_product', authMiddleware, productController.update);
+stockRouter.delete('/product/:id_product', authMiddleware, productController.destroy);
 
-stockRouter.post('/acquisition', sessionController.allowIfLoggedin, acquisitionController.store);
-stockRouter.get('/acquisitions', sessionController.allowIfLoggedin, acquisitionController.index);
-stockRouter.get('/acquisition/:id_acquisition', sessionController.allowIfLoggedin, acquisitionController.show);
-stockRouter.put('/acquisition/:id_acquisition', sessionController.allowIfLoggedin, acquisitionController.update);
-stockRouter.delete('/acquisition/:id_acquisition', sessionController.allowIfLoggedin, acquisitionController.destroy);
+stockRouter.post('/acquisition', authMiddleware, acquisitionController.store);
+stockRouter.get('/acquisitions', authMiddleware, acquisitionController.index);
+stockRouter.get('/acquisition/:id_acquisition', authMiddleware, acquisitionController.show);
+stockRouter.put('/acquisition/:id_acquisition', authMiddleware, acquisitionController.update);
+stockRouter.delete('/acquisition/:id_acquisition', authMiddleware, acquisitionController.destroy);
 
-stockRouter.get('/product/acquisition/:id_prod_acq', sessionController.allowIfLoggedin, productAcquisitionController.show);
+stockRouter.get('/product/acquisition/:id_prod_acq', authMiddleware, productAcquisitionController.show);
 
 module.exports = stockRouter;

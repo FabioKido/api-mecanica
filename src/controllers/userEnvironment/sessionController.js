@@ -3,8 +3,6 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 
 const User = require('../../models/userEntities/User');
-const Contact = require('../../models/userEntities/Contact');
-const Address = require('../../models/userEntities/Address');
 
 const { createContact } = require('../../services/contactService');
 const { createAddress } = require('../../services/addressService');
@@ -19,35 +17,21 @@ async function validatePassword(plainPassword, hashedPassword) {
   return await bcrypt.compare(plainPassword, hashedPassword);
 }
 
-exports.grantAccess = function(action, resource) {
-  return async (req, res, next) => {
-    try {
-      const permission = roles.can(req.user.role)[action](resource);
-      if (!permission.granted) {
-        return res.status(401).json({
-          error: "Vocẽ não tem permissão para acessar"
-        });
-      }
-      next()
-    } catch (error) {
-      next(error)
-    }
-  }
-}
-
-exports.allowIfLoggedin = async (req, res, next) => {
-  try {
-    const user = res.locals.loggedInUser;
-    if (!user)
-      return res.status(401).json({
-        error: "Você precisa estar logado para acessar essa página"
-      });
-    req.user = user;
-    next();
-  } catch (error) {
-    next(error);
-  }
-}
+// exports.grantAccess = function(action, resource) {
+//   return async (req, res, next) => {
+//     try {
+//       const permission = roles.can(req.user.role)[action](resource);
+//       if (!permission.granted) {
+//         return res.status(401).json({
+//           error: "Vocẽ não tem permissão para acessar"
+//         });
+//       }
+//       next()
+//     } catch (error) {
+//       next(error)
+//     }
+//   }
+// }
 
 exports.signup = async (req, res, next) => {
   try {
@@ -126,26 +110,29 @@ exports.signin = async (req, res, next) => {
       }
     });
 
-    if (!user) return next(new Error('Email não existe'));
+    if (!user) return next(new Error('Usuário não existe'));
 
-    const validPassword = await validatePassword(password, user.password);
+	    const validPassword = await validatePassword(password, user.password);
 
-    if (!validPassword) return next(new Error('Senha incorreta'));
+	    if (!validPassword) return next(new Error('Senha incorreta'));
 
-    const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-      expiresIn: "1d"
-    });
+	    const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+	      expiresIn: 86400,
+	    });
+      
+      await user.update({ access_token, last_login: Date() })
 
-    await user.update({ access_token, last_login: Date() })
+	  	user.password = undefined;
 
-    res.status(200).json({
-      user,
-      access_token
-    })
+	    res.status(200).json({
+	      user,
+	      access_token
+	    })
 
   } catch (error) {
-    next(error);
+      next(error);
   }
+    
 }
 
 exports.signupWorker = async (req, res, next) => {
@@ -168,7 +155,7 @@ exports.signupWorker = async (req, res, next) => {
       })
     }
 
-    const id_user = req.user.id;
+    const id_user = req.user;
 
     const hashedPassword = await hashPassword(password);
 

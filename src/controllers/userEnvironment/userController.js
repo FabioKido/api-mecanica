@@ -14,9 +14,10 @@ exports.index = async (req, res, next) => {
 
 exports.show = async (req, res, next) => {
   try {
-    const { id } = req.user;
-
+    const id = req.user;
+    
     const user = await User.findByPk(id);
+    
     if (!user) return next(new Error('Usuário não existe'));
 
     user.password = "";

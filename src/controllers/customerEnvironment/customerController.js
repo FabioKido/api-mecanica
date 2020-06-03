@@ -27,7 +27,7 @@ exports.show = async (req, res, next) => {
 
 exports.store = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const {
       name,
       sex,
@@ -85,7 +85,7 @@ exports.store = async (req, res, next) => {
 exports.update = async (req, res, next) => {
 
   try {
-    const userId = req.user.id;
+    const userId = req.user;
     const { id_customer } = req.params;
     const {
       name,
