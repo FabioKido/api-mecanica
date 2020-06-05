@@ -1,6 +1,12 @@
+const bcrypt = require('bcrypt');
+
 const User = require('../../models/userEntities/User');
 const Contact = require('../../models/userEntities/Contact');
 const Address = require('../../models/userEntities/Address');
+
+async function hashPassword(password) {
+  return await bcrypt.hash(password, 10);
+}
 
 exports.index = async (req, res, next) => {
 
@@ -54,12 +60,14 @@ exports.update = async (req, res, next) => {
       complement
     } = req.body
 
+    const hashedPassword = await hashPassword(password);
+
     const user = await User.update( {
       username,
       type,
       role,
       email,
-      password,
+      password: hashedPassword,
       enable,
       updated_by: userId,
       accept_terms_privacy,

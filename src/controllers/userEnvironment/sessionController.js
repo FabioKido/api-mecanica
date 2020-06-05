@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const path = require('path');
+// const path = require('path');
+const nodemailer = require("nodemailer");
 
 const User = require('../../models/userEntities/User');
 
 const { createContact } = require('../../services/contactService');
 const { createAddress } = require('../../services/addressService');
 
-const { roles } = require('../../roles');
+// const { roles } = require('../../roles');
 
 async function hashPassword(password) {
   return await bcrypt.hash(password, 10);
@@ -15,6 +16,10 @@ async function hashPassword(password) {
 
 async function validatePassword(plainPassword, hashedPassword) {
   return await bcrypt.compare(plainPassword, hashedPassword);
+}
+
+function getRandomNumber(min, max) {
+  return Math.random() * (max - min) + min;
 }
 
 // exports.grantAccess = function(action, resource) {
@@ -112,22 +117,22 @@ exports.signin = async (req, res, next) => {
 
     if (!user) return next(new Error('Usuário não existe'));
 
-	    const validPassword = await validatePassword(password, user.password);
+    const validPassword = await validatePassword(password, user.password);
 
-	    if (!validPassword) return next(new Error('Senha incorreta'));
+    if (!validPassword) return next(new Error('Senha incorreta'));
 
-	    const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-	      expiresIn: 86400,
-	    });
-      
-      await user.update({ access_token, last_login: Date() })
+    const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: 86400,
+    });
+    
+    await user.update({ access_token, last_login: Date() })
 
-	  	user.password = undefined;
+    user.password = undefined;
 
-	    res.status(200).json({
-	      user,
-	      access_token
-	    })
+    res.status(200).json({
+      user,
+      access_token
+    })
 
   } catch (error) {
       next(error);
@@ -185,6 +190,78 @@ exports.signupWorker = async (req, res, next) => {
       message: "Colaborador cadastrado com sucesso"
     })
   } catch (error) {
+    next(error)
+  }
+}
+
+exports.forgot = async (req, res, next) => {
+
+  try{
+    const { email } = req.body
+
+    const user = await User.findOne({
+      where: {
+        email
+      }
+    });
+
+    if(!user) return next(new Error('Usuário não existe'));
+
+    const password = 'T3MP'+getRandomNumber(0, 100)+'RAR1O';
+    const hashedPassword = await hashPassword(password);
+
+    await user.update({ password: hashedPassword });
+
+    user.password = undefined;
+    
+    let transporter = nodemailer.createTransport({
+      service:'gmail',
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS
+      }
+    });
+
+    transporter.verify(function(error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Server is ready to take our messages");
+      }
+    });
+
+    const subject = 'Recuperação de Senha - e-mecânica';
+    const email_message = `
+      Recuperação de Senha de cliente - e-mecânica
+
+      Essa é sua senha de recuperação TEMPORÁRIA: ${password}
+
+      Depois de entrar no App - e-mecânica - Crie uma nova senha e atualise suas informações!
+
+      Att, e-mecânica.
+    `;
+  
+    transporter.sendMail({
+      from: "Fábio Kido <fabiohenryquemesquita@gmail.com>",
+      to: email,
+      subject: subject,
+      text: email_message
+    }).then(message => {
+      console.log(message);
+    }).catch(err => {
+      console.log(err);
+    });
+
+    res.status(200).json({
+      message: 'Email enviado com sucesso'
+    });
+
+    next()
+  }catch (error) {
     next(error)
   }
 }
