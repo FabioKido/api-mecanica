@@ -41,14 +41,9 @@ function getRandomNumber(min, max) {
 exports.signup = async (req, res, next) => {
   try {
     const {
-      username,
-      type,
-      role,
+      username,    
       email,
-      password,
-      enable,
-      accept_terms_privacy,
-      id_access_plan
+      password
     } = req.body
 
     const user = await User.findOne({
@@ -70,14 +65,14 @@ exports.signup = async (req, res, next) => {
     address = await createAddress({ city: 'Cidade', uf: 'UF' });
 
     const newUser = new User({
-      username,
+      username: username || email,
       email,
       password: hashedPassword,
-      type,
-      role: role || "user_admin",
-      enable: enable || false,
-      accept_terms_privacy,
-      id_access_plan: id_access_plan || null,
+      type: 'user_admin',
+      role: "user_admin",
+      enable:  true,
+      accept_terms_privacy: true,
+      id_access_plan: null,
       id_contact: contact.id || null,
       id_address: address.id || null,
       created_by: null,
