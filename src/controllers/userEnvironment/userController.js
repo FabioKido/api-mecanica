@@ -43,13 +43,9 @@ exports.update = async (req, res, next) => {
     const userId = req.params.userId;
     const {
       username,
-      type,
-      role,
       email,
       password,
-      enable,
-      accept_terms_privacy,
-      id_access_plan,
+      password_confirmation,
       phone,
       celphone,
       street,
@@ -60,27 +56,36 @@ exports.update = async (req, res, next) => {
       complement
     } = req.body
 
-    const hashedPassword = await hashPassword(password);
-
-    const user = await User.update( {
-      username,
-      type,
-      role,
-      email,
-      password: hashedPassword,
-      enable,
-      updated_by: userId,
-      accept_terms_privacy,
-      id_access_plan
-     },
-     {
-      where: {
-        id: userId
-      }
-    });
-
+    let user;
     const { id_contact, id_address } = await User.findByPk(userId);
 
+    if(password){
+      const hashedPassword = await hashPassword(password);
+
+      user = await User.update( {
+        username,
+        email,
+        password: hashedPassword,
+        updated_by: userId,
+       },
+       {
+        where: {
+          id: userId
+        }
+      });
+    }else {
+      user = await User.update( {
+        username,
+        email,
+        updated_by: userId,
+       },
+       {
+        where: {
+          id: userId
+        }
+      });
+    }
+    
     await Contact.update( {
       phone,
       celphone,

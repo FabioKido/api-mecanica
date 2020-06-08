@@ -18,6 +18,7 @@ async function validatePassword(plainPassword, hashedPassword) {
   return await bcrypt.compare(plainPassword, hashedPassword);
 }
 
+// Usar lib Crypto para gerar hash seguro
 function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
