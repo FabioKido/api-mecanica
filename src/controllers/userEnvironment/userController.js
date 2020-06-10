@@ -45,7 +45,6 @@ exports.update = async (req, res, next) => {
       username,
       email,
       password,
-      password_confirmation,
       phone,
       celphone,
       street,
