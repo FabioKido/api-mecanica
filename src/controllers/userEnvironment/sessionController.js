@@ -61,7 +61,7 @@ exports.signup = async (req, res, next) => {
 
     const hashedPassword = await hashPassword(password);
 
-    contact = await createContact({ celphone: '(00) 90000-0000' });
+    contact = await createContact({ celphone: '(00) 90000-0000', email });
 
     address = await createAddress({ city: 'Cidade', uf: 'UF' });
 

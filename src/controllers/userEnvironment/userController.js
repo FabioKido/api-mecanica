@@ -99,7 +99,7 @@ exports.update = async (req, res, next) => {
     await Address.update( {
       street,
       neighborhood,
-      number,
+      number: number || null,
       city,
       uf,
       complement
