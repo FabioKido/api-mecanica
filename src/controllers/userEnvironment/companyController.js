@@ -4,13 +4,18 @@ const Company = require('../../models/userEntities/Company');
 module.exports = {
 
   async show(req, res) {
-    const { id_company } = req.params;
+    const { id_user } = req.params;
 
-    const company = await Company.findByPk(id_company);
+    const company = await Company.findOne({
+      where: {
+        id_user
+      }
+    });
 
     return res.json(company);
   },
 
+  // Não utilizando
   async store(req, res) {
 
     const id_user = req.user;

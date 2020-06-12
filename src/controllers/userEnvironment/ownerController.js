@@ -4,13 +4,18 @@ const Owner = require('../../models/userEntities/Owner');
 module.exports = {
 
   async show(req, res) {
-    const { id_owner } = req.params;
+    const { id_user } = req.params;
 
-    const owner = await Owner.findByPk(id_owner);
+    const owner = await Owner.findOne({
+      where: {
+        id_user
+      }
+    });
 
     return res.json(owner);
   },
 
+  // Não utilizando
   async store(req, res) {
 
     const id_user = req.user;

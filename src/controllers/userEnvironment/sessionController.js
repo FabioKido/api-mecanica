@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
 
 const User = require('../../models/userEntities/User');
+const Owner = require('../../models/userEntities/Owner');
+const Company = require('../../models/userEntities/Company');
 
 const { createContact } = require('../../services/contactService');
 const { createAddress } = require('../../services/addressService');
@@ -44,8 +46,11 @@ exports.signup = async (req, res, next) => {
     const {
       username,    
       email,
-      password
+      password,
+      company
     } = req.body
+
+    let pj, pf;
 
     const user = await User.findOne({
       where: {
@@ -69,7 +74,7 @@ exports.signup = async (req, res, next) => {
       username: username || email,
       email,
       password: hashedPassword,
-      type: 'user_admin',
+      type: company ? 'PJ' : 'PF',
       role: "user_admin",
       enable:  true,
       accept_terms_privacy: true,
@@ -87,6 +92,12 @@ exports.signup = async (req, res, next) => {
     newUser.access_token = access_token;
 
     await newUser.save();
+
+    if(company){
+      await Company.create({ name: newUser.username, type: 'MPE', id_user: newUser.id });
+    }else {
+      await Owner.create({ name: newUser.username, id_user: newUser.id });
+    }
 
     newUser.password = "";
 
