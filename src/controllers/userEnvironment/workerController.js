@@ -21,6 +21,7 @@ module.exports = {
     return res.json(worker);
   },
 
+  // Não utilizado!
   async store(req, res) {
 
     const id_user = req.user;

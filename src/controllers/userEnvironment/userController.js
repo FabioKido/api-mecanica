@@ -120,6 +120,7 @@ exports.update = async (req, res, next) => {
   }
 }
 
+// Deletar os tipos também.
 exports.destroy = async (req, res, next) => {
 
   try {

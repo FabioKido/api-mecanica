@@ -17,8 +17,11 @@ module.exports = {
         onDelete: 'SET NULL',
       },
       acquisition: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
+        get: function() {
+          return moment.utc(this.getDataValue('acquisition')).format('YYYY-MM-DD');
+        }
       },
       total_sale: {
         type: Sequelize.DECIMAL(8, 2),

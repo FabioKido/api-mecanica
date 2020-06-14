@@ -17,8 +17,11 @@ module.exports = {
         onDelete: 'SET NULL',
       },
       date: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
+        get: function() {
+          return moment.utc(this.getDataValue('date')).format('YYYY-MM-DD');
+        }
       },
       parcels: {
         type: Sequelize.INTEGER,

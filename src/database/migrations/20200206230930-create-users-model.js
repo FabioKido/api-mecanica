@@ -24,6 +24,7 @@ module.exports = {
       role: {
         type: Sequelize.STRING,
         allowNull: false,
+        defaultValue: 'user_admin'
       },
       type: {
         type: Sequelize.STRING,
@@ -32,6 +33,7 @@ module.exports = {
       enable: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
+        defaultValue: true
       },
       created_at: {
         type: Sequelize.DATE,
@@ -59,7 +61,8 @@ module.exports = {
       },
       accept_terms_privacy: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+        defaultValue: true
       },
       access_token: {
         type: Sequelize.STRING,

@@ -16,7 +16,7 @@ class Product extends Model {
       commission: DataTypes.DECIMAL(8, 2),
       profit: DataTypes.DECIMAL(8, 2),
       km_limit: DataTypes.INTEGER,
-      validity: DataTypes.DATE,
+      validity: DataTypes.DATEONLY,
       origin_product: DataTypes.STRING,
       applications: DataTypes.STRING,
       observations: DataTypes.STRING,

@@ -39,8 +39,11 @@ module.exports = {
         allowNull: true,
       },
       date: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
+        get: function() {
+          return moment.utc(this.getDataValue('date')).format('YYYY-MM-DD');
+        }
       },
       observations: {
         type: Sequelize.STRING,

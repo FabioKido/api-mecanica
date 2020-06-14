@@ -7,7 +7,7 @@ class Worker extends Model {
       sex: DataTypes.STRING(1),
       cpf: DataTypes.STRING(14),
       rg: DataTypes.STRING(14),
-      birthday: DataTypes.DATE,
+      birthday: DataTypes.DATEONLY,
       orgao_expeditor: DataTypes.STRING(30),
       ctps: DataTypes.STRING(13),
       salary_hour: DataTypes.DECIMAL(8, 2),

@@ -6,7 +6,7 @@ class Order extends Model {
       km: DataTypes.INTEGER,
       tanque: DataTypes.INTEGER,
       internal_control: DataTypes.STRING,
-      prevision_exit: DataTypes.DATE,
+      prevision_exit: DataTypes.DATEONLY,
       observations: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
       created_by: DataTypes.INTEGER,

@@ -3,7 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 class Preventive extends Model {
   static init(sequelize) {
     super.init({
-      date: DataTypes.DATE,
+      date: DataTypes.DATEONLY,
       status: DataTypes.STRING(25),
       enable: DataTypes.BOOLEAN,
       created_by: DataTypes.INTEGER,

@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 
 const User = require('../../models/userEntities/User');
 const Owner = require('../../models/userEntities/Owner');
+const Worker = require('../../models/userEntities/Worker');
 const Company = require('../../models/userEntities/Company');
 
 const { createContact } = require('../../services/contactService');
@@ -25,21 +26,25 @@ function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-// exports.grantAccess = function(action, resource) {
-//   return async (req, res, next) => {
-//     try {
-//       const permission = roles.can(req.user.role)[action](resource);
-//       if (!permission.granted) {
-//         return res.status(401).json({
-//           error: "Vocẽ não tem permissão para acessar"
-//         });
-//       }
-//       next()
-//     } catch (error) {
-//       next(error)
-//     }
-//   }
-// }
+async function createTypeOfUser(newUser) {
+  if(newUser.type === 'PJ'){
+    await Company.create({ name: newUser.username, type: 'MPE', id_user: newUser.id });
+  }else {
+    await Owner.create({ name: newUser.username, id_user: newUser.id });
+  }
+}
+
+async function createUserWorker(newUser) {
+  await Worker.create({ name: newUser.username, id_user: newUser.id });
+}
+
+async function createContactAddress(email) {
+  
+  const contact = await createContact({ celphone: '(00) 90000-0000', email });
+  const address = await createAddress({ city: 'Cidade', uf: 'UF' });
+
+  return { contact, address }
+}
 
 exports.signup = async (req, res, next) => {
   try {
@@ -49,8 +54,6 @@ exports.signup = async (req, res, next) => {
       password,
       company
     } = req.body
-
-    let pj, pf;
 
     const user = await User.findOne({
       where: {
@@ -66,23 +69,15 @@ exports.signup = async (req, res, next) => {
 
     const hashedPassword = await hashPassword(password);
 
-    contact = await createContact({ celphone: '(00) 90000-0000', email });
-
-    address = await createAddress({ city: 'Cidade', uf: 'UF' });
+    const { contact, address } = await createContactAddress(email);
 
     const newUser = new User({
       username: username || email,
       email,
       password: hashedPassword,
       type: company ? 'PJ' : 'PF',
-      role: "user_admin",
-      enable:  true,
-      accept_terms_privacy: true,
-      id_access_plan: null,
-      id_contact: contact.id || null,
-      id_address: address.id || null,
-      created_by: null,
-      updated_by: null
+      id_contact: contact.id,
+      id_address: address.id
     });
 
     const access_token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
@@ -93,13 +88,9 @@ exports.signup = async (req, res, next) => {
 
     await newUser.save();
 
-    if(company){
-      await Company.create({ name: newUser.username, type: 'MPE', id_user: newUser.id });
-    }else {
-      await Owner.create({ name: newUser.username, id_user: newUser.id });
-    }
+    await createTypeOfUser(newUser);
 
-    newUser.password = "";
+    newUser.password = undefined;
 
     res.json({
       data: newUser,
@@ -172,13 +163,11 @@ exports.signupWorker = async (req, res, next) => {
     const hashedPassword = await hashPassword(password);
 
     const newUser = new User({
-      username,
+      username: username || email,
       email,
       password: hashedPassword,
-      type: "user_basic",
+      type: 'PF',
       role: "user_basic",
-      enable: true,
-      accept_terms_privacy: true,
       created_by: id_user
     });
 
@@ -190,7 +179,9 @@ exports.signupWorker = async (req, res, next) => {
 
     await newUser.save();
 
-    newUser.password = "";
+    await createUserWorker(newUser);
+
+    newUser.password = undefined;
 
     res.json({
       data: {newUser},
@@ -201,6 +192,7 @@ exports.signupWorker = async (req, res, next) => {
   }
 }
 
+// Add data da req de nova senha
 exports.forgot = async (req, res, next) => {
 
   try{
@@ -272,3 +264,19 @@ exports.forgot = async (req, res, next) => {
     next(error)
   }
 }
+
+// exports.grantAccess = function(action, resource) {
+//   return async (req, res, next) => {
+//     try {
+//       const permission = roles.can(req.user.role)[action](resource);
+//       if (!permission.granted) {
+//         return res.status(401).json({
+//           error: "Vocẽ não tem permissão para acessar"
+//         });
+//       }
+//       next()
+//     } catch (error) {
+//       next(error)
+//     }
+//   }
+// }

@@ -35,8 +35,11 @@ module.exports = {
         allowNull: false,
       },
       vencimento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
+        get: function() {
+          return moment.utc(this.getDataValue('vencimento')).format('YYYY-MM-DD');
+        }
       },
       document_number: {
         type: Sequelize.INTEGER,

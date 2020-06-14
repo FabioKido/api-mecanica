@@ -9,7 +9,7 @@ class Customer extends Model {
       rg: DataTypes.STRING(14),
       cnpj: DataTypes.STRING(25),
       ie: DataTypes.STRING(13),
-      birthday: DataTypes.DATE,
+      birthday: DataTypes.DATEONLY,
       observations: DataTypes.STRING,
       status: DataTypes.INTEGER,
       inadimplente:  DataTypes.BOOLEAN,

@@ -4,7 +4,7 @@ class RecipeDetail extends Model {
   static init(sequelize) {
     super.init({
       value: DataTypes.DECIMAL(8, 2),
-      vencimento: DataTypes.DATE,
+      vencimento: DataTypes.DATEONLY,
       document_number: DataTypes.INTEGER,
       taxa_ajuste: DataTypes.DECIMAL(8, 2),
       observations: DataTypes.STRING,

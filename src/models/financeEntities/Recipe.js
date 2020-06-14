@@ -6,7 +6,7 @@ class Recipe extends Model {
       total_value: DataTypes.DECIMAL(8, 2),
       description: DataTypes.STRING,
       parcels: DataTypes.INTEGER,
-      date: DataTypes.DATE,
+      date: DataTypes.DATEONLY,
       options: DataTypes.STRING(10),
       observations: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,

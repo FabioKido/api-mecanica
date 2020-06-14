@@ -9,7 +9,7 @@ class Message extends Model {
       receptor: DataTypes.STRING,
       subject: DataTypes.STRING,
       message: DataTypes.STRING,
-      sent: DataTypes.DATE,
+      sent: DataTypes.DATEONLY,
     }, {
       sequelize
     })

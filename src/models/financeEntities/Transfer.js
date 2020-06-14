@@ -5,7 +5,7 @@ class Transfer extends Model {
     super.init({
       total_value: DataTypes.DECIMAL(8, 2),
       description: DataTypes.STRING,
-      date: DataTypes.DATE,
+      date: DataTypes.DATEONLY,
       observations: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,
       created_by: DataTypes.INTEGER,

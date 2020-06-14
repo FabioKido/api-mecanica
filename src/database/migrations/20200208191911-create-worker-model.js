@@ -26,8 +26,11 @@ module.exports = {
         allowNull: true,
       },
       birthday: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true,
+        get: function() {
+          return moment.utc(this.getDataValue('birthday')).format('YYYY-MM-DD');
+        }
       },
       orgao_expeditor: {
         type: Sequelize.STRING(30),

@@ -3,7 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 class Acquisition extends Model {
   static init(sequelize) {
     super.init({
-      acquisition: DataTypes.DATE,
+      acquisition: DataTypes.DATEONLY,
       total_sale: DataTypes.DECIMAL(8, 2),
       total_qtd: DataTypes.INTEGER,
       nef_key: DataTypes.STRING,

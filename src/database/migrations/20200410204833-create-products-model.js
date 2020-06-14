@@ -69,8 +69,11 @@ module.exports = {
         allowNull: false,
       },
       validity: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
+        get: function() {
+          return moment.utc(this.getDataValue('validity')).format('YYYY-MM-DD');
+        }
       },
       origin_product: {
         type: Sequelize.STRING,

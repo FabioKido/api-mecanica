@@ -24,7 +24,7 @@ exports.store = async (req, res, next) => {
   try {
 
     const userId = req.user;
-    const { name, type, value, enable, created_by, updated_by } = req.body;
+    const { name, type, value, enable } = req.body;
 
     const accessPlan = await AccessPlan.create({
       name,

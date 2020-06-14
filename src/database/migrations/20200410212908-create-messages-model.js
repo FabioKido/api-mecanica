@@ -26,8 +26,11 @@ module.exports = {
         allowNull: true,
       },
       sent: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true,
+        get: function() {
+          return moment.utc(this.getDataValue('sent')).format('YYYY-MM-DD');
+        }
       },
       created_at: {
         type: Sequelize.DATE,

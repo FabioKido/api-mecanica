@@ -64,8 +64,11 @@ module.exports = {
         allowNull: true,
       },
       prevision_exit: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true,
+        get: function() {
+          return moment.utc(this.getDataValue('prevision_exit')).format('YYYY-MM-DD');
+        }
       },
       observations: {
         type: Sequelize.STRING,
