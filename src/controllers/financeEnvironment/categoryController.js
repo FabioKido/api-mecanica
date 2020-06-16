@@ -1,11 +1,21 @@
 const Category = require('../../models/financeEntities/Category');
 
-exports.index = async (req, res) => {
-  const categorys = await Category.findAll();
+exports.index = async (req, res, next) => {
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: categorys
-  });
+    const categories = await Category.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      categories
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -58,16 +68,16 @@ exports.update = async (req, res, next) => {
       indicator
     } = req.body;
 
-    const category = await Category.update( {
+    const category = await Category.update({
       description,
       indicator,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_category
-      }
-    });
+    },
+      {
+        where: {
+          id: id_category
+        }
+      });
 
     res.json({
       data: category,
