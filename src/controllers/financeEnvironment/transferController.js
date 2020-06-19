@@ -1,11 +1,21 @@
 const Transfer = require('../../models/financeEntities/Transfer');
 
 exports.index = async (req, res) => {
-  const transfers = await Transfer.findAll();
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: transfers
-  });
+    const transfers = await Transfer.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      transfers
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -73,19 +83,19 @@ exports.update = async (req, res, next) => {
       enable
     } = req.body;
 
-    const transfer = await Transfer.update( {
+    const transfer = await Transfer.update({
       total_value,
       description,
       date,
       observations,
       enable,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_transfer
-      }
-    });
+    },
+      {
+        where: {
+          id: id_transfer
+        }
+      });
 
     res.json({
       data: transfer,

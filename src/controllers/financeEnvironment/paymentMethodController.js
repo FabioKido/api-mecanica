@@ -1,11 +1,21 @@
 const PaymentMethod = require('../../models/financeEntities/PaymentMethod');
 
 exports.index = async (req, res) => {
-  const payment_methods = await PaymentMethod.findAll();
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: payment_methods
-  });
+    const payment_methods = await PaymentMethod.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      payment_methods
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -61,17 +71,17 @@ exports.update = async (req, res, next) => {
       taxa
     } = req.body;
 
-    const payment_method = await PaymentMethod.update( {
+    const payment_method = await PaymentMethod.update({
       method,
       operator,
       taxa,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_payment_method
-      }
-    });
+    },
+      {
+        where: {
+          id: id_payment_method
+        }
+      });
 
     res.json({
       data: payment_method,

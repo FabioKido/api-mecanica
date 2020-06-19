@@ -1,11 +1,21 @@
 const Account = require('../../models/financeEntities/Account');
 
-exports.index = async (req, res) => {
-  const accounts = await Account.findAll();
+exports.index = async (req, res, next) => {
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: accounts
-  });
+    const accounts = await Account.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      accounts
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -64,18 +74,18 @@ exports.update = async (req, res, next) => {
       initial_value
     } = req.body;
 
-    const account = await Account.update( {
+    const account = await Account.update({
       title,
       type,
       description,
       initial_value,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_account
-      }
-    });
+    },
+      {
+        where: {
+          id: id_account
+        }
+      });
 
     res.json({
       data: account,
