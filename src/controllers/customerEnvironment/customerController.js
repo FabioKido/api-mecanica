@@ -5,11 +5,30 @@ const Address = require('../../models/userEntities/Address');
 const { createContact } = require('../../services/contactService');
 const { createAddress } = require('../../services/addressService');
 
+async function createContactAddress() {
+
+  const contact = await createContact({ celphone: '(00) 90000-0000' });
+  const address = await createAddress({ city: 'Cidade', uf: 'UF' });
+
+  return { contact, address }
+}
+
 exports.index = async (req, res, next) => {
-  const customers = await Customer.findAll();
-  res.status(200).json({
-    data: customers
-  });
+  try {
+    const id_user = req.user;
+
+    const customers = await Customer.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      customers
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -36,46 +55,31 @@ exports.store = async (req, res, next) => {
       cnpj,
       ie,
       birthday,
-      observations,
-      status,
-      inadimplente,
-      phone,
-      celphone,
-      email,
-      street,
-      neighborhood,
-      number,
-      city,
-      uf,
-      complement
+      observations
     } = req.body;
 
-    if(celphone)
-      contact = await createContact({ phone, celphone, email });
-
-    if(city || uf)
-      address = await createAddress({ street, neighborhood, number, city, uf, complement });
+    const { contact, address } = await createContactAddress();
 
     const newCustomer = await Customer.create({
-      id_contact: contact.id || null,
-      id_address: address.id || null,
       name,
       sex,
       cpf,
       rg,
       cnpj,
       ie,
-      birthday,
+      birthday: birthday || null,
       observations,
-      status,
-      inadimplente,
+      status: 0,
+      inadimplente: false,
       active: true,
+      id_contact: contact.id,
+      id_address: address.id,
       created_by: userId
     });
 
     res.json({
-      data: {newCustomer, contact, address},
-      message: "Customer cadastrado com sucesso"
+      data: { newCustomer },
+      message: "Cliente cadastrado com sucesso"
     });
   } catch (error) {
     next(error)
@@ -112,7 +116,7 @@ exports.update = async (req, res, next) => {
 
     const { id_contact, id_address } = await Customer.findByPk(id_customer);
 
-    const customer = await Customer.update( {
+    const customer = await Customer.update({
       name,
       sex,
       cpf,
@@ -125,40 +129,40 @@ exports.update = async (req, res, next) => {
       inadimplente,
       active,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_customer
-      }
-    });
+    },
+      {
+        where: {
+          id: id_customer
+        }
+      });
 
-    await Contact.update( {
+    await Contact.update({
       phone,
       celphone,
       email
-     },
-     {
-      where: {
-        id: id_contact
-      }
-    });
+    },
+      {
+        where: {
+          id: id_contact
+        }
+      });
 
-    await Address.update( {
+    await Address.update({
       street,
       neighborhood,
       number,
       city,
       uf,
       complement
-     },
-     {
-      where: {
-        id: id_address
-      }
-    });
+    },
+      {
+        where: {
+          id: id_address
+        }
+      });
 
     res.status(200).json({
-      data: {customer},
+      data: { customer },
       message: 'Cliente foi atualizado'
     });
 
@@ -172,10 +176,10 @@ exports.destroy = async (req, res, next) => {
     const { id_customer } = req.params;
     const { id_contact, id_address } = await Customer.findByPk(id_customer);
 
-    if(id_contact)
+    if (id_contact)
       Contact.destroy({ where: { id: id_contact } });
 
-    if(id_address)
+    if (id_address)
       Address.destroy({ where: { id: id_address } });
 
     Customer.destroy({
