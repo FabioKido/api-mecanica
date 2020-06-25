@@ -10,11 +10,13 @@ module.exports = {
   },
 
   async show(req, res) {
-    const { id_automobile } = req.params;
+    const { id_vehicle } = req.params;
 
-    const automobile = await Automobile.findByPk(id_automobile, {
-      include: { association: 'vehicle' }
-    })
+    const automobile = await Automobile.findOne({
+      where: {
+        id_vehicle
+      }
+    });
 
     return res.json(automobile);
   }

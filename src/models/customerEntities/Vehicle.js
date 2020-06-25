@@ -8,6 +8,7 @@ class Vehicle extends Model {
       year_fab: DataTypes.INTEGER,
       year_model: DataTypes.INTEGER,
       color: DataTypes.STRING(60),
+      type: DataTypes.STRING(10),
       observations: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,
       created_by: DataTypes.INTEGER,

@@ -1,22 +1,32 @@
 const Vehicle = require('../../models/customerEntities/Vehicle');
 const Customer = require('../../models/customerEntities/Customer');
 
-const { createAutomobile, updateAutomobile} = require('../../services/automobileService');
+const { createAutomobile, updateAutomobile } = require('../../services/automobileService');
 const { createBicycle, updateBicycle } = require('../../services/bicycleService');
 
-module.exports = {
+exports.index = async (req, res, next) => {
+  try {
+    const id_user = req.user;
 
-  async index(req, res) {
-    const vehicles = await Vehicle.findAll();
-    res.status(200).json({
-      data: vehicles
+    const vehicles = await Vehicle.findAll({
+      where: {
+        created_by: id_user
+      }
     });
-  },
 
-  async store(req, res) {
+    res.status(200).json({
+      vehicles
+    });
+  } catch (error) {
+    next(error)
+  }
+},
+
+  exports.store = async (req, res) => {
+
     const userId = req.user;
-    const { id_customer } = req.params;
     const {
+      id_customer,
       fabricator,
       model,
       year_fab,
@@ -32,7 +42,8 @@ module.exports = {
       chassis,
       renavam,
       ar,
-      hand_brake
+      hand_brake,
+      automovel
     } = req.body;
 
     const customer = await Customer.findByPk(id_customer);
@@ -49,23 +60,24 @@ module.exports = {
       year_model,
       color,
       observations,
+      type: automovel ? 'Auto' : 'Bike',
       enable: true,
       created_by: userId
     });
 
-    if(fuel){
+    if (vehicle.type === 'Auto') {
       await createAutomobile({ id_vehicle: vehicle.id, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
-    }else{
+    } else {
       await createBicycle({ id_vehicle: vehicle.id, hand_brake });
     }
 
     res.json({
-      data: {vehicle},
+      data: { vehicle },
       message: "Veículo cadastrado com sucesso"
     });
   },
 
-  async update(req, res) {
+  exports.update = async (req, res) => {
     const userId = req.user;
     const { id_vehicle } = req.params;
     const {
@@ -75,7 +87,6 @@ module.exports = {
       year_model,
       color,
       observations,
-      enable,
       board,
       motor,
       fuel,
@@ -88,33 +99,32 @@ module.exports = {
       hand_brake
     } = req.body;
 
-    const vehicle = await Vehicle.update( {
+    const vehicle = await Vehicle.update({
       fabricator,
       model,
       year_fab,
       year_model,
       color,
       observations,
-      enable,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_vehicle
-      }
-    });
+    },
+      {
+        where: {
+          id: id_vehicle
+        }
+      });
 
     await updateAutomobile({ id_vehicle, board, motor, fuel, car_exchange, direction, doors, chassis, renavam, ar });
 
     await updateBicycle({ id_vehicle, hand_brake });
 
     res.status(200).json({
-      data: {vehicle},
+      data: { vehicle },
       message: 'Veículo foi atualizado'
     });
   },
 
-  async destroy(req, res) {
+  exports.destroy = async (req, res) => {
     const { id_vehicle } = req.params;
 
     Vehicle.destroy({
@@ -128,4 +138,4 @@ module.exports = {
       message: "Veículo deletado com sucesso"
     });
   }
-};
+
