@@ -8,6 +8,7 @@ const stockRouters = require('./stockRouters');
 const serviceRouters = require('./serviceRouters');
 const orderRouters = require('./orderRouters');
 const financeRouters = require('./financeRouters');
+const dashboardsRouters = require('./dashboardsRouters');
 
 const routes = Router();
 
@@ -21,5 +22,6 @@ routes.use('/stock', stockRouters);
 routes.use('/service', serviceRouters);
 routes.use('/order', orderRouters);
 routes.use('/finance', financeRouters);
+routes.use('/dashboard', dashboardsRouters);
 
 module.exports = routes;
