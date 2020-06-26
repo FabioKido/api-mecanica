@@ -24,7 +24,8 @@ exports.index = async (req, res, next) => {
       raw: true,
       where: {
         created_by: id_user,
-      }
+      },
+      limit: 3
     });
 
     const models = await Vehicle.findAll({
@@ -34,7 +35,8 @@ exports.index = async (req, res, next) => {
       raw: true,
       where: {
         created_by: id_user,
-      }
+      },
+      limit: 5
     });
 
     res.status(200).json({
