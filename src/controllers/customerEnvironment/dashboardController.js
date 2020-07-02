@@ -1,4 +1,4 @@
-const { Op, fn, literal } = require('sequelize');
+const { fn, literal } = require('sequelize');
 
 const Vehicle = require('../../models/customerEntities/Vehicle');
 const Customer = require('../../models/customerEntities/Customer');
