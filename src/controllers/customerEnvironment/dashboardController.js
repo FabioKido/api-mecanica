@@ -14,7 +14,8 @@ exports.index = async (req, res, next) => {
       raw: true,
       where: {
         created_by: id_user,
-      }
+      },
+      limit: 3
     });
 
     const fabricators = await Vehicle.findAll({
