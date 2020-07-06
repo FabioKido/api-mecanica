@@ -1,11 +1,21 @@
 const Recipe = require('../../models/financeEntities/Recipe');
 
-exports.index = async (req, res) => {
-  const recipes = await Recipe.findAll();
+exports.index = async (req, res, next) => {
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: recipes
-  });
+    const recipes = await Recipe.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      recipes
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -35,8 +45,7 @@ exports.store = async (req, res, next) => {
       parcels,
       date,
       options,
-      observations,
-      enable
+      observations
     } = req.body;
 
     const recipe = await Recipe.create({
@@ -45,10 +54,10 @@ exports.store = async (req, res, next) => {
       total_value,
       description,
       parcels,
-      date,
+      date: date || Date.now(),
       options,
       observations,
-      enable,
+      enable: true,
       created_by: userId
     });
 
@@ -77,7 +86,7 @@ exports.update = async (req, res, next) => {
       enable
     } = req.body;
 
-    const recipe = await Recipe.update( {
+    const recipe = await Recipe.update({
       total_value,
       description,
       parcels,
@@ -86,12 +95,12 @@ exports.update = async (req, res, next) => {
       observations,
       enable,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_recipe
-      }
-    });
+    },
+      {
+        where: {
+          id: id_recipe
+        }
+      });
 
     res.json({
       data: recipe,
