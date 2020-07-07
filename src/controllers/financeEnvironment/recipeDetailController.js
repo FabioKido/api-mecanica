@@ -33,11 +33,11 @@ exports.store = async (req, res, next) => {
       id_payment_method: id_payment_method || null,
       id_account_destiny: id_account_destiny || null,
       value,
-      vencimento,
+      vencimento: vencimento || Date.now(),
       document_number,
       taxa_ajuste,
       observations,
-      paid_out
+      paid_out: paid_out || false
     });
 
     res.json({
@@ -64,19 +64,19 @@ exports.update = async (req, res, next) => {
       paid_out
     } = req.body;
 
-    const recipe_detail = await RecipeDetail.update( {
+    const recipe_detail = await RecipeDetail.update({
       value,
       vencimento,
       document_number,
       taxa_ajuste,
       observations,
       paid_out
-     },
-     {
-      where: {
-        id: id_recipe_detail
-      }
-    });
+    },
+      {
+        where: {
+          id: id_recipe_detail
+        }
+      });
 
     res.json({
       data: recipe_detail,
