@@ -27,7 +27,7 @@ exports.show = async (req, res, next) => {
     if (!category) return next(new Error('Categoria não existe'));
 
     res.status(200).json({
-      data: category
+      category
     });
   } catch (error) {
     next(error)

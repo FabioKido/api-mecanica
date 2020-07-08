@@ -67,8 +67,8 @@ exports.update = async (req, res, next) => {
     } = req.body;
 
     const recipe_detail = await RecipeDetail.update({
-      id_payment_method,
-      id_account_destiny,
+      id_payment_method: id_payment_method || null,
+      id_account_destiny: id_account_destiny || null,
       value,
       vencimento,
       document_number,

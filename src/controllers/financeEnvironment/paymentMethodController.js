@@ -27,7 +27,7 @@ exports.show = async (req, res, next) => {
     if (!payment_method) return next(new Error('Metodo de Pagamento não existe'));
 
     res.status(200).json({
-      data: payment_method
+      payment_method
     });
   } catch (error) {
     next(error)

@@ -27,7 +27,7 @@ exports.show = async (req, res, next) => {
     if (!account) return next(new Error('Conta Bancária não existe'));
 
     res.status(200).json({
-      data: account
+      account
     });
   } catch (error) {
     next(error)

@@ -44,26 +44,31 @@ exports.store = async (req, res, next) => {
       total_value,
       description,
       date,
-      observations,
-      enable
+      observations
     } = req.body;
 
-    const transfer = await Transfer.create({
-      id_category: id_category || null,
-      id_account_origin: id_account_origin || null,
-      id_account_destiny: id_account_destiny || null,
-      total_value,
-      description,
-      date,
-      observations,
-      enable,
-      created_by: userId
-    });
+    if ((id_account_origin === id_account_destiny) || !id_account_origin || !id_account_destiny) {
 
-    res.json({
-      data: transfer,
-      message: "Transferência cadastrada com sucesso"
-    })
+      return next(new Error('Verifique se as contas são diferentes entre si ou existam'));
+
+    } else {
+      const transfer = await Transfer.create({
+        id_category: id_category || null,
+        id_account_origin: id_account_origin || null,
+        id_account_destiny: id_account_destiny || null,
+        total_value,
+        description,
+        date: date || Date.now(),
+        observations,
+        enable: true,
+        created_by: userId
+      });
+
+      res.json({
+        data: transfer,
+        message: "Transferência cadastrada com sucesso"
+      })
+    }
 
   } catch (error) {
     next(error)
@@ -76,19 +81,13 @@ exports.update = async (req, res, next) => {
     const userId = req.user;
     const { id_transfer } = req.params;
     const {
-      total_value,
       description,
-      date,
-      observations,
-      enable
+      observations
     } = req.body;
 
     const transfer = await Transfer.update({
-      total_value,
       description,
-      date,
       observations,
-      enable,
       updated_by: userId
     },
       {
