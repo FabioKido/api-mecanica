@@ -1,4 +1,5 @@
 const Recipe = require('../../models/financeEntities/Recipe');
+const RecipeDetail = require('../../models/financeEntities/RecipeDetail');
 
 exports.index = async (req, res, next) => {
   try {
@@ -77,23 +78,25 @@ exports.update = async (req, res, next) => {
     const userId = req.user;
     const { id_recipe } = req.params;
     const {
+      id_category,
       total_value,
       description,
-      parcels,
       date,
-      options,
-      observations,
-      enable
+      observations
     } = req.body;
 
+    const recipe_details = await RecipeDetail.findAll({
+      where: {
+        id_recipe
+      }
+    });
+
     const recipe = await Recipe.update({
+      id_category: id_category || null,
       total_value,
       description,
-      parcels,
       date,
-      options,
       observations,
-      enable,
       updated_by: userId
     },
       {
@@ -101,6 +104,19 @@ exports.update = async (req, res, next) => {
           id: id_recipe
         }
       });
+
+    const { parcels } = await Recipe.findByPk(id_recipe);
+
+    recipe_details.map(recipe_detail =>
+      RecipeDetail.update({
+        value: (total_value / parcels) + Number(recipe_detail.taxa_ajuste)
+      },
+        {
+          where: {
+            id: recipe_detail.id
+          }
+        })
+    )
 
     res.json({
       data: recipe,

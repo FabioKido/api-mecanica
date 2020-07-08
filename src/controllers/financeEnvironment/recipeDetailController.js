@@ -10,7 +10,7 @@ exports.index = async (req, res) => {
   });
 
   res.status(200).json({
-    data: recipe_details
+    recipe_details
   });
 }
 
@@ -56,6 +56,8 @@ exports.update = async (req, res, next) => {
 
     const { id_recipe_detail } = req.params;
     const {
+      id_payment_method,
+      id_account_destiny,
       value,
       vencimento,
       document_number,
@@ -65,6 +67,8 @@ exports.update = async (req, res, next) => {
     } = req.body;
 
     const recipe_detail = await RecipeDetail.update({
+      id_payment_method,
+      id_account_destiny,
       value,
       vencimento,
       document_number,
