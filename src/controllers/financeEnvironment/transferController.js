@@ -1,4 +1,5 @@
 const Transfer = require('../../models/financeEntities/Transfer');
+const Account = require('../../models/financeEntities/Account');
 
 exports.index = async (req, res) => {
   try {
@@ -47,7 +48,13 @@ exports.store = async (req, res, next) => {
       observations
     } = req.body;
 
-    if ((id_account_origin === id_account_destiny) || !id_account_origin || !id_account_destiny) {
+    const account_origin = await Account.findByPk(id_account_origin);
+    const { initial_value: origin_value } = account_origin;
+
+    const account_destiny = await Account.findByPk(id_account_destiny);
+    const { initial_value: destiny_value } = account_destiny;
+
+    if ((id_account_origin === id_account_destiny) || !id_account_origin || !id_account_destiny || (Number(origin_value) < Number(total_value))) {
 
       return next(new Error('Verifique se as contas são diferentes entre si ou existam'));
 
@@ -65,7 +72,9 @@ exports.store = async (req, res, next) => {
       });
 
       res.json({
-        data: transfer,
+        transfer,
+        origin_value,
+        destiny_value,
         message: "Transferência cadastrada com sucesso"
       })
     }
