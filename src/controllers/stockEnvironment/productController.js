@@ -1,10 +1,21 @@
 const Product = require('../../models/stockEntities/Product');
 
 exports.index = async (req, res, next) => {
-  const products = await Product.findAll();
-  res.status(200).json({
-    data: products
-  });
+  try {
+    const id_user = req.user;
+
+    const products = await Product.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      products
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -104,7 +115,7 @@ exports.update = async (req, res, next) => {
       repos
     } = req.body;
 
-    const product = await Product.update( {
+    const product = await Product.update({
       id_family,
       image,
       nef_cod,
@@ -125,12 +136,12 @@ exports.update = async (req, res, next) => {
       observations,
       repos,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_product
-      }
-    });
+    },
+      {
+        where: {
+          id: id_product
+        }
+      });
 
     res.json({
       data: product,

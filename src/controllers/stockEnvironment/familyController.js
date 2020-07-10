@@ -1,10 +1,21 @@
 const Family = require('../../models/stockEntities/Family');
 
 exports.index = async (req, res, next) => {
-  const families = await Family.findAll();
-  res.status(200).json({
-    data: families
-  });
+  try {
+    const id_user = req.user;
+
+    const families = await Family.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      families
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -50,16 +61,16 @@ exports.update = async (req, res, next) => {
       description
     } = req.body;
 
-    const family = await Family.update( {
+    const family = await Family.update({
       name,
       description,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_family
-      }
-    });
+    },
+      {
+        where: {
+          id: id_family
+        }
+      });
 
     res.json({
       data: family,

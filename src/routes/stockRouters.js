@@ -3,6 +3,7 @@ const { Router } = require('express');
 const authMiddleware = require('../middlewares/auth');
 
 const providerController = require('../controllers/stockEnvironment/providerController');
+const providerInfoController = require('../controllers/stockEnvironment/providerInfoController');
 const familyController = require('../controllers/stockEnvironment/familyController');
 const productController = require('../controllers/stockEnvironment/productController');
 const acquisitionController = require('../controllers/stockEnvironment/acquisitionController');
@@ -15,6 +16,8 @@ stockRouter.get('/providers', authMiddleware, providerController.index);
 stockRouter.get('/provider/:id_provider', authMiddleware, providerController.show);
 stockRouter.put('/provider/:id_provider', authMiddleware, providerController.update);
 stockRouter.delete('/provider/:id_provider', authMiddleware, providerController.destroy);
+
+stockRouter.get('/provider/inf/:id', authMiddleware, providerInfoController.show);
 
 stockRouter.post('/family', authMiddleware, familyController.store);
 stockRouter.get('/families', authMiddleware, familyController.index);

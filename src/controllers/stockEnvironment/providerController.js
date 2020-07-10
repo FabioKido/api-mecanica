@@ -5,11 +5,30 @@ const Address = require('../../models/userEntities/Address');
 const { createContact } = require('../../services/contactService');
 const { createAddress } = require('../../services/addressService');
 
+async function createContactAddress() {
+
+  const contact = await createContact({ celphone: '(00) 90000-0000' });
+  const address = await createAddress({ city: 'Cidade', uf: 'UF' });
+
+  return { contact, address }
+}
+
 exports.index = async (req, res, next) => {
-  const providers = await Provider.findAll();
-  res.status(200).json({
-    data: providers
-  });
+  try {
+    const id_user = req.user;
+
+    const providers = await Provider.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      providers
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -33,23 +52,10 @@ exports.store = async (req, res, next) => {
       cnpj,
       ie,
       observations,
-      product_provider,
-      phone,
-      celphone,
-      email,
-      street,
-      neighborhood,
-      number,
-      city,
-      uf,
-      complement
+      product_provider
     } = req.body;
 
-    if(celphone)
-      contact = await createContact({ phone, celphone, email });
-
-    if(city || uf)
-      address = await createAddress({ street, neighborhood, number, city, uf, complement });
+    const { contact, address } = await createContactAddress();
 
     const provider = await Provider.create({
       id_contact: contact.id,
@@ -58,7 +64,7 @@ exports.store = async (req, res, next) => {
       cnpj,
       ie,
       observations,
-      product_provider,
+      product_provider: product_provider || false,
       active: true,
       created_by: userId
     });
@@ -97,7 +103,7 @@ exports.update = async (req, res, next) => {
 
     const { id_contact, id_address } = await Provider.findByPk(id_provider);
 
-    const provider = await Provider.update( {
+    const provider = await Provider.update({
       name,
       cnpj,
       ie,
@@ -105,37 +111,37 @@ exports.update = async (req, res, next) => {
       product_provider,
       active,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_provider
-      }
-    });
+    },
+      {
+        where: {
+          id: id_provider
+        }
+      });
 
-    await Contact.update( {
+    await Contact.update({
       phone,
       celphone,
       email
-     },
-     {
-      where: {
-        id: id_contact
-      }
-    });
+    },
+      {
+        where: {
+          id: id_contact
+        }
+      });
 
-    await Address.update( {
+    await Address.update({
       street,
       neighborhood,
       number,
       city,
       uf,
       complement
-     },
-     {
-      where: {
-        id: id_address
-      }
-    });
+    },
+      {
+        where: {
+          id: id_address
+        }
+      });
 
     res.json({
       data: provider,
@@ -153,10 +159,10 @@ exports.destroy = async (req, res, next) => {
     const { id_provider } = req.params;
     const { id_contact, id_address } = await Provider.findByPk(id_provider);
 
-    if(id_contact)
+    if (id_contact)
       Contact.destroy({ where: { id: id_contact } });
 
-    if(id_address)
+    if (id_address)
       Address.destroy({ where: { id: id_address } });
 
     Provider.destroy({
