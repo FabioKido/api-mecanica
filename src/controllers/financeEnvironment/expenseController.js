@@ -1,11 +1,22 @@
 const Expense = require('../../models/financeEntities/Expense');
+const ExpenseDetail = require('../../models/financeEntities/ExpenseDetail');
 
-exports.index = async (req, res) => {
-  const expenses = await Expense.findAll();
+exports.index = async (req, res, next) => {
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: expenses
-  });
+    const expenses = await Expense.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      expenses
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -35,8 +46,7 @@ exports.store = async (req, res, next) => {
       date,
       options,
       classification,
-      observations,
-      enable
+      observations
     } = req.body;
 
     const expense = await Expense.create({
@@ -44,11 +54,11 @@ exports.store = async (req, res, next) => {
       total_value,
       description,
       parcels,
-      date,
+      date: date || Date.now(),
       options,
       classification,
       observations,
-      enable,
+      enable: true,
       created_by: userId
     });
 
@@ -68,32 +78,47 @@ exports.update = async (req, res, next) => {
     const userId = req.user;
     const { id_expense } = req.params;
     const {
+      id_category,
       total_value,
       description,
-      parcels,
       date,
-      options,
       classification,
-      observations,
-      enable
+      observations
     } = req.body;
 
-    const expense = await Expense.update( {
-      total_value,
-      description,
-      parcels,
-      date,
-      options,
-      classification,
-      observations,
-      enable,
-      updated_by: userId
-     },
-     {
+    const expense_details = await ExpenseDetail.findAll({
       where: {
-        id: id_expense
+        id_expense
       }
     });
+
+    const expense = await Expense.update({
+      id_category: id_category || null,
+      total_value,
+      description,
+      date,
+      classification,
+      observations,
+      updated_by: userId
+    },
+      {
+        where: {
+          id: id_expense
+        }
+      });
+
+    const { parcels } = await Expense.findByPk(id_expense);
+
+    expense_details.map(expense_detail =>
+      ExpenseDetail.update({
+        value: (total_value / parcels) + Number(expense_detail.taxa_ajuste)
+      },
+        {
+          where: {
+            id: expense_detail.id
+          }
+        })
+    )
 
     res.json({
       data: expense,

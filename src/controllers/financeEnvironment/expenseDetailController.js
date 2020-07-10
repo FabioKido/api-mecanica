@@ -1,4 +1,5 @@
 const ExpenseDetail = require('../../models/financeEntities/ExpenseDetail');
+const Expense = require('../../models/financeEntities/Expense');
 
 exports.index = async (req, res) => {
   const { id_expense } = req.query;
@@ -10,7 +11,7 @@ exports.index = async (req, res) => {
   });
 
   res.status(200).json({
-    data: expense_details
+    expense_details
   });
 }
 
@@ -33,12 +34,23 @@ exports.store = async (req, res, next) => {
       id_payment_method: id_payment_method || null,
       id_account_destiny: id_account_destiny || null,
       value,
-      vencimento,
+      vencimento: vencimento || Date.now(),
       document_number,
       taxa_ajuste,
       observations,
-      paid_out
+      paid_out: paid_out || false
     });
+
+    const { total_value } = await Expense.findByPk(id_expense);
+
+    Expense.update({
+      total_value: Number(total_value) + (Number(taxa_ajuste) || 0)
+    },
+      {
+        where: {
+          id: id_expense
+        }
+      })
 
     res.json({
       data: expense_detail,
@@ -54,29 +66,48 @@ exports.store = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
 
+    const { id_expense } = req.query;
     const { id_expense_detail } = req.params;
     const {
+      id_payment_method,
+      id_account_destiny,
       value,
       vencimento,
       document_number,
       taxa_ajuste,
       observations,
-      paid_out
+      paid_out,
+      taxa_ant
     } = req.body;
 
-    const expense_detail = await ExpenseDetail.update( {
+    const expense_detail = await ExpenseDetail.update({
+      id_payment_method: id_payment_method || null,
+      id_account_destiny: id_account_destiny || null,
       value,
       vencimento,
       document_number,
       taxa_ajuste,
       observations,
       paid_out
-     },
-     {
-      where: {
-        id: id_expense_detail
-      }
-    });
+    },
+      {
+        where: {
+          id: id_expense_detail
+        }
+      });
+
+    const { total_value } = await Expense.findByPk(id_expense);
+
+    const total = taxa_ajuste ? (Number(total_value) - Number(taxa_ant)) : Number(total_value);
+
+    Expense.update({
+      total_value: total + (Number(taxa_ajuste) || 0)
+    },
+      {
+        where: {
+          id: id_expense
+        }
+      })
 
     res.json({
       data: expense_detail,

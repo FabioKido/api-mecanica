@@ -1,4 +1,5 @@
 const RecipeDetail = require('../../models/financeEntities/RecipeDetail');
+const Recipe = require('../../models/financeEntities/Recipe');
 
 exports.index = async (req, res) => {
   const { id_recipe } = req.query;
@@ -40,6 +41,17 @@ exports.store = async (req, res, next) => {
       paid_out: paid_out || false
     });
 
+    const { total_value } = await Recipe.findByPk(id_recipe);
+
+    Recipe.update({
+      total_value: Number(total_value) + (Number(taxa_ajuste) || 0)
+    },
+      {
+        where: {
+          id: id_recipe
+        }
+      })
+
     res.json({
       data: recipe_detail,
       message: "Detalhes da Receita cadastrada com sucesso"
@@ -50,10 +62,10 @@ exports.store = async (req, res, next) => {
   }
 }
 
-
 exports.update = async (req, res, next) => {
   try {
 
+    const { id_recipe } = req.query;
     const { id_recipe_detail } = req.params;
     const {
       id_payment_method,
@@ -63,7 +75,8 @@ exports.update = async (req, res, next) => {
       document_number,
       taxa_ajuste,
       observations,
-      paid_out
+      paid_out,
+      taxa_ant
     } = req.body;
 
     const recipe_detail = await RecipeDetail.update({
@@ -81,6 +94,19 @@ exports.update = async (req, res, next) => {
           id: id_recipe_detail
         }
       });
+
+    const { total_value } = await Recipe.findByPk(id_recipe);
+
+    const total = taxa_ajuste ? (Number(total_value) - Number(taxa_ant)) : Number(total_value);
+
+    Recipe.update({
+      total_value: total + (Number(taxa_ajuste) || 0)
+    },
+      {
+        where: {
+          id: id_recipe
+        }
+      })
 
     res.json({
       data: recipe_detail,
