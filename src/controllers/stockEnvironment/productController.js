@@ -35,7 +35,7 @@ exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
     const {
-      image,
+      id_family,
       nef_cod,
       name,
       location,
@@ -53,29 +53,29 @@ exports.store = async (req, res, next) => {
       applications,
       observations,
       repos,
-      id_family
+      image
     } = req.body;
 
     const product = await Product.create({
       id_family: id_family || null,
-      image,
       nef_cod,
       name,
       location,
       ncm,
       unidade,
       unity_cost,
-      min_qtd,
+      min_qtd: min_qtd || 1,
       price_sale,
-      premium,
-      commission,
-      profit,
+      premium: premium || 0,
+      commission: commission || 0,
+      profit: profit || 0,
       km_limit,
-      validity,
+      validity: validity || Date.now(),
       origin_product,
       applications,
       observations,
-      repos,
+      repos: repos || false,
+      image,
       created_by: userId
     });
 
