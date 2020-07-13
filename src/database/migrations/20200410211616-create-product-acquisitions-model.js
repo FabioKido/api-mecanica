@@ -18,7 +18,7 @@ module.exports = {
       },
       id_acquisition: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: { model: 'acquisitions', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',

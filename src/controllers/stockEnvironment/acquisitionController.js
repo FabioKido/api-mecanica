@@ -2,10 +2,21 @@ const Acquisition = require('../../models/stockEntities/Acquisition');
 const ProductAcquisition = require('../../models/stockEntities/ProductAcquisition');
 
 exports.index = async (req, res, next) => {
-  const acquisitions = await Acquisition.findAll();
-  res.status(200).json({
-    data: acquisitions
-  });
+  try {
+    const id_user = req.user;
+
+    const acquisitions = await Acquisition.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      acquisitions
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -32,7 +43,6 @@ exports.store = async (req, res, next) => {
       nef_key,
       nef_number,
       approved,
-      qtd,
       unity_cost,
       discount,
       id_product
@@ -40,21 +50,21 @@ exports.store = async (req, res, next) => {
 
     const acq = await Acquisition.create({
       id_provider: id_provider || null,
-      acquisition,
+      acquisition: acquisition || Date.now(),
       total_sale,
       total_qtd,
       nef_key,
       nef_number,
-      approved,
+      approved: approved || false,
       created_by: userId
     });
 
     const productAcquisition = await ProductAcquisition.create({
       id_product,
       id_acquisition: acq.id,
-      qtd,
+      qtd: total_qtd,
       unity_cost,
-      discount,
+      discount: discount || 0
     });
 
     res.json({
@@ -80,7 +90,7 @@ exports.update = async (req, res, next) => {
       approved
     } = req.body;
 
-    const acq = await Acquisition.update( {
+    const acq = await Acquisition.update({
       acquisition,
       total_sale,
       total_qtd,
@@ -88,12 +98,12 @@ exports.update = async (req, res, next) => {
       nef_number,
       approved,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_acquisition
-      }
-    });
+    },
+      {
+        where: {
+          id: id_acquisition
+        }
+      });
 
     res.json({
       data: acq,
