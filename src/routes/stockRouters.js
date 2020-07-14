@@ -31,12 +31,12 @@ stockRouter.get('/product/:id_product', authMiddleware, productController.show);
 stockRouter.put('/product/:id_product', authMiddleware, productController.update);
 stockRouter.delete('/product/:id_product', authMiddleware, productController.destroy);
 
+stockRouter.get('/product/acquisition/:id_acquisition', authMiddleware, productAcquisitionController.show);
+
 stockRouter.post('/acquisition', authMiddleware, acquisitionController.store);
 stockRouter.get('/acquisitions', authMiddleware, acquisitionController.index);
 stockRouter.get('/acquisition/:id_acquisition', authMiddleware, acquisitionController.show);
 stockRouter.put('/acquisition/:id_acquisition', authMiddleware, acquisitionController.update);
 stockRouter.delete('/acquisition/:id_acquisition', authMiddleware, acquisitionController.destroy);
-
-stockRouter.get('/product/acquisition/:id_prod_acq', authMiddleware, productAcquisitionController.show);
 
 module.exports = stockRouter;

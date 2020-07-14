@@ -24,7 +24,7 @@ exports.show = async (req, res, next) => {
     const product = await Product.findByPk(id_product);
     if (!product) return next(new Error('Produto não existe'));
     res.status(200).json({
-      data: product
+      product
     });
   } catch (error) {
     next(error)
