@@ -16,11 +16,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      title: {
-        type: Sequelize.STRING(100),
-        allowNull: false,
-      },
-      checked: {
+      enable: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },

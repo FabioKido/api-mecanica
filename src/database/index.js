@@ -40,6 +40,7 @@ const Record = require('../models/serviceEntities/Record');
 const Timeline = require('../models/serviceEntities/Timeline');
 const Parcel = require('../models/serviceEntities/Parcel');
 const TimelineDetail = require('../models/serviceEntities/TimelineDetail');
+const ChecklistDetail = require('../models/serviceEntities/ChecklistDetail');
 
 // Import of financeEntities
 const Account = require('../models/financeEntities/Account');
@@ -114,6 +115,7 @@ Record.init(connection);
 Timeline.init(connection);
 Parcel.init(connection);
 TimelineDetail.init(connection);
+ChecklistDetail.init(connection);
 
 Order.associate(connection.models);
 OrderProduct.associate(connection.models);
@@ -126,6 +128,7 @@ Diagnostic.associate(connection.models);
 Checklist.associate(connection.models);
 Parcel.associate(connection.models);
 TimelineDetail.associate(connection.models);
+ChecklistDetail.associate(connection.models);
 
 // FinanceEntities
 Account.init(connection);

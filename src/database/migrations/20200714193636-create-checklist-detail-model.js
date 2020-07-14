@@ -2,28 +2,27 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('timeline_details', {
+    return queryInterface.createTable('checklist_details', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      id_timeline: {
+      id_checklist: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'timelines', key: 'id' },
+        references: { model: 'checklists', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
       title: {
-        type: Sequelize.STRING(60),
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
-      complete: {
+      checked: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: false
       },
       created_at: {
         type: Sequelize.DATE,
@@ -37,6 +36,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('timeline_details');
+    return queryInterface.dropTable('checklist_details');
   }
 };

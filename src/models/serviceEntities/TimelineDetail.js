@@ -4,6 +4,7 @@ class TimelineDetail extends Model {
   static init(sequelize) {
     super.init({
       title: DataTypes.STRING(60),
+      complete: DataTypes.BOOLEAN,
     }, {
       sequelize
     })

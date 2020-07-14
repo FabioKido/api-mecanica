@@ -27,12 +27,10 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const { id_diagnostic } = req.params;
-    const { title, checked } = req.body;
 
     const checklist = await Checklist.create({
       id_diagnostic,
-      title,
-      checked
+      enable: true
     });
 
     res.json({
@@ -50,17 +48,16 @@ exports.update = async (req, res, next) => {
   try {
 
     const { id_checklist } = req.params;
-    const { title, checked } = req.body;
+    const { enable } = req.body;
 
-    const checklist = await Checklist.update( {
-      title,
-      checked
-     },
-     {
-      where: {
-        id: id_checklist
-      }
-    });
+    const checklist = await Checklist.update({
+      enable
+    },
+      {
+        where: {
+          id: id_checklist
+        }
+      });
 
     res.json({
       data: checklist,

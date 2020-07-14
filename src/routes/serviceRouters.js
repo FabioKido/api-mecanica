@@ -10,6 +10,7 @@ const preventiveController = require('../controllers/serviceEnvironment/preventi
 const recordController = require('../controllers/serviceEnvironment/recordController');
 const timelineController = require('../controllers/serviceEnvironment/timelineController');
 const timelineDetailController = require('../controllers/serviceEnvironment/timelineDetailController');
+const checklistDetailController = require('../controllers/serviceEnvironment/checklistDetailController');
 
 const serviceRouter = Router();
 
@@ -57,5 +58,10 @@ serviceRouter.post('/timeline/detail/:id_timeline', authMiddleware, timelineDeta
 serviceRouter.get('/timeline-details', authMiddleware, timelineDetailController.index);
 serviceRouter.put('/timeline/detail/:id_time_detail', authMiddleware, timelineDetailController.update);
 serviceRouter.delete('/timeline/detail/:id_time_detail', authMiddleware, timelineDetailController.destroy);
+
+serviceRouter.post('/checklist/detail/:id_checklist', authMiddleware, checklistDetailController.store);
+serviceRouter.get('/checklist-details', authMiddleware, checklistDetailController.index);
+serviceRouter.put('/checklist/detail/:id_check_detail', authMiddleware, checklistDetailController.update);
+serviceRouter.delete('/checklist/detail/:id_check_detail', authMiddleware, checklistDetailController.destroy);
 
 module.exports = serviceRouter;

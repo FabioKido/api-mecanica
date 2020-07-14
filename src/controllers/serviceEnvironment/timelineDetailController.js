@@ -18,11 +18,12 @@ exports.store = async (req, res, next) => {
   try {
     const { id_timeline } = req.params;
 
-    const { title } = req.body;
+    const { title, complete } = req.body;
 
     const timeline_detail = await TimelineDetail.create({
       id_timeline,
-      title
+      title,
+      complete
     });
 
     res.json({
@@ -39,10 +40,11 @@ exports.update = async (req, res, next) => {
   try {
 
     const { id_time_detail } = req.params;
-    const { title } = req.body;
+    const { title, complete } = req.body;
 
     const timeline_detail = await TimelineDetail.update({
-      title
+      title,
+      complete
     },
       {
         where: {

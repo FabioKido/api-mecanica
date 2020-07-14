@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('users', { 
+    return queryInterface.createTable('users', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -35,22 +35,6 @@ module.exports = {
         allowNull: false,
         defaultValue: true
       },
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      created_by: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      updated_by: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
       last_login: {
         type: Sequelize.DATE,
         allowNull: true,
@@ -66,6 +50,27 @@ module.exports = {
       },
       access_token: {
         type: Sequelize.STRING,
+        allowNull: true,
+      },
+      workshops: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 1
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      created_by: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      updated_by: {
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
     });
