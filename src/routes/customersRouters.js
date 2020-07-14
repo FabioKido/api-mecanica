@@ -14,5 +14,6 @@ customersRouter.put('/:id_customer', authMiddleware, customerController.update);
 customersRouter.delete('/:id_customer', authMiddleware, customerController.destroy);
 
 customersRouter.get('/inf/:id', authMiddleware, customerInfoController.show);
+customersRouter.get('/vehicles/:id_customer', authMiddleware, customerInfoController.index);
 
 module.exports = customersRouter;

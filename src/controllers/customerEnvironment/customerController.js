@@ -37,7 +37,7 @@ exports.show = async (req, res, next) => {
     const customer = await Customer.findByPk(id_customer);
     if (!customer) return next(new Error('Cliente não existe'));
     res.status(200).json({
-      data: customer
+      customer
     });
   } catch (error) {
     next(error)

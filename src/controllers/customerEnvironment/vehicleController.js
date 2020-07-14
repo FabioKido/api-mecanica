@@ -22,6 +22,19 @@ exports.index = async (req, res, next) => {
   }
 }
 
+exports.show = async (req, res, next) => {
+  try {
+    const { id_vehicle } = req.params;
+    const vehicle = await Vehicle.findByPk(id_vehicle);
+    if (!vehicle) return next(new Error('Veículo não existe'));
+    res.status(200).json({
+      vehicle
+    });
+  } catch (error) {
+    next(error)
+  }
+}
+
 exports.store = async (req, res) => {
 
   const userId = req.user;

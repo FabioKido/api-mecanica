@@ -1,11 +1,21 @@
 const Diagnostic = require('../../models/serviceEntities/Diagnostic');
 
 exports.index = async (req, res) => {
-  const diagnostics = await Diagnostic.findAll();
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: diagnostics
-  });
+    const diagnostics = await Diagnostic.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      diagnostics
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -24,17 +34,16 @@ exports.show = async (req, res, next) => {
   }
 }
 
-// FIXME Resolver problema como o do timeline talvez.
-
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
-    const { value, approved, observations } = req.body;
+    const { value, approved, observations, id_vehicle } = req.body;
 
     const diagnostic = await Diagnostic.create({
-      value,
+      value: value || 0,
       approved,
       observations,
+      id_vehicle,
       created_by: userId
     });
 
@@ -59,7 +68,7 @@ exports.update = async (req, res, next) => {
     } = req.body;
 
     const diagnostic = await Diagnostic.update({
-      value,
+      value: value || 0,
       approved,
       observations,
       updated_by: userId

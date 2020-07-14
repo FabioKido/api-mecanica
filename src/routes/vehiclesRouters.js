@@ -10,6 +10,7 @@ const vehiclesRouter = Router();
 
 vehiclesRouter.post('/:id_customer/add', authMiddleware, vehicleController.store);
 vehiclesRouter.get('/', authMiddleware, vehicleController.index);
+vehiclesRouter.get('/:id_vehicle/one', authMiddleware, vehicleController.show);
 vehiclesRouter.put('/:id_vehicle', authMiddleware, vehicleController.update);
 vehiclesRouter.delete('/:id_vehicle', authMiddleware, vehicleController.destroy);
 
