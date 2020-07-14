@@ -4,7 +4,7 @@ exports.index = async (req, res) => {
   const timelines = await Timeline.findAll();
 
   res.status(200).json({
-    data: timelines
+    timelines
   });
 }
 

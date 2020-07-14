@@ -10,7 +10,7 @@ exports.index = async (req, res) => {
   });
 
   res.status(200).json({
-    data: timeline_details
+    timeline_details
   });
 }
 
@@ -41,14 +41,14 @@ exports.update = async (req, res, next) => {
     const { id_time_detail } = req.params;
     const { title } = req.body;
 
-    const timeline_detail = await TimelineDetail.update( {
+    const timeline_detail = await TimelineDetail.update({
       title
-     },
-     {
-      where: {
-        id: id_time_detail
-      }
-    });
+    },
+      {
+        where: {
+          id: id_time_detail
+        }
+      });
 
     res.json({
       data: timeline_detail,

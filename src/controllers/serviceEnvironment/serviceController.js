@@ -4,7 +4,7 @@ exports.index = async (req, res) => {
   const services = await Service.findAll();
 
   res.status(200).json({
-    data: services
+    services
   });
 }
 
@@ -28,12 +28,21 @@ exports.store = async (req, res, next) => {
   try {
     const { name } = req.body;
 
-    const service = await Service.create({
+    // TODO Melhorar isso aqui, para otimizar.
+    const service = await Service.findOne({
+      where: {
+        name
+      }
+    });
+
+    if (service) return next(new Error('Serviço já existe'));
+
+    const serv = await Service.create({
       name
     });
 
     res.json({
-      data: service,
+      serv,
       message: "Serviço cadastrado com sucesso"
     })
 
@@ -49,14 +58,14 @@ exports.update = async (req, res, next) => {
     const { id_service } = req.params;
     const { name } = req.body;
 
-    const service = await Service.update( {
+    const service = await Service.update({
       name
-     },
-     {
-      where: {
-        id: id_service
-      }
-    });
+    },
+      {
+        where: {
+          id: id_service
+        }
+      });
 
     res.json({
       data: service,

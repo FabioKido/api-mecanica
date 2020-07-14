@@ -24,6 +24,8 @@ exports.show = async (req, res, next) => {
   }
 }
 
+// FIXME Resolver problema como o do timeline talvez.
+
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
@@ -46,7 +48,6 @@ exports.store = async (req, res, next) => {
   }
 }
 
-
 exports.update = async (req, res, next) => {
   try {
     const userId = req.user;
@@ -57,17 +58,17 @@ exports.update = async (req, res, next) => {
       observations
     } = req.body;
 
-    const diagnostic = await Diagnostic.update( {
+    const diagnostic = await Diagnostic.update({
       value,
       approved,
       observations,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_diagnostic
-      }
-    });
+    },
+      {
+        where: {
+          id: id_diagnostic
+        }
+      });
 
     res.json({
       data: diagnostic,
