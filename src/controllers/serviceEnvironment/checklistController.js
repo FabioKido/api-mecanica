@@ -10,14 +10,18 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res, next) => {
   try {
-    const { id_checklist } = req.params;
+    const { id_diagnostic } = req.params;
 
-    const checklist = await Checklist.findByPk(id_checklist);
+    const checklist = await Checklist.findOne({
+      where: {
+        id_diagnostic
+      }
+    });
 
     if (!checklist) return next(new Error('Checklist de Veículos não existe'));
 
     res.status(200).json({
-      data: checklist
+      checklist
     });
   } catch (error) {
     next(error)
@@ -34,7 +38,7 @@ exports.store = async (req, res, next) => {
     });
 
     res.json({
-      data: checklist,
+      checklist,
       message: "Checklist de Veículos cadastrado com sucesso"
     })
 
@@ -42,7 +46,6 @@ exports.store = async (req, res, next) => {
     next(error)
   }
 }
-
 
 exports.update = async (req, res, next) => {
   try {
@@ -63,27 +66,6 @@ exports.update = async (req, res, next) => {
       data: checklist,
       message: "Checklist de Veículos atualizado com sucesso"
     })
-
-  } catch (error) {
-    next(error)
-  }
-}
-
-exports.destroy = async (req, res, next) => {
-  try {
-
-    const { id_checklist } = req.params;
-
-    Checklist.destroy({
-      where: {
-        id: id_checklist
-      }
-    })
-
-    res.status(200).json({
-      data: null,
-      message: 'Checklist de Veículos foi deletado'
-    });
 
   } catch (error) {
     next(error)

@@ -34,9 +34,8 @@ serviceRouter.delete('/diagnostic/:id_diagnostic', authMiddleware, diagnosticCon
 
 serviceRouter.post('/checklist/:id_diagnostic', authMiddleware, checklistController.store);
 serviceRouter.get('/checklists', authMiddleware, checklistController.index);
-serviceRouter.get('/checklist/:id_checklist', authMiddleware, checklistController.show);
+serviceRouter.get('/checklist/:id_diagnostic', authMiddleware, checklistController.show);
 serviceRouter.put('/checklist/:id_checklist', authMiddleware, checklistController.update);
-serviceRouter.delete('/checklist/:id_checklist', authMiddleware, checklistController.destroy);
 
 serviceRouter.post('/preventive', authMiddleware, preventiveController.store);
 serviceRouter.get('/preventives', authMiddleware, preventiveController.index);

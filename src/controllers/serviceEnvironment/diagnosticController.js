@@ -39,7 +39,7 @@ exports.store = async (req, res, next) => {
     const userId = req.user;
     const { value, approved, observations, id_vehicle } = req.body;
 
-    const diagnostic = await Diagnostic.create({
+    const { id: diagnostic } = await Diagnostic.create({
       value: value || 0,
       approved,
       observations,
@@ -48,9 +48,9 @@ exports.store = async (req, res, next) => {
     });
 
     res.json({
-      data: diagnostic,
+      diagnostic,
       message: "Diagnóstico do Veículo cadastrado com sucesso"
-    })
+    });
 
   } catch (error) {
     next(error)
