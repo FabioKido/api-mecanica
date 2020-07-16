@@ -126,6 +126,7 @@ Schedule.associate(connection.models);
 Service.associate(connection.models);
 Diagnostic.associate(connection.models);
 Checklist.associate(connection.models);
+Timeline.associate(connection.models);
 Parcel.associate(connection.models);
 TimelineDetail.associate(connection.models);
 ChecklistDetail.associate(connection.models);

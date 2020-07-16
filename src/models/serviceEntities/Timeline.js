@@ -11,6 +11,10 @@ class Timeline extends Model {
     })
   }
 
+  static associate(models) {
+    this.belongsTo(models.Order, { foreignKey: 'id_order', as: 'order' });
+  }
+
 }
 
 module.exports = Timeline;
