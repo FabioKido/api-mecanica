@@ -1,11 +1,21 @@
 const Preventive = require('../../models/serviceEntities/Preventive');
 
-exports.index = async (req, res) => {
-  const preventives = await Preventive.findAll();
+exports.index = async (req, res, next) => {
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: preventives
-  });
+    const preventives = await Preventive.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      preventives
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -37,7 +47,7 @@ exports.store = async (req, res, next) => {
     const preventive = await Preventive.create({
       id_vehicle: id_vehicle || null,
       id_service: id_service || null,
-      date,
+      date: date || Date.now(),
       status,
       enable: true,
       created_by: userId
@@ -53,28 +63,25 @@ exports.store = async (req, res, next) => {
   }
 }
 
-
 exports.update = async (req, res, next) => {
   try {
     const userId = req.user;
     const { id_preventive } = req.params;
     const {
       date,
-      status,
-      enable
+      status
     } = req.body;
 
-    const preventive = await Preventive.update( {
+    const preventive = await Preventive.update({
       date,
       status,
-      enable,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_preventive
-      }
-    });
+    },
+      {
+        where: {
+          id: id_preventive
+        }
+      });
 
     res.json({
       data: preventive,

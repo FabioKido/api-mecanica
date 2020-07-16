@@ -17,7 +17,7 @@ exports.show = async (req, res, next) => {
     if (!service) return next(new Error('Serviço não existe'));
 
     res.status(200).json({
-      data: service
+      service
     });
   } catch (error) {
     next(error)

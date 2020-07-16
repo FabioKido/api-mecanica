@@ -1,6 +1,6 @@
 const Diagnostic = require('../../models/serviceEntities/Diagnostic');
 
-exports.index = async (req, res) => {
+exports.index = async (req, res, next) => {
   try {
     const id_user = req.user;
 

@@ -1,11 +1,21 @@
 const Schedule = require('../../models/serviceEntities/Schedule');
 
 exports.index = async (req, res) => {
-  const schedules = await Schedule.findAll();
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: schedules
-  });
+    const schedules = await Schedule.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      schedules
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -27,11 +37,16 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
-    const { date, status, observations, id_vehicle } = req.body;
+    const {
+      date,
+      status,
+      observations,
+      id_vehicle
+    } = req.body;
 
     const schedule = await Schedule.create({
-      id_vehicle,
-      date,
+      id_vehicle: id_vehicle || null,
+      date: date || Date.now(),
       status,
       observations,
       enable: true,
@@ -48,7 +63,6 @@ exports.store = async (req, res, next) => {
   }
 }
 
-
 exports.update = async (req, res, next) => {
   try {
     const userId = req.user;
@@ -56,22 +70,20 @@ exports.update = async (req, res, next) => {
     const {
       date,
       status,
-      observations,
-      enable
+      observations
     } = req.body;
 
-    const schedule = await Schedule.update( {
+    const schedule = await Schedule.update({
       date,
       status,
       observations,
-      enable,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_schedule
-      }
-    });
+    },
+      {
+        where: {
+          id: id_schedule
+        }
+      });
 
     res.json({
       data: schedule,
