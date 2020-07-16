@@ -9,13 +9,6 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      id_timeline: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: { model: 'timelines', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-      },
       id_vehicle: {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -66,7 +59,7 @@ module.exports = {
       prevision_exit: {
         type: Sequelize.DATEONLY,
         allowNull: true,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('prevision_exit')).format('YYYY-MM-DD');
         }
       },

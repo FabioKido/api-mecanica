@@ -9,6 +9,13 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
+      id_order: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'orders', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
       enable: {
         type: Sequelize.BOOLEAN,
         allowNull: false,

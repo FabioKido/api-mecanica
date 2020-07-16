@@ -23,7 +23,7 @@ exports.store = async (req, res, next) => {
     const timeline_detail = await TimelineDetail.create({
       id_timeline,
       title,
-      complete
+      complete: complete || false
     });
 
     res.json({

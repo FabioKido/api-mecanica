@@ -48,10 +48,9 @@ serviceRouter.get('/records', authMiddleware, recordController.index);
 serviceRouter.get('/record/:id_record', authMiddleware, recordController.show);
 serviceRouter.delete('/record/:id_record', authMiddleware, recordController.destroy);
 
-serviceRouter.post('/timeline', authMiddleware, timelineController.store);
+serviceRouter.post('/timeline/:id_order', authMiddleware, timelineController.store);
 serviceRouter.get('/timelines', authMiddleware, timelineController.index);
-serviceRouter.get('/timeline/:id_timeline', authMiddleware, timelineController.show);
-serviceRouter.delete('/timeline/:id_timeline', authMiddleware, timelineController.destroy);
+serviceRouter.get('/timeline/:id_order', authMiddleware, timelineController.show);
 
 serviceRouter.post('/timeline/detail/:id_timeline', authMiddleware, timelineDetailController.store);
 serviceRouter.get('/timeline-details', authMiddleware, timelineDetailController.index);
