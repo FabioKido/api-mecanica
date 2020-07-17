@@ -16,9 +16,9 @@ exports.index = async (req, res) => {
 
 exports.store = async (req, res, next) => {
   try {
+    const userId = req.user;
     const { id_order } = req.params;
     const {
-      id_user,
       id_service,
       type,
       commission,
@@ -29,15 +29,15 @@ exports.store = async (req, res, next) => {
     } = req.body;
 
     const orderService = await OrderService.create({
-      id_user: id_user || null,
+      id_user: userId,
       id_order: id_order || null,
       id_service: id_service || null,
       type,
-      commission,
-      price,
-      discount,
-      premium,
-      approved
+      commission: commission || 0,
+      price: price || 0,
+      discount: discount || 0,
+      premium: premium || 0,
+      approved: approved || false
     });
 
     res.json({
@@ -64,19 +64,19 @@ exports.update = async (req, res, next) => {
       approved
     } = req.body;
 
-    const orderService = await OrderService.update( {
+    const orderService = await OrderService.update({
       type,
       commission,
       price,
       discount,
       premium,
       approved
-     },
-     {
-      where: {
-        id: id_os
-      }
-    });
+    },
+      {
+        where: {
+          id: id_os
+        }
+      });
 
     res.json({
       data: orderService,

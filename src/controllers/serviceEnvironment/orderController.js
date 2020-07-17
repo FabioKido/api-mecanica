@@ -29,7 +29,6 @@ exports.store = async (req, res, next) => {
     const userId = req.user;
     const {
       id_vehicle,
-      id_timeline,
       id_diagnostic,
       id_schedule,
       id_preventive,
@@ -38,13 +37,11 @@ exports.store = async (req, res, next) => {
       tanque,
       internal_control,
       prevision_exit,
-      observations,
-      active
+      observations
     } = req.body;
 
     const order = await Order.create({
       id_vehicle: id_vehicle || null,
-      id_timeline: id_timeline || null,
       id_diagnostic: id_diagnostic || null,
       id_schedule: id_schedule || null,
       id_preventive: id_preventive || null,
@@ -52,9 +49,9 @@ exports.store = async (req, res, next) => {
       km,
       tanque,
       internal_control,
-      prevision_exit,
+      prevision_exit: prevision_exit || null,
       observations,
-      active,
+      active: true,
       created_by: userId
     });
 
@@ -67,7 +64,6 @@ exports.store = async (req, res, next) => {
     next(error)
   }
 }
-
 
 exports.update = async (req, res, next) => {
   try {
@@ -82,7 +78,7 @@ exports.update = async (req, res, next) => {
       active
     } = req.body;
 
-    const order = await Order.update( {
+    const order = await Order.update({
       km,
       tanque,
       internal_control,
@@ -90,12 +86,12 @@ exports.update = async (req, res, next) => {
       observations,
       active,
       updated_by: userId
-     },
-     {
-      where: {
-        id: id_order
-      }
-    });
+    },
+      {
+        where: {
+          id: id_order
+        }
+      });
 
     res.json({
       data: order,
