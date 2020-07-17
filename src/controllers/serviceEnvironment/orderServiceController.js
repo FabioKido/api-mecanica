@@ -1,17 +1,21 @@
 const OrderService = require('../../models/serviceEntities/OrderService');
 
-exports.index = async (req, res) => {
-  const { id_order } = req.query;
+exports.index = async (req, res, next) => {
+  try {
+    const { id_order } = req.query;
 
-  const orderServices = await OrderService.findAll({
-    where: {
-      id_order
-    }
-  });
+    const orderServices = await OrderService.findAll({
+      where: {
+        id_order
+      }
+    });
 
-  res.status(200).json({
-    data: orderServices
-  });
+    res.status(200).json({
+      orderServices
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.store = async (req, res, next) => {

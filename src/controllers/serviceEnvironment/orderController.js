@@ -1,11 +1,21 @@
 const Order = require('../../models/serviceEntities/Order');
 
-exports.index = async (req, res) => {
-  const orders = await Order.findAll();
+exports.index = async (req, res, next) => {
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: orders
-  });
+    const orders = await Order.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      orders
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -46,8 +56,8 @@ exports.store = async (req, res, next) => {
       id_schedule: id_schedule || null,
       id_preventive: id_preventive || null,
       id_record: id_record || null,
-      km,
-      tanque,
+      km: km || 0,
+      tanque: tanque || 0,
       internal_control,
       prevision_exit: prevision_exit || null,
       observations,
