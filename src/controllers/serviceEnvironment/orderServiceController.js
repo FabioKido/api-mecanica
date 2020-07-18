@@ -4,14 +4,14 @@ exports.index = async (req, res, next) => {
   try {
     const { id_order } = req.query;
 
-    const orderServices = await OrderService.findAll({
+    const order_services = await OrderService.findAll({
       where: {
         id_order
       }
     });
 
     res.status(200).json({
-      orderServices
+      order_services
     });
   } catch (error) {
     next(error)
