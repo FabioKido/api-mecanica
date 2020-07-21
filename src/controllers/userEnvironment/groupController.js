@@ -1,10 +1,21 @@
 const Group = require('../../models/userEntities/Group');
 
 exports.index = async (req, res, next) => {
-  const groups = await Group.findAll();
-  res.status(200).json({
-    data: groups
-  });
+  try {
+    const id_user = req.user;
+
+    const groups = await Group.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      groups
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
@@ -24,12 +35,12 @@ exports.store = async (req, res, next) => {
   try {
 
     const userId = req.user;
-    const { name, description, enable } = req.body;
+    const { name, description } = req.body;
 
     const newGroup = await Group.create({
       name,
       description,
-      enable,
+      enable: true,
       created_by: userId
     });
 
@@ -37,6 +48,36 @@ exports.store = async (req, res, next) => {
       data: newGroup,
       message: "Grupo cadastrado com sucesso"
     });
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.update = async (req, res, next) => {
+  try {
+    const userId = req.user;
+    const { groupId } = req.params;
+    const {
+      name,
+      description
+    } = req.body;
+
+    const group = await Group.update({
+      name,
+      description,
+      updated_by: userId
+    },
+      {
+        where: {
+          id: groupId
+        }
+      });
+
+    res.json({
+      data: group,
+      message: "Grupo atualizado com sucesso"
+    })
+
   } catch (error) {
     next(error)
   }

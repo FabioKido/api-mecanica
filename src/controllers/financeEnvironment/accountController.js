@@ -62,7 +62,6 @@ exports.store = async (req, res, next) => {
   }
 }
 
-
 exports.update = async (req, res, next) => {
   try {
     const userId = req.user;

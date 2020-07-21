@@ -29,6 +29,7 @@ userRouter.get('/inf', authMiddleware, userInfoController.show);
 userRouter.post('/group', authMiddleware, groupController.store);
 userRouter.get('/group/:groupId', authMiddleware, groupController.show);
 userRouter.get('/groups', authMiddleware, groupController.index);
+userRouter.put('/group/:groupId', authMiddleware, groupController.update);
 userRouter.delete('/group/:groupId', authMiddleware, groupController.destroy);
 
 // Permission
