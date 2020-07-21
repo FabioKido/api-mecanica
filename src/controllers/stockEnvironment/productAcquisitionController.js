@@ -20,6 +20,21 @@ exports.show = async (req, res, next) => {
   }
 }
 
-// const prod_acq = await ProductAcquisition.findByPk(id_prod_acq, {
-//   include: { association: 'product' }
-// })
+exports.index = async (req, res, next) => {
+  try {
+    const { id_product } = req.params;
+
+    const prod_acqs = await ProductAcquisition.findAll({
+      where: {
+        id_product
+      }
+    });
+
+    res.status(200).json({
+      prod_acqs
+    });
+
+  } catch (error) {
+    next(error)
+  }
+}

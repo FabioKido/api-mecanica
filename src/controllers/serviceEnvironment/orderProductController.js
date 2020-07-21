@@ -1,17 +1,22 @@
 const OrderProduct = require('../../models/serviceEntities/OrderProduct');
+const ProductAcquisition = require('../../models/stockEntities/ProductAcquisition');
 
-exports.index = async (req, res) => {
-  const { id_os } = req.query;
+exports.index = async (req, res, next) => {
+  try {
+    const { id_os } = req.query;
 
-  const orderProducts = await OrderProduct.findAll({
-    where: {
-      id_order_service: id_os
-    }
-  });
+    const order_products = await OrderProduct.findAll({
+      where: {
+        id_order_service: id_os
+      }
+    });
 
-  res.status(200).json({
-    data: orderProducts
-  });
+    res.status(200).json({
+      order_products
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.store = async (req, res, next) => {
@@ -22,23 +27,34 @@ exports.store = async (req, res, next) => {
       id_provider,
       qtd,
       acquisition,
-      total_sale,
       unit_sale,
       unit_cost,
-      discount
+      discount,
+      id_prod_acq
     } = req.body;
 
     const orderProduct = await OrderProduct.create({
       id_order_service: id_os || null,
       id_product: id_product || null,
       id_provider: id_provider || null,
-      qtd,
+      qtd: qtd || 1,
       acquisition,
-      total_sale,
-      unit_sale,
+      total_sale: Number(unit_sale) * Number(qtd) - Number(discount),
+      unit_sale: unit_sale || 0,
       unit_cost,
-      discount
+      discount: discount || 0
     });
+
+    const { qtd: quantity } = await ProductAcquisition.findByPk(id_prod_acq);
+
+    await ProductAcquisition.update({
+      qtd: Number(quantity) - Number(qtd)
+    },
+      {
+        where: {
+          id: id_prod_acq
+        }
+      });
 
     res.json({
       data: orderProduct,
@@ -49,7 +65,6 @@ exports.store = async (req, res, next) => {
     next(error)
   }
 }
-
 
 exports.update = async (req, res, next) => {
   try {
@@ -64,19 +79,19 @@ exports.update = async (req, res, next) => {
       discount
     } = req.body;
 
-    const orderProduct = await OrderProduct.update( {
+    const orderProduct = await OrderProduct.update({
       qtd,
       acquisition,
       total_sale,
       unit_sale,
       unit_cost,
       discount
-     },
-     {
-      where: {
-        id: id_op
-      }
-    });
+    },
+      {
+        where: {
+          id: id_op
+        }
+      });
 
     res.json({
       data: orderProduct,

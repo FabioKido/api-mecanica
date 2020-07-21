@@ -8,6 +8,7 @@ const familyController = require('../controllers/stockEnvironment/familyControll
 const productController = require('../controllers/stockEnvironment/productController');
 const acquisitionController = require('../controllers/stockEnvironment/acquisitionController');
 const productAcquisitionController = require('../controllers/stockEnvironment/productAcquisitionController');
+const productAcquisitionInfoController = require('../controllers/stockEnvironment/productAcquisitionInfoController');
 
 const stockRouter = Router();
 
@@ -32,6 +33,9 @@ stockRouter.put('/product/:id_product', authMiddleware, productController.update
 stockRouter.delete('/product/:id_product', authMiddleware, productController.destroy);
 
 stockRouter.get('/product/acquisition/:id_acquisition', authMiddleware, productAcquisitionController.show);
+stockRouter.get('/acquisition/product/:id_product', authMiddleware, productAcquisitionController.index);
+
+stockRouter.get('/inf/product/:id_prod_acq', authMiddleware, productAcquisitionInfoController.show);
 
 stockRouter.post('/acquisition', authMiddleware, acquisitionController.store);
 stockRouter.get('/acquisitions', authMiddleware, acquisitionController.index);
