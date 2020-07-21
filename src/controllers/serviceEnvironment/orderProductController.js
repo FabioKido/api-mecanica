@@ -37,7 +37,8 @@ exports.store = async (req, res, next) => {
       id_order_service: id_os || null,
       id_product: id_product || null,
       id_provider: id_provider || null,
-      qtd: qtd || 1,
+      id_prod_acq: id_prod_acq || null,
+      qtd: qtd || 0,
       acquisition,
       total_sale: Number(unit_sale) * Number(qtd) - Number(discount),
       unit_sale: unit_sale || 0,
@@ -45,16 +46,18 @@ exports.store = async (req, res, next) => {
       discount: discount || 0
     });
 
-    const { qtd: quantity } = await ProductAcquisition.findByPk(id_prod_acq);
+    if (qtd > 0) {
+      const { qtd: quantity } = await ProductAcquisition.findByPk(id_prod_acq);
 
-    await ProductAcquisition.update({
-      qtd: Number(quantity) - Number(qtd)
-    },
-      {
-        where: {
-          id: id_prod_acq
-        }
-      });
+      await ProductAcquisition.update({
+        qtd: Number(quantity) - Number(qtd)
+      },
+        {
+          where: {
+            id: id_prod_acq
+          }
+        });
+    }
 
     res.json({
       data: orderProduct,
@@ -66,37 +69,53 @@ exports.store = async (req, res, next) => {
   }
 }
 
+// TODO Ver se o acquisition é isso mesmo(data da compra) ou é a data da venda do produto.
 exports.update = async (req, res, next) => {
   try {
 
     const { id_op } = req.params;
     const {
       qtd,
-      acquisition,
       total_sale,
       unit_sale,
-      unit_cost,
-      discount
+      discount,
+      id_prod_acq,
+      qtd_ant
     } = req.body;
 
-    const orderProduct = await OrderProduct.update({
-      qtd,
-      acquisition,
-      total_sale,
-      unit_sale,
-      unit_cost,
-      discount
-    },
-      {
-        where: {
-          id: id_op
-        }
-      });
+    const { qtd: quantity } = await ProductAcquisition.findByPk(id_prod_acq);
 
-    res.json({
-      data: orderProduct,
-      message: "Item de Produto atualizado com sucesso"
-    })
+    if (qtd > 0) {
+      const orderProduct = await OrderProduct.update({
+        qtd,
+        total_sale,
+        unit_sale,
+        discount
+      },
+        {
+          where: {
+            id: id_op
+          }
+        });
+
+      if (qtd !== qtd_ant) {
+        await ProductAcquisition.update({
+          qtd: (Number(quantity) + Number(qtd_ant)) - Number(qtd)
+        },
+          {
+            where: {
+              id: id_prod_acq
+            }
+          });
+      }
+
+      res.json({
+        data: orderProduct,
+        message: "Item de Produto atualizado com sucesso"
+      })
+    } else {
+      return next(new Error('Quantidade não pode ser ZERO ou Igual a anterior'));
+    }
 
   } catch (error) {
     next(error)
@@ -107,6 +126,18 @@ exports.destroy = async (req, res, next) => {
   try {
 
     const { id_op } = req.params;
+    const { qtd, id_prod_acq } = await OrderProduct.findByPk(id_op);
+
+    const { qtd: quantity } = await ProductAcquisition.findByPk(id_prod_acq);
+
+    await ProductAcquisition.update({
+      qtd: Number(quantity) + Number(qtd)
+    },
+      {
+        where: {
+          id: id_prod_acq
+        }
+      });
 
     OrderProduct.destroy({
       where: {
