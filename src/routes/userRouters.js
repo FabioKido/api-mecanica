@@ -61,6 +61,7 @@ userRouter.delete('/in/group/:id_user', authMiddleware, userGroupController.dest
 userRouter.post('/permission/group/:id_permission', authMiddleware, permissionGroupController.store);
 userRouter.get('/permission/group/:id_permission', authMiddleware, permissionGroupController.show);
 userRouter.delete('/permission/group/:id_permission', authMiddleware, permissionGroupController.destroy);
+userRouter.get('/permissions/group', authMiddleware, permissionGroupController.index);
 
 // Type of Users
 userRouter.post('/owner', authMiddleware, ownerController.store);

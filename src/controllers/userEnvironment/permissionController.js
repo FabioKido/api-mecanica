@@ -3,7 +3,7 @@ const Permission = require('../../models/userEntities/Permission');
 exports.index = async (req, res, next) => {
   const permissions = await Permission.findAll();
   res.status(200).json({
-    data: permissions
+    permissions
   });
 }
 
@@ -13,7 +13,7 @@ exports.show = async (req, res, next) => {
     const permission = await Permission.findByPk(permissionId);
     if (!permission) return next(new Error('Permissão não existe'));
     res.status(200).json({
-      data: permission
+      permission
     });
   } catch (error) {
     next(error)
