@@ -21,15 +21,15 @@ async function validatePassword(plainPassword, hashedPassword) {
   return await bcrypt.compare(plainPassword, hashedPassword);
 }
 
-// Usar lib Crypto para gerar hash seguro
+// FIXME Usar lib Crypto para gerar hash seguro
 function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
 async function createTypeOfUser(newUser) {
-  if(newUser.type === 'PJ'){
+  if (newUser.type === 'PJ') {
     await Company.create({ name: newUser.username, type: 'MPE', id_user: newUser.id });
-  }else {
+  } else {
     await Owner.create({ name: newUser.username, id_user: newUser.id });
   }
 }
@@ -39,17 +39,18 @@ async function createUserWorker(newUser) {
 }
 
 async function createContactAddress(email) {
-  
+
   const contact = await createContact({ celphone: '(00) 90000-0000', email });
   const address = await createAddress({ city: 'Cidade', uf: 'UF' });
 
   return { contact, address }
 }
 
+// TODO Resolver workshops.
 exports.signup = async (req, res, next) => {
   try {
     const {
-      username,    
+      username,
       email,
       password,
       company
@@ -61,7 +62,7 @@ exports.signup = async (req, res, next) => {
       }
     });
 
-    if(user){
+    if (user) {
       return res.json({
         message: "Usuário já cadastrado"
       })
@@ -75,6 +76,7 @@ exports.signup = async (req, res, next) => {
       username: username || email,
       email,
       password: hashedPassword,
+      workshops: 1,
       type: company ? 'PJ' : 'PF',
       id_contact: contact.id,
       id_address: address.id
@@ -122,7 +124,7 @@ exports.signin = async (req, res, next) => {
     const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: 86400,
     });
-    
+
     await user.update({ access_token, last_login: Date() })
 
     user.password = undefined;
@@ -133,9 +135,9 @@ exports.signin = async (req, res, next) => {
     })
 
   } catch (error) {
-      next(error);
+    next(error);
   }
-    
+
 }
 
 exports.signupWorker = async (req, res, next) => {
@@ -152,7 +154,7 @@ exports.signupWorker = async (req, res, next) => {
       }
     });
 
-    if(user){
+    if (user) {
       return res.json({
         message: "Usuário já cadastrado"
       })
@@ -184,7 +186,7 @@ exports.signupWorker = async (req, res, next) => {
     newUser.password = undefined;
 
     res.json({
-      data: {newUser},
+      data: { newUser },
       message: "Colaborador cadastrado com sucesso"
     })
   } catch (error) {
@@ -195,7 +197,7 @@ exports.signupWorker = async (req, res, next) => {
 // Add data da req de nova senha
 exports.forgot = async (req, res, next) => {
 
-  try{
+  try {
     const { email } = req.body
 
     const user = await User.findOne({
@@ -204,17 +206,17 @@ exports.forgot = async (req, res, next) => {
       }
     });
 
-    if(!user) return next(new Error('Usuário não existe'));
+    if (!user) return next(new Error('Usuário não existe'));
 
-    const password = 'T3MP'+getRandomNumber(0, 100)+'RAR1O';
+    const password = 'T3MP' + getRandomNumber(0, 100) + 'RAR1O';
     const hashedPassword = await hashPassword(password);
 
     await user.update({ password: hashedPassword });
 
     user.password = undefined;
-    
+
     let transporter = nodemailer.createTransport({
-      service:'gmail',
+      service: 'gmail',
       host: "smtp.gmail.com",
       port: 587,
       secure: false,
@@ -225,7 +227,7 @@ exports.forgot = async (req, res, next) => {
       }
     });
 
-    transporter.verify(function(error, success) {
+    transporter.verify(function (error, success) {
       if (error) {
         console.log(error);
       } else {
@@ -243,7 +245,7 @@ exports.forgot = async (req, res, next) => {
 
       Att, e-mecânica.
     `;
-  
+
     transporter.sendMail({
       from: "Fábio Kido <fabiohenryquemesquita@gmail.com>",
       to: email,
@@ -260,7 +262,7 @@ exports.forgot = async (req, res, next) => {
     });
 
     next()
-  }catch (error) {
+  } catch (error) {
     next(error)
   }
 }

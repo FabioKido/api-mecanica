@@ -15,32 +15,6 @@ module.exports = {
     return res.json(owner);
   },
 
-  // Não utilizando
-  async store(req, res) {
-
-    const id_user = req.user;
-
-    const { name, sex, cpf, rg, birthday, orgao_expeditor } = req.body;
-
-    const user = await User.findByPk(id_user);
-
-    if (!user) {
-      return res.status(400).json({ error: 'Usuário não encontrado' });
-    }
-
-    const owner = await Owner.create({
-      name,
-      sex,
-      cpf,
-      rg,
-      birthday,
-      orgao_expeditor,
-      id_user,
-    });
-
-    return res.json(owner);
-  },
-
   async update(req, res) {
     const { id_owner } = req.params;
     const {
@@ -52,19 +26,19 @@ module.exports = {
       orgao_expeditor
     } = req.body;
 
-    const owner = await Owner.update( {
+    const owner = await Owner.update({
       name,
       sex,
       cpf,
       rg,
       birthday,
       orgao_expeditor
-     },
-     {
-      where: {
-        id: id_owner
-      }
-    });
+    },
+      {
+        where: {
+          id: id_owner
+        }
+      });
 
     res.json({
       data: owner,

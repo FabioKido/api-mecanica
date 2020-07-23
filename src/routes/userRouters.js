@@ -64,16 +64,13 @@ userRouter.delete('/permission/group/:id_permission', authMiddleware, permission
 userRouter.get('/permissions/group', authMiddleware, permissionGroupController.index);
 
 // Type of Users
-userRouter.post('/owner', authMiddleware, ownerController.store);
 userRouter.get('/owner/:id_user', authMiddleware, ownerController.show);
 userRouter.put('/owner/:id_owner', authMiddleware, ownerController.update);
 
-userRouter.post('/worker', authMiddleware, workerController.store);
-userRouter.get('/worker/:id_worker', authMiddleware, workerController.show);
+userRouter.get('/worker/:id_user', authMiddleware, workerController.show);
 userRouter.get('/workers', authMiddleware, workerController.index);
 userRouter.put('/worker/:id_worker', authMiddleware, workerController.update);
 
-userRouter.post('/company', authMiddleware, companyController.store);
 userRouter.get('/company/:id_user', authMiddleware, companyController.show);
 userRouter.put('/company/:id_company', authMiddleware, companyController.update);
 

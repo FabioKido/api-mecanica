@@ -3,82 +3,37 @@ const Worker = require('../../models/userEntities/Worker');
 
 module.exports = {
 
-  async index(req, res) {
-    const id_user = req.user;
+  async index(req, res, next) {
+    try {
+      const id_user = req.user;
 
-    const user = await User.findByPk(id_user, {
-      include: { association: 'workers' }
-    });
+      const workers = await User.findAll({
+        where: {
+          created_by: id_user
+        }
+      });
 
-    return res.json(user.workers);
+      res.status(200).json({
+        workers
+      });
+    } catch (error) {
+      next(error)
+    }
   },
 
   async show(req, res) {
-    const { id_worker } = req.params;
+    const { id_user } = req.params;
 
-    const worker = await Worker.findByPk(id_worker);
-
-    return res.json(worker);
-  },
-
-  // Não utilizado!
-  async store(req, res) {
-
-    const id_user = req.user;
-    const {
-      name,
-      sex,
-      cpf,
-      rg,
-      birthday,
-      orgao_expeditor,
-      ctps,
-      salary_hour,
-      salary,
-      commission,
-      admission,
-      admission_exam,
-      next_exam,
-      last_vacation,
-      nest_vacation,
-      rescission,
-      rescission_exam,
-      rescission_reason,
-      observations
-    } = req.body;
-
-    const user = await User.findByPk(id_user);
-
-    if (!user) {
-      return res.status(400).json({ error: 'Usuário não encontrado' });
-    }
-
-    const worker = await Worker.create({
-      name,
-      sex,
-      cpf,
-      rg,
-      birthday,
-      orgao_expeditor,
-      ctps,
-      salary_hour,
-      salary,
-      commission,
-      admission,
-      admission_exam,
-      next_exam,
-      last_vacation,
-      nest_vacation,
-      rescission,
-      rescission_exam,
-      rescission_reason,
-      observations,
-      id_user
+    const worker = await Worker.findOne({
+      where: {
+        id_user
+      }
     });
 
     return res.json(worker);
   },
 
+  // TODO Colocar 'enable' do user e atualizá-lo.
   async update(req, res) {
     const { id_worker } = req.params;
     const {
@@ -100,10 +55,12 @@ module.exports = {
       rescission,
       rescission_exam,
       rescission_reason,
-      observations
+      observations,
+      enable,
+      id_user
     } = req.body;
 
-    const worker = await Worker.update( {
+    const worker = await Worker.update({
       name,
       sex,
       cpf,
@@ -123,12 +80,12 @@ module.exports = {
       rescission_exam,
       rescission_reason,
       observations
-     },
-     {
-      where: {
-        id: id_worker
-      }
-    });
+    },
+      {
+        where: {
+          id: id_worker
+        }
+      });
 
     res.json({
       data: worker,

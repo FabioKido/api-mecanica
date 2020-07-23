@@ -55,7 +55,7 @@ module.exports = {
       workshops: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 1
+        defaultValue: 0
       },
       created_at: {
         type: Sequelize.DATE,
