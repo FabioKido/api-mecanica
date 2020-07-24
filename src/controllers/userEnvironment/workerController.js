@@ -30,7 +30,7 @@ module.exports = {
       }
     });
 
-    return res.json(worker);
+    return res.status(200).json({ worker });
   },
 
   // TODO Colocar 'enable' do user e atualizá-lo.

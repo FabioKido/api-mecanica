@@ -121,6 +121,8 @@ exports.signin = async (req, res, next) => {
 
     if (!validPassword) return next(new Error('Senha incorreta'));
 
+    if (!user.enable) return next(new Error('Usuário sem permissão de entrar'));
+
     const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
       expiresIn: 86400,
     });
@@ -170,6 +172,7 @@ exports.signupWorker = async (req, res, next) => {
       password: hashedPassword,
       type: 'PF',
       role: "user_basic",
+      enable: false,
       created_by: id_user
     });
 

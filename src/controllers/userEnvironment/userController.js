@@ -21,9 +21,9 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const id = req.user;
-    
+
     const user = await User.findByPk(id);
-    
+
     if (!user) return next(new Error('Usuário não existe'));
 
     user.password = "";
@@ -44,6 +44,7 @@ exports.update = async (req, res, next) => {
     const {
       username,
       email,
+      enable,
       password,
       phone,
       celphone,
@@ -58,60 +59,62 @@ exports.update = async (req, res, next) => {
     let user;
     const { id_contact, id_address } = await User.findByPk(userId);
 
-    if(password){
+    if (password) {
       const hashedPassword = await hashPassword(password);
 
-      user = await User.update( {
+      user = await User.update({
         username,
         email,
+        enable,
         password: hashedPassword,
         updated_by: userId,
-       },
-       {
-        where: {
-          id: userId
-        }
-      });
-    }else {
-      user = await User.update( {
+      },
+        {
+          where: {
+            id: userId
+          }
+        });
+    } else {
+      user = await User.update({
         username,
         email,
+        enable,
         updated_by: userId,
-       },
-       {
-        where: {
-          id: userId
-        }
-      });
+      },
+        {
+          where: {
+            id: userId
+          }
+        });
     }
-    
-    await Contact.update( {
+
+    await Contact.update({
       phone,
       celphone,
       email
-     },
-     {
-      where: {
-        id: id_contact
-      }
-    });
+    },
+      {
+        where: {
+          id: id_contact
+        }
+      });
 
-    await Address.update( {
+    await Address.update({
       street,
       neighborhood,
       number: number || null,
       city,
       uf,
       complement
-     },
-     {
-      where: {
-        id: id_address
-      }
-    });
+    },
+      {
+        where: {
+          id: id_address
+        }
+      });
 
     res.status(200).json({
-      data: {user},
+      data: { user },
       message: 'Usuário foi atualizado'
     });
 
@@ -128,10 +131,10 @@ exports.destroy = async (req, res, next) => {
     const userId = req.params.userId;
     const { id_contact, id_address } = await User.findByPk(userId);
 
-    if(id_contact)
+    if (id_contact)
       Contact.destroy({ where: { id: id_contact } });
 
-    if(id_address)
+    if (id_address)
       Address.destroy({ where: { id: id_address } });
 
     User.destroy({
