@@ -32,13 +32,15 @@ exports.store = async (req, res, next) => {
       approved
     } = req.body;
 
+    const total = price ? Number(price) - (Number(discount) || 0) : 0;
+
     const orderService = await OrderService.create({
       id_user: userId,
       id_order: id_order || null,
       id_service: id_service || null,
       type,
       commission: commission || 0,
-      price: price || 0,
+      price: total,
       discount: discount || 0,
       premium: premium || 0,
       approved: approved || false
@@ -54,7 +56,6 @@ exports.store = async (req, res, next) => {
   }
 }
 
-
 exports.update = async (req, res, next) => {
   try {
 
@@ -65,13 +66,16 @@ exports.update = async (req, res, next) => {
       price,
       discount,
       premium,
-      approved
+      approved,
+      disc_ant
     } = req.body;
+
+    const total = price ? (Number(price) + Number(disc_ant)) - Number(discount) : 0;
 
     const orderService = await OrderService.update({
       type,
       commission,
-      price,
+      price: total,
       discount,
       premium,
       approved
