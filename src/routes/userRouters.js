@@ -56,6 +56,7 @@ userRouter.delete('/resource/:resourceId', authMiddleware, resourceController.de
 userRouter.post('/in/group/:id_user', authMiddleware, userGroupController.store);
 userRouter.get('/in/group/:id_user', authMiddleware, userGroupController.show);
 userRouter.delete('/in/group/:id_user', authMiddleware, userGroupController.destroy);
+userRouter.get('/in/groups', authMiddleware, userGroupController.index);
 
 // Group and Permission
 userRouter.post('/permission/group/:id_permission', authMiddleware, permissionGroupController.store);

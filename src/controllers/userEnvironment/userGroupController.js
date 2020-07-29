@@ -1,6 +1,23 @@
 const User = require('../../models/userEntities/User');
 const Group = require('../../models/userEntities/Group');
 
+exports.index = async (req, res) => {
+
+  const { id_group } = req.query;
+
+  const group = await Group.findByPk(id_group, {
+    include: {
+      association: 'users',
+      attributes: ['id', 'username'],
+      through: {
+        attributes: []
+      }
+    }
+  });
+
+  return res.json(group.users);
+}
+
 exports.show = async (req, res) => {
 
   const { id_user } = req.params;
@@ -19,7 +36,7 @@ exports.show = async (req, res) => {
 }
 
 exports.store = async (req, res, next) => {
-  try{
+  try {
     const { id_user } = req.params;
     const { id_group } = req.body;
 
@@ -39,10 +56,10 @@ exports.store = async (req, res, next) => {
   }
 }
 
-exports.destroy = async (req, res, next) => {
+exports.destroy = async (req, res) => {
 
   const { id_user } = req.params;
-  const { id } = req.query;
+  const { id_group } = req.query;
 
   const user = await User.findByPk(id_user);
 
@@ -50,11 +67,9 @@ exports.destroy = async (req, res, next) => {
     return res.status(400).json({ error: 'User não encontrado' });
   }
 
-  const group = await Group.findOne({
-    where: { id }
-  });
+  const group = await Group.findByPk(id_group);
 
   await user.removeGroup(group);
 
-  return res.json({message: "Usuário retirado do Grupo"});
+  return res.json({ message: "Usuário retirado do Grupo" });
 }
