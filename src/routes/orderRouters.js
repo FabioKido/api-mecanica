@@ -18,6 +18,7 @@ orderServiceRouter.delete('/os/:id_order', authMiddleware, orderController.destr
 
 orderServiceRouter.post('/order-service/:id_order', authMiddleware, orderServiceController.store);
 orderServiceRouter.get('/order-services', authMiddleware, orderServiceController.index);
+orderServiceRouter.get('/order-service/:id_os', authMiddleware, orderServiceController.show);
 orderServiceRouter.put('/order-service/:id_os', authMiddleware, orderServiceController.update);
 orderServiceRouter.delete('/order-service/:id_os', authMiddleware, orderServiceController.destroy);
 

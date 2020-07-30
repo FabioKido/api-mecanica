@@ -18,6 +18,22 @@ exports.index = async (req, res, next) => {
   }
 }
 
+exports.show = async (req, res, next) => {
+  try {
+    const { id_os } = req.params;
+
+    const order_service = await OrderService.findByPk(id_os);
+
+    if (!order_service) return next(new Error('Item de Serviço não existe'));
+
+    res.status(200).json({
+      order_service
+    });
+  } catch (error) {
+    next(error)
+  }
+}
+
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;

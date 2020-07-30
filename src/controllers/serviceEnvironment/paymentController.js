@@ -41,9 +41,9 @@ exports.store = async (req, res, next) => {
 
     const payment = await Payment.create({
       id_order: id_order || null,
-      date,
+      date: Date.now(),
       parcels,
-      status
+      status: status || false
     });
 
     res.json({
@@ -67,16 +67,16 @@ exports.update = async (req, res, next) => {
       status
     } = req.body;
 
-    const payment = await Payment.update( {
+    const payment = await Payment.update({
       date,
       parcels,
       status
-     },
-     {
-      where: {
-        id: id_payment
-      }
-    });
+    },
+      {
+        where: {
+          id: id_payment
+        }
+      });
 
     res.json({
       data: payment,
