@@ -10,7 +10,7 @@ exports.index = async (req, res) => {
   });
 
   res.status(200).json({
-    data: parcels
+    parcels
   });
 }
 
@@ -33,11 +33,11 @@ exports.store = async (req, res, next) => {
       id_payment_method: id_payment_method || null,
       id_bank_account: id_bank_account || null,
       value,
-      vencimento,
+      vencimento: vencimento || Date.now(),
       document_number,
       taxa_ajuste,
       observations,
-      paid_out
+      paid_out: paid_out || false
     });
 
     res.json({
@@ -50,33 +50,39 @@ exports.store = async (req, res, next) => {
   }
 }
 
-
 exports.update = async (req, res, next) => {
   try {
 
     const { id_parcel } = req.params;
     const {
+      id_payment_method,
+      id_bank_account,
       value,
       vencimento,
       document_number,
       taxa_ajuste,
       observations,
-      paid_out
+      paid_out,
+      taxa_ant
     } = req.body;
 
-    const parcel = await Parcel.update( {
-      value,
+    const total = taxa_ajuste !== taxa_ant ? (Number(value) - Number(taxa_ant)) + Number(taxa_ajuste) : value;
+
+    const parcel = await Parcel.update({
+      id_payment_method: id_payment_method || null,
+      id_bank_account: id_bank_account || null,
+      value: total,
       vencimento,
       document_number,
       taxa_ajuste,
       observations,
       paid_out
-     },
-     {
-      where: {
-        id: id_parcel
-      }
-    });
+    },
+      {
+        where: {
+          id: id_parcel
+        }
+      });
 
     res.json({
       data: parcel,

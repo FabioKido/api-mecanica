@@ -79,22 +79,14 @@ exports.update = async (req, res, next) => {
     const { id_expense } = req.params;
     const {
       id_category,
-      total_value,
       description,
       date,
       classification,
       observations
     } = req.body;
 
-    const expense_details = await ExpenseDetail.findAll({
-      where: {
-        id_expense
-      }
-    });
-
     const expense = await Expense.update({
       id_category: id_category || null,
-      total_value,
       description,
       date,
       classification,
@@ -106,19 +98,6 @@ exports.update = async (req, res, next) => {
           id: id_expense
         }
       });
-
-    const { parcels } = await Expense.findByPk(id_expense);
-
-    expense_details.map(expense_detail =>
-      ExpenseDetail.update({
-        value: (total_value / parcels) + Number(expense_detail.taxa_ajuste)
-      },
-        {
-          where: {
-            id: expense_detail.id
-          }
-        })
-    )
 
     res.json({
       data: expense,

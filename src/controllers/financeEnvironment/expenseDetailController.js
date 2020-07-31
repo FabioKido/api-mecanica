@@ -66,7 +66,6 @@ exports.store = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
 
-    const { id_expense } = req.query;
     const { id_expense_detail } = req.params;
     const {
       id_payment_method,
@@ -80,10 +79,12 @@ exports.update = async (req, res, next) => {
       taxa_ant
     } = req.body;
 
+    const new_value = taxa_ajuste !== taxa_ant ? (Number(value) - Number(taxa_ant)) + Number(taxa_ajuste) : value;
+
     const expense_detail = await ExpenseDetail.update({
       id_payment_method: id_payment_method || null,
       id_account_destiny: id_account_destiny || null,
-      value,
+      value: new_value,
       vencimento,
       document_number,
       taxa_ajuste,
@@ -95,19 +96,6 @@ exports.update = async (req, res, next) => {
           id: id_expense_detail
         }
       });
-
-    const { total_value } = await Expense.findByPk(id_expense);
-
-    const total = taxa_ajuste ? (Number(total_value) - Number(taxa_ant)) : Number(total_value);
-
-    Expense.update({
-      total_value: total + (Number(taxa_ajuste) || 0)
-    },
-      {
-        where: {
-          id: id_expense
-        }
-      })
 
     res.json({
       data: expense_detail,

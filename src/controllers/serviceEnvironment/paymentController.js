@@ -10,7 +10,7 @@ exports.index = async (req, res) => {
   });
 
   res.status(200).json({
-    data: payments
+    payments
   });
 }
 
@@ -41,7 +41,7 @@ exports.store = async (req, res, next) => {
 
     const payment = await Payment.create({
       id_order: id_order || null,
-      date: Date.now(),
+      date: date || Date.now(),
       parcels,
       status: status || false
     });
@@ -55,7 +55,6 @@ exports.store = async (req, res, next) => {
     next(error)
   }
 }
-
 
 exports.update = async (req, res, next) => {
   try {
