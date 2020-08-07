@@ -3,6 +3,7 @@ const { Router } = require('express');
 const authMiddleware = require('../middlewares/auth');
 
 const orderController = require('../controllers/serviceEnvironment/orderController');
+const orderInfosController = require('../controllers/serviceEnvironment/orderInfosController');
 const orderServiceController = require('../controllers/serviceEnvironment/orderServiceController');
 const orderProductController = require('../controllers/serviceEnvironment/orderProductController');
 const paymentController = require('../controllers/serviceEnvironment/paymentController');
@@ -15,6 +16,11 @@ orderServiceRouter.get('/os-all', authMiddleware, orderController.index);
 orderServiceRouter.get('/os/:id_order', authMiddleware, orderController.show);
 orderServiceRouter.put('/os/:id_order', authMiddleware, orderController.update);
 orderServiceRouter.delete('/os/:id_order', authMiddleware, orderController.destroy);
+
+orderServiceRouter.get('/order-diagnostic/:id_diagnostic', authMiddleware, orderInfosController.getDiagnosticOrder);
+orderServiceRouter.get('/order-preventive/:id_preventive', authMiddleware, orderInfosController.getPreventiveOrder);
+orderServiceRouter.get('/order-schedule/:id_schedule', authMiddleware, orderInfosController.getScheduleOrder);
+orderServiceRouter.get('/order-record/:id_record', authMiddleware, orderInfosController.getRecordOrder);
 
 orderServiceRouter.post('/order-service/:id_order', authMiddleware, orderServiceController.store);
 orderServiceRouter.get('/order-services', authMiddleware, orderServiceController.index);
