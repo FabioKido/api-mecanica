@@ -1,11 +1,21 @@
 const Record = require('../../models/serviceEntities/Record');
 
 exports.index = async (req, res) => {
-  const records = await Record.findAll();
+  try {
+    const id_user = req.user;
 
-  res.status(200).json({
-    data: records
-  });
+    const records = await Record.findAll({
+      where: {
+        created_by: id_user
+      }
+    });
+
+    res.status(200).json({
+      records
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 exports.show = async (req, res, next) => {
