@@ -44,7 +44,7 @@ exports.store = async (req, res, next) => {
     const { total_value } = await Recipe.findByPk(id_recipe);
 
     Recipe.update({
-      total_value: Number(total_value) + (Number(taxa_ajuste) || 0)
+      total_value: Number(total_value) - (Number(taxa_ajuste) || 0)
     },
       {
         where: {
@@ -67,6 +67,7 @@ exports.update = async (req, res, next) => {
 
     const { id_recipe_detail } = req.params;
     const {
+      id_recipe,
       id_payment_method,
       id_account_destiny,
       value,
@@ -75,10 +76,23 @@ exports.update = async (req, res, next) => {
       taxa_ajuste,
       observations,
       paid_out,
-      taxa_ant
+      taxa_ant,
+      value_ant
     } = req.body;
 
-    const new_value = taxa_ajuste !== taxa_ant ? (Number(value) - Number(taxa_ant)) + Number(taxa_ajuste) : value;
+    let new_value;
+
+    if (Number(taxa_ajuste) !== Number(taxa_ant)) {
+      if (Number(value) !== Number(value_ant)) {
+        new_value = Number(value) - Number(taxa_ajuste);
+      } else {
+        new_value = (Number(value) + Number(taxa_ant)) - Number(taxa_ajuste);
+      }
+    } else if (Number(value) !== Number(value_ant) && Number(taxa_ajuste) === Number(taxa_ant)) {
+      new_value = Number(value) - Number(taxa_ajuste);
+    } else {
+      new_value = value;
+    };
 
     const recipe_detail = await RecipeDetail.update({
       id_payment_method: id_payment_method || null,
@@ -95,6 +109,15 @@ exports.update = async (req, res, next) => {
           id: id_recipe_detail
         }
       });
+
+    Recipe.update({
+      total_value: new_value
+    },
+      {
+        where: {
+          id: id_recipe
+        }
+      })
 
     res.json({
       data: recipe_detail,

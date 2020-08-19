@@ -44,7 +44,7 @@ exports.store = async (req, res, next) => {
     const { total_value } = await Expense.findByPk(id_expense);
 
     Expense.update({
-      total_value: Number(total_value) + (Number(taxa_ajuste) || 0)
+      total_value: Number(total_value) - (Number(taxa_ajuste) || 0)
     },
       {
         where: {
@@ -62,12 +62,12 @@ exports.store = async (req, res, next) => {
   }
 }
 
-
 exports.update = async (req, res, next) => {
   try {
 
     const { id_expense_detail } = req.params;
     const {
+      id_expense,
       id_payment_method,
       id_account_destiny,
       value,
@@ -76,10 +76,23 @@ exports.update = async (req, res, next) => {
       taxa_ajuste,
       observations,
       paid_out,
-      taxa_ant
+      taxa_ant,
+      value_ant
     } = req.body;
 
-    const new_value = taxa_ajuste !== taxa_ant ? (Number(value) - Number(taxa_ant)) + Number(taxa_ajuste) : value;
+    let new_value;
+
+    if (Number(taxa_ajuste) !== Number(taxa_ant)) {
+      if (Number(value) !== Number(value_ant)) {
+        new_value = Number(value) - Number(taxa_ajuste);
+      } else {
+        new_value = (Number(value) + Number(taxa_ant)) - Number(taxa_ajuste);
+      }
+    } else if (Number(value) !== Number(value_ant) && Number(taxa_ajuste) === Number(taxa_ant)) {
+      new_value = Number(value) - Number(taxa_ajuste);
+    } else {
+      new_value = value;
+    };
 
     const expense_detail = await ExpenseDetail.update({
       id_payment_method: id_payment_method || null,
@@ -96,6 +109,15 @@ exports.update = async (req, res, next) => {
           id: id_expense_detail
         }
       });
+
+    Expense.update({
+      total_value: new_value
+    },
+      {
+        where: {
+          id: id_expense
+        }
+      })
 
     res.json({
       data: expense_detail,
