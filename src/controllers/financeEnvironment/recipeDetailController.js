@@ -110,14 +110,14 @@ exports.update = async (req, res, next) => {
         }
       });
 
-    Recipe.update({
-      total_value: new_value
-    },
-      {
-        where: {
-          id: id_recipe
-        }
-      })
+    // Recipe.update({
+    //   total_value: new_value
+    // },
+    //   {
+    //     where: {
+    //       id: id_recipe
+    //     }
+    //   })
 
     res.json({
       data: recipe_detail,

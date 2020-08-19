@@ -110,14 +110,14 @@ exports.update = async (req, res, next) => {
         }
       });
 
-    Expense.update({
-      total_value: new_value
-    },
-      {
-        where: {
-          id: id_expense
-        }
-      })
+    // Expense.update({
+    //   total_value: new_value
+    // },
+    //   {
+    //     where: {
+    //       id: id_expense
+    //     }
+    //   })
 
     res.json({
       data: expense_detail,

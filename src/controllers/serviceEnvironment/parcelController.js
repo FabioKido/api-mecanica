@@ -63,15 +63,28 @@ exports.update = async (req, res, next) => {
       taxa_ajuste,
       observations,
       paid_out,
-      taxa_ant
+      taxa_ant,
+      value_ant
     } = req.body;
 
-    const total = taxa_ajuste !== taxa_ant ? (Number(value) - Number(taxa_ant)) + Number(taxa_ajuste) : value;
+    let new_value;
+
+    if (Number(taxa_ajuste) !== Number(taxa_ant)) {
+      if (Number(value) !== Number(value_ant)) {
+        new_value = Number(value) - Number(taxa_ajuste);
+      } else {
+        new_value = (Number(value) + Number(taxa_ant)) - Number(taxa_ajuste);
+      }
+    } else if (Number(value) !== Number(value_ant) && Number(taxa_ajuste) === Number(taxa_ant)) {
+      new_value = Number(value) - Number(taxa_ajuste);
+    } else {
+      new_value = value;
+    };
 
     const parcel = await Parcel.update({
       id_payment_method: id_payment_method || null,
       id_bank_account: id_bank_account || null,
-      value: total,
+      value: new_value,
       vencimento,
       document_number,
       taxa_ajuste,
