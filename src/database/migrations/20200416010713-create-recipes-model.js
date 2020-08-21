@@ -18,10 +18,10 @@ module.exports = {
       },
       id_payment: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: { model: 'payments', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
       total_value: {
         type: Sequelize.DECIMAL(8, 2),
@@ -38,7 +38,7 @@ module.exports = {
       date: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('date')).format('YYYY-MM-DD');
         }
       },

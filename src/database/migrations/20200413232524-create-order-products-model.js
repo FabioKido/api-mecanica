@@ -11,10 +11,10 @@ module.exports = {
       },
       id_order_service: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: { model: 'order_services', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
       id_product: {
         type: Sequelize.INTEGER,
@@ -37,7 +37,7 @@ module.exports = {
       acquisition: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('acquisition')).format('YYYY-MM-DD');
         }
       },

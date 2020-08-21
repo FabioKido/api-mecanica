@@ -11,15 +11,15 @@ module.exports = {
       },
       id_order: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: { model: 'orders', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
       date: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('date')).format('YYYY-MM-DD');
         }
       },

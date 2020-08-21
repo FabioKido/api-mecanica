@@ -18,10 +18,10 @@ module.exports = {
       },
       id_order: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: { model: 'orders', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
       id_user: {
         type: Sequelize.INTEGER,

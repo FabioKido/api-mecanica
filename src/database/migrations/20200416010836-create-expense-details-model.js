@@ -11,10 +11,10 @@ module.exports = {
       },
       id_expense: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: { model: 'expenses', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
       id_payment_method: {
         type: Sequelize.INTEGER,
@@ -37,7 +37,7 @@ module.exports = {
       vencimento: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('vencimento')).format('YYYY-MM-DD');
         }
       },
