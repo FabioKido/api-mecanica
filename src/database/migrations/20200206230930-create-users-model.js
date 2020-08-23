@@ -16,6 +16,7 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.STRING,
@@ -52,10 +53,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      workshops: {
-        type: Sequelize.INTEGER,
+      workshop: {
+        type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: 0
       },
       created_at: {
         type: Sequelize.DATE,

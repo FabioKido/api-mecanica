@@ -7,6 +7,7 @@ class Account extends Model {
       type: DataTypes.STRING(10),
       description: DataTypes.STRING,
       initial_value: DataTypes.DECIMAL(8, 2),
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

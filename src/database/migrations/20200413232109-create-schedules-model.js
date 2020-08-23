@@ -19,7 +19,7 @@ module.exports = {
       date: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('date')).format('YYYY-MM-DD');
         }
       },
@@ -33,6 +33,10 @@ module.exports = {
       },
       enable: {
         type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      workshop: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {

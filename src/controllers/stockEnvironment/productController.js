@@ -2,11 +2,11 @@ const Product = require('../../models/stockEntities/Product');
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const products = await Product.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

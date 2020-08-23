@@ -3,11 +3,11 @@ const Account = require('../../models/financeEntities/Account');
 
 exports.index = async (req, res) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const transfers = await Transfer.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

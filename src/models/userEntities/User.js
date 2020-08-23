@@ -8,13 +8,14 @@ class User extends Model {
       password: DataTypes.STRING,
       role: DataTypes.STRING,
       type: DataTypes.STRING,
-      enable:  DataTypes.BOOLEAN,
+      enable: DataTypes.BOOLEAN,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
       last_login: DataTypes.DATE,
       password_requested_at: DataTypes.DATE,
       accept_terms_privacy: DataTypes.BOOLEAN,
       access_token: DataTypes.STRING,
+      workshop: DataTypes.STRING,
     }, {
       sequelize
     })

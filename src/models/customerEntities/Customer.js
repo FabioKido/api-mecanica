@@ -12,8 +12,9 @@ class Customer extends Model {
       birthday: DataTypes.DATEONLY,
       observations: DataTypes.STRING,
       status: DataTypes.INTEGER,
-      inadimplente:  DataTypes.BOOLEAN,
+      inadimplente: DataTypes.BOOLEAN,
       active: DataTypes.BOOLEAN,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

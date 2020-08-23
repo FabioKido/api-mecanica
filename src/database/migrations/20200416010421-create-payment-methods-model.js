@@ -21,6 +21,10 @@ module.exports = {
         type: Sequelize.DECIMAL(8, 2),
         allowNull: false,
       },
+      workshop: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

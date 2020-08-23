@@ -50,7 +50,7 @@ module.exports = {
       birthday: {
         type: Sequelize.DATEONLY,
         allowNull: true,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('birthday')).format('YYYY-MM-DD');
         }
       },
@@ -68,6 +68,10 @@ module.exports = {
       },
       active: {
         type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      workshop: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {

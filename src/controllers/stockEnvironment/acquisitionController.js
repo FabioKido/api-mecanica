@@ -3,11 +3,11 @@ const ProductAcquisition = require('../../models/stockEntities/ProductAcquisitio
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const acquisitions = await Acquisition.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

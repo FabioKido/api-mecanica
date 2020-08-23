@@ -7,6 +7,7 @@ class Schedule extends Model {
       status: DataTypes.STRING(25),
       observations: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

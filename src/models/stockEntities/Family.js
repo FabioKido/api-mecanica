@@ -5,6 +5,7 @@ class Family extends Model {
     super.init({
       name: DataTypes.STRING,
       description: DataTypes.STRING,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

@@ -21,6 +21,7 @@ class Product extends Model {
       applications: DataTypes.STRING,
       observations: DataTypes.STRING,
       repos: DataTypes.BOOLEAN,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

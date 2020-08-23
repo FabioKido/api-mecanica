@@ -71,7 +71,7 @@ module.exports = {
       validity: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('validity')).format('YYYY-MM-DD');
         }
       },
@@ -89,6 +89,10 @@ module.exports = {
       },
       repos: {
         type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      workshop: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {

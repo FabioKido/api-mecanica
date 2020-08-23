@@ -9,6 +9,7 @@ class Order extends Model {
       prevision_exit: DataTypes.DATEONLY,
       observations: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

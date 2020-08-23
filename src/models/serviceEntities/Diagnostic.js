@@ -6,6 +6,7 @@ class Diagnostic extends Model {
       value: DataTypes.DECIMAL(8, 2),
       approved: DataTypes.BOOLEAN,
       observations: DataTypes.STRING,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

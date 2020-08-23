@@ -7,6 +7,7 @@ const User = require('../../models/userEntities/User');
 const Owner = require('../../models/userEntities/Owner');
 const Worker = require('../../models/userEntities/Worker');
 const Company = require('../../models/userEntities/Company');
+const AccessPlan = require('../../models/userEntities/AccessPlan');
 
 const { createContact } = require('../../services/contactService');
 const { createAddress } = require('../../services/addressService');
@@ -46,19 +47,25 @@ async function createContactAddress(email) {
   return { contact, address }
 }
 
-// TODO Resolver workshops.
 exports.signup = async (req, res, next) => {
   try {
     const {
       username,
       email,
       password,
-      company
+      company,
+      access_plan
     } = req.body
 
     const user = await User.findOne({
       where: {
         email
+      }
+    });
+
+    const plan = await AccessPlan.findOne({
+      where: {
+        type: access_plan
       }
     });
 
@@ -76,10 +83,11 @@ exports.signup = async (req, res, next) => {
       username: username || email,
       email,
       password: hashedPassword,
-      workshops: 1,
+      workshop: email,
       type: company ? 'PJ' : 'PF',
       id_contact: contact.id,
-      id_address: address.id
+      id_address: address.id,
+      id_access_plan: plan.id
     });
 
     const access_token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
@@ -123,7 +131,7 @@ exports.signin = async (req, res, next) => {
 
     if (!user.enable) return next(new Error('Usuário sem permissão de entrar'));
 
-    const access_token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
+    const access_token = jwt.sign({ userId: user.id, workshop: user.workshop }, process.env.JWT_SECRET, {
       expiresIn: 86400,
     });
 
@@ -147,7 +155,9 @@ exports.signupWorker = async (req, res, next) => {
     const {
       username,
       email,
-      password
+      password,
+      workshop,
+      access_plan
     } = req.body
 
     const user = await User.findOne({
@@ -173,6 +183,8 @@ exports.signupWorker = async (req, res, next) => {
       type: 'PF',
       role: "user_basic",
       enable: false,
+      workshop: workshop,
+      id_access_plan: access_plan,
       created_by: id_user
     });
 

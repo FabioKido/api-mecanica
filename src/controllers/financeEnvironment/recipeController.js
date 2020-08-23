@@ -3,11 +3,11 @@ const RecipeDetail = require('../../models/financeEntities/RecipeDetail');
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const recipes = await Recipe.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

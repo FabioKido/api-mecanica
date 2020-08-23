@@ -2,11 +2,11 @@ const Preventive = require('../../models/serviceEntities/Preventive');
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const preventives = await Preventive.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

@@ -2,11 +2,11 @@ const Schedule = require('../../models/serviceEntities/Schedule');
 
 exports.index = async (req, res) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const schedules = await Schedule.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

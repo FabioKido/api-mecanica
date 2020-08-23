@@ -3,11 +3,11 @@ const ExpenseDetail = require('../../models/financeEntities/ExpenseDetail');
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const expenses = await Expense.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

@@ -5,6 +5,7 @@ class Category extends Model {
     super.init({
       description: DataTypes.STRING,
       indicator: DataTypes.STRING,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

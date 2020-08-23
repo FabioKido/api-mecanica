@@ -11,6 +11,7 @@ class Vehicle extends Model {
       type: DataTypes.STRING(10),
       observations: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

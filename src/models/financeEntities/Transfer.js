@@ -8,6 +8,7 @@ class Transfer extends Model {
       date: DataTypes.DATEONLY,
       observations: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

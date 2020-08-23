@@ -2,25 +2,25 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 
 require("dotenv").config({
-  path: path.join(__dirname, "../.env")
+	path: path.join(__dirname, "../.env")
 });
 
 module.exports = (req, res, next) => {
 	const authHeader = req.headers.authorization;
 
-	if (!authHeader){
+	if (!authHeader) {
 		return res.status(401).send({ error: 'No token provided' });
 	}
 
 	const parts = authHeader.split(' ');
 
-	if (!parts.length === 2){
+	if (!parts.length === 2) {
 		return res.status(401).send({ error: 'Token error' });
 	}
 
-	const [ scheme, access_token ] = parts;
+	const [scheme, access_token] = parts;
 
-	if (!/^Bearer$/i.test(scheme)){
+	if (!/^Bearer$/i.test(scheme)) {
 		return res.status(401).send({ error: 'Token malformatted' });
 	}
 
@@ -28,7 +28,8 @@ module.exports = (req, res, next) => {
 		if (err) return res.status(401).send({ error: 'Token invalid' });
 
 		req.user = decoded.userId;
-		
+		req.workshop = decoded.workshop;
+
 		return next();
 	});
 

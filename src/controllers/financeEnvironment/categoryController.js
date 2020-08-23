@@ -2,11 +2,11 @@ const Category = require('../../models/financeEntities/Category');
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const categories = await Category.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

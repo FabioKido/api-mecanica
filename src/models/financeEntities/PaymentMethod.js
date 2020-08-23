@@ -6,6 +6,7 @@ class PaymentMethod extends Model {
       method: DataTypes.STRING(60),
       operator: DataTypes.STRING(60),
       taxa: DataTypes.DECIMAL(8, 2),
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

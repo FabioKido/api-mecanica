@@ -19,7 +19,7 @@ module.exports = {
       acquisition: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        get: function() {
+        get: function () {
           return moment.utc(this.getDataValue('acquisition')).format('YYYY-MM-DD');
         }
       },
@@ -41,6 +41,10 @@ module.exports = {
       },
       approved: {
         type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      workshop: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {

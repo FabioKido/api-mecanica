@@ -9,6 +9,7 @@ class Provider extends Model {
       observations: DataTypes.STRING,
       product_provider: DataTypes.BOOLEAN,
       active: DataTypes.BOOLEAN,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

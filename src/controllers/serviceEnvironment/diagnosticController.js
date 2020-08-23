@@ -2,11 +2,11 @@ const Diagnostic = require('../../models/serviceEntities/Diagnostic');
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const diagnostics = await Diagnostic.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

@@ -2,11 +2,11 @@ const Family = require('../../models/stockEntities/Family');
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const families = await Family.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

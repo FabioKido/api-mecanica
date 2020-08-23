@@ -11,6 +11,7 @@ class Expense extends Model {
       classification: DataTypes.STRING(60),
       observations: DataTypes.STRING,
       enable: DataTypes.BOOLEAN,
+      workshop: DataTypes.STRING,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {

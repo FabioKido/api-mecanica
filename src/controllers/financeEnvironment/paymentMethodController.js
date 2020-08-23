@@ -2,11 +2,11 @@ const PaymentMethod = require('../../models/financeEntities/PaymentMethod');
 
 exports.index = async (req, res) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const payment_methods = await PaymentMethod.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 

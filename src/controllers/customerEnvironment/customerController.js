@@ -15,11 +15,11 @@ async function createContactAddress() {
 
 exports.index = async (req, res, next) => {
   try {
-    const id_user = req.user;
+    const workshop = req.workshop;
 
     const customers = await Customer.findAll({
       where: {
-        created_by: id_user
+        workshop: workshop
       }
     });
 
