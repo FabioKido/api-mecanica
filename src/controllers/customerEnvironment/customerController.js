@@ -47,6 +47,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const {
       name,
       sex,
@@ -74,6 +75,7 @@ exports.store = async (req, res, next) => {
       active: true,
       id_contact: contact.id,
       id_address: address.id,
+      workshop: workshop,
       created_by: userId
     });
 

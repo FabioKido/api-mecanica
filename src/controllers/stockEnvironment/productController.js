@@ -34,6 +34,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const {
       id_family,
       nef_cod,
@@ -76,6 +77,7 @@ exports.store = async (req, res, next) => {
       observations,
       repos: repos || false,
       image,
+      workshop: workshop,
       created_by: userId
     });
 

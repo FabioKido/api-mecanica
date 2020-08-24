@@ -38,6 +38,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const {
       id_category,
       id_account_origin,
@@ -68,6 +69,7 @@ exports.store = async (req, res, next) => {
         date: date || Date.now(),
         observations,
         enable: true,
+        workshop: workshop,
         created_by: userId
       });
 

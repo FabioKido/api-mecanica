@@ -37,6 +37,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const {
       method,
       operator,
@@ -47,6 +48,7 @@ exports.store = async (req, res, next) => {
       method,
       operator,
       taxa,
+      workshop: workshop,
       created_by: userId
     });
 

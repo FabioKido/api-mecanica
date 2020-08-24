@@ -38,6 +38,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const {
       id_category,
       total_value,
@@ -59,6 +60,7 @@ exports.store = async (req, res, next) => {
       classification,
       observations,
       enable: true,
+      workshop: workshop,
       created_by: userId
     });
 

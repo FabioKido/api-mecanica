@@ -35,6 +35,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const {
       id_provider,
       acquisition,
@@ -56,6 +57,7 @@ exports.store = async (req, res, next) => {
       nef_key,
       nef_number,
       approved: approved || false,
+      workshop: workshop,
       created_by: userId
     });
 

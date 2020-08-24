@@ -37,6 +37,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const {
       description,
       indicator
@@ -45,6 +46,7 @@ exports.store = async (req, res, next) => {
     const category = await Category.create({
       description,
       indicator,
+      workshop: workshop,
       created_by: userId
     });
 

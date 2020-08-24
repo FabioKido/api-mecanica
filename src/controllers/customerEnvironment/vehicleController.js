@@ -38,6 +38,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res) => {
 
   const userId = req.user;
+  const workshop = req.workshop;
   const { id_customer } = req.params;
   const {
     fabricator,
@@ -75,6 +76,7 @@ exports.store = async (req, res) => {
     observations,
     type: automovel ? 'Auto' : 'Bike',
     enable: true,
+    workshop: workshop,
     created_by: userId
   });
 

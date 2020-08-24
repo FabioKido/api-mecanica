@@ -37,6 +37,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const {
       id_vehicle,
       id_diagnostic,
@@ -62,6 +63,7 @@ exports.store = async (req, res, next) => {
       prevision_exit: prevision_exit || null,
       observations,
       active: true,
+      workshop: workshop,
       created_by: userId
     });
 

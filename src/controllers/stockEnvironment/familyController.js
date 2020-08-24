@@ -34,11 +34,13 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const { name, description } = req.body;
 
     const family = await Family.create({
       name,
       description,
+      workshop: workshop,
       created_by: userId
     });
 

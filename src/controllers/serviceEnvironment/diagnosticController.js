@@ -37,6 +37,7 @@ exports.show = async (req, res, next) => {
 exports.store = async (req, res, next) => {
   try {
     const userId = req.user;
+    const workshop = req.workshop;
     const { value, approved, observations, id_vehicle } = req.body;
 
     const { id: diagnostic } = await Diagnostic.create({
@@ -44,6 +45,7 @@ exports.store = async (req, res, next) => {
       approved,
       observations,
       id_vehicle,
+      workshop: workshop,
       created_by: userId
     });
 
