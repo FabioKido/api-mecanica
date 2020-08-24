@@ -92,10 +92,6 @@ module.exports = {
 };
 
 /*
-  TODO Objetivo completo está com problema no item de timeline ao vizualizar apenas.
-  TODO Valor Total no pagamento de um serviço aparece bugado(como se fosse string).
-  TODO Taxa de Ajuste no pagamento de um serviço aparece bugado(como se fosse NaN).
-
   Permissões
 
 
