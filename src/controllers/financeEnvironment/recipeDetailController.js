@@ -1,5 +1,6 @@
 const RecipeDetail = require('../../models/financeEntities/RecipeDetail');
 const Recipe = require('../../models/financeEntities/Recipe');
+const Account = require('../../models/financeEntities/Account');
 
 exports.index = async (req, res) => {
   const { id_recipe } = req.query;
@@ -77,7 +78,8 @@ exports.update = async (req, res, next) => {
       observations,
       paid_out,
       taxa_ant,
-      value_ant
+      value_ant,
+      paid_ant
     } = req.body;
 
     let new_value;
@@ -109,6 +111,73 @@ exports.update = async (req, res, next) => {
           id: id_recipe_detail
         }
       });
+
+    if (paid_out !== paid_ant && Number(new_value) === Number(value_ant)) {
+
+      const { initial_value } = await Account.findByPk(id_account_destiny);
+
+      if (paid_out) {
+        Account.update({
+          initial_value: Number(initial_value) + Number(new_value)
+        },
+          {
+            where: {
+              id: id_account_destiny
+            }
+          })
+      } else {
+        Account.update({
+          initial_value: Number(initial_value) - Number(new_value)
+        },
+          {
+            where: {
+              id: id_account_destiny
+            }
+          })
+      }
+    }
+
+    if (paid_out !== paid_ant && Number(new_value) !== Number(value_ant)) {
+
+      const { initial_value } = await Account.findByPk(id_account_destiny);
+
+      if (paid_out) {
+        Account.update({
+          initial_value: Number(initial_value) + Number(new_value)
+        },
+          {
+            where: {
+              id: id_account_destiny
+            }
+          })
+      } else {
+        Account.update({
+          initial_value: Number(initial_value) - Number(value_ant)
+        },
+          {
+            where: {
+              id: id_account_destiny
+            }
+          })
+      }
+    }
+
+    if (paid_out === paid_ant && Number(new_value) !== Number(value_ant)) {
+
+      const { initial_value } = await Account.findByPk(id_account_destiny);
+
+      if (paid_out) {
+        Account.update({
+          initial_value: (Number(initial_value) - Number(value_ant)) + Number(new_value)
+        },
+          {
+            where: {
+              id: id_account_destiny
+            }
+          })
+      }
+
+    }
 
     // Recipe.update({
     //   total_value: new_value
