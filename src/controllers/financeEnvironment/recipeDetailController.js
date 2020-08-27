@@ -1,6 +1,7 @@
 const RecipeDetail = require('../../models/financeEntities/RecipeDetail');
 const Recipe = require('../../models/financeEntities/Recipe');
 const Account = require('../../models/financeEntities/Account');
+const Parcel = require('../../models/serviceEntities/Parcel');
 
 exports.index = async (req, res) => {
   const { id_recipe } = req.query;
@@ -52,6 +53,19 @@ exports.store = async (req, res, next) => {
           id: id_recipe
         }
       })
+
+    const { initial_value } = await Account.findByPk(id_account_destiny);
+
+    if (paid_out && id_account_destiny) {
+      Account.update({
+        initial_value: Number(initial_value) + Number(value)
+      },
+        {
+          where: {
+            id: id_account_destiny
+          }
+        })
+    }
 
     res.json({
       data: recipe_detail,
@@ -109,6 +123,34 @@ exports.update = async (req, res, next) => {
       {
         where: {
           id: id_recipe_detail
+        }
+      });
+
+    const { id_payment } = await Recipe.findByPk(id_recipe);
+
+    const parcels = await Parcel.findAll({
+      where: {
+        id_payment
+      }
+    });
+
+    const valuesEquals = item => item.document_number === document_number;
+
+    const parcel = parcels.filter(valuesEquals);
+
+    await Parcel.update({
+      id_payment_method: id_payment_method || null,
+      id_bank_account: id_account_destiny || null,
+      value: new_value,
+      vencimento,
+      document_number,
+      taxa_ajuste,
+      observations,
+      paid_out
+    },
+      {
+        where: {
+          id: parcel[0].id
         }
       });
 

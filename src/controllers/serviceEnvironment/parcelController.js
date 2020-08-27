@@ -1,4 +1,7 @@
 const Parcel = require('../../models/serviceEntities/Parcel');
+const Account = require('../../models/financeEntities/Account');
+const Recipe = require('../../models/financeEntities/Recipe');
+const RecipeDetail = require('../../models/financeEntities/RecipeDetail');
 
 exports.index = async (req, res) => {
   const { id_payment } = req.query;
@@ -64,7 +67,9 @@ exports.update = async (req, res, next) => {
       observations,
       paid_out,
       taxa_ant,
-      value_ant
+      value_ant,
+      paid_ant,
+      id_payment
     } = req.body;
 
     let new_value;
@@ -96,6 +101,105 @@ exports.update = async (req, res, next) => {
           id: id_parcel
         }
       });
+
+    const recipe = await Recipe.findOne({
+      where: {
+        id_payment
+      }
+    });
+
+    const details = await RecipeDetail.findAll({
+      where: {
+        id_recipe: recipe.id
+      }
+    });
+
+    const valuesEquals = item => item.document_number === document_number;
+
+    const recipe_detail = details.filter(valuesEquals);
+
+    await RecipeDetail.update({
+      id_payment_method: id_payment_method || null,
+      id_account_destiny: id_bank_account || null,
+      value: new_value,
+      vencimento,
+      document_number,
+      taxa_ajuste,
+      observations,
+      paid_out
+    },
+      {
+        where: {
+          id: recipe_detail[0].id
+        }
+      });
+
+    if (paid_out !== paid_ant && Number(new_value) === Number(value_ant)) {
+
+      const { initial_value } = await Account.findByPk(id_bank_account);
+
+      if (paid_out) {
+        Account.update({
+          initial_value: Number(initial_value) + Number(new_value)
+        },
+          {
+            where: {
+              id: id_bank_account
+            }
+          })
+      } else {
+        Account.update({
+          initial_value: Number(initial_value) - Number(new_value)
+        },
+          {
+            where: {
+              id: id_bank_account
+            }
+          })
+      }
+    }
+
+    if (paid_out !== paid_ant && Number(new_value) !== Number(value_ant)) {
+
+      const { initial_value } = await Account.findByPk(id_bank_account);
+
+      if (paid_out) {
+        Account.update({
+          initial_value: Number(initial_value) + Number(new_value)
+        },
+          {
+            where: {
+              id: id_bank_account
+            }
+          })
+      } else {
+        Account.update({
+          initial_value: Number(initial_value) - Number(value_ant)
+        },
+          {
+            where: {
+              id: id_bank_account
+            }
+          })
+      }
+    }
+
+    if (paid_out === paid_ant && Number(new_value) !== Number(value_ant)) {
+
+      const { initial_value } = await Account.findByPk(id_bank_account);
+
+      if (paid_out) {
+        Account.update({
+          initial_value: (Number(initial_value) - Number(value_ant)) + Number(new_value)
+        },
+          {
+            where: {
+              id: id_bank_account
+            }
+          })
+      }
+
+    }
 
     res.json({
       data: parcel,

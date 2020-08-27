@@ -53,6 +53,19 @@ exports.store = async (req, res, next) => {
         }
       })
 
+    const { initial_value } = await Account.findByPk(id_account_destiny);
+
+    if (paid_out && id_account_destiny) {
+      Account.update({
+        initial_value: Number(initial_value) - Number(value)
+      },
+        {
+          where: {
+            id: id_account_destiny
+          }
+        })
+    }
+
     res.json({
       data: expense_detail,
       message: "Detalhes da Despesa cadastrada com sucesso"
