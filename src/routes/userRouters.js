@@ -53,10 +53,8 @@ userRouter.put('/resource/:resourceId', authMiddleware, resourceController.updat
 userRouter.delete('/resource/:resourceId', authMiddleware, resourceController.destroy);
 
 // User and Group
-userRouter.post('/in/group/:id_user', authMiddleware, userGroupController.store);
-userRouter.get('/in/group/:id_user', authMiddleware, userGroupController.show);
-userRouter.delete('/in/group/:id_user', authMiddleware, userGroupController.destroy);
 userRouter.get('/in/groups', authMiddleware, userGroupController.index);
+userRouter.put('/in/group/:id_worker', authMiddleware, userGroupController.update);
 
 // Group and Permission
 userRouter.post('/permission/group/:id_permission', authMiddleware, permissionGroupController.store);

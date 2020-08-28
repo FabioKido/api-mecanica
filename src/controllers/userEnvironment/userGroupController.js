@@ -1,75 +1,50 @@
 const User = require('../../models/userEntities/User');
-const Group = require('../../models/userEntities/Group');
 
-exports.index = async (req, res) => {
-
-  const { id_group } = req.query;
-
-  const group = await Group.findByPk(id_group, {
-    include: {
-      association: 'users',
-      attributes: ['id', 'username'],
-      through: {
-        attributes: []
-      }
-    }
-  });
-
-  return res.json(group.users);
-}
-
-exports.show = async (req, res) => {
-
-  const { id_user } = req.params;
-
-  const user = await User.findByPk(id_user, {
-    include: {
-      association: 'groups',
-      attributes: ['name'],
-      through: {
-        attributes: []
-      }
-    }
-  })
-
-  return res.json(user.groups);
-}
-
-exports.store = async (req, res, next) => {
+exports.index = async (req, res, next) => {
   try {
-    const { id_user } = req.params;
-    const { id_group } = req.body;
+    const { id_group } = req.query;
 
-    const user = await User.findByPk(id_user);
-    const group = await Group.findByPk(id_group);
+    const user_groups = await User.findAll({
+      where: {
+        id_group
+      }
+    });
 
-    if (!user) {
-      return res.status(400).json({ error: 'User não encontrado' });
-    }
-
-    await user.addGroup(group);
-
-    return res.json(group);
+    res.status(200).json({
+      user_groups
+    });
 
   } catch (error) {
     next(error)
   }
 }
 
-exports.destroy = async (req, res) => {
+exports.update = async (req, res, next) => {
 
-  const { id_user } = req.params;
-  const { id_group } = req.query;
+  try {
 
-  const user = await User.findByPk(id_user);
+    const userId = req.user;
+    const { id_worker } = req.params;
+    const {
+      id_group
+    } = req.body
 
-  if (!user) {
-    return res.status(400).json({ error: 'User não encontrado' });
+    const user = await User.update({
+      id_group: id_group || null,
+      updated_by: userId,
+    },
+      {
+        where: {
+          id: id_worker
+        }
+      });
+
+    res.status(200).json({
+      data: { user },
+      message: 'Usuário foi atualizado'
+    });
+
+  } catch (error) {
+    next(error)
   }
-
-  const group = await Group.findByPk(id_group);
-
-  await user.removeGroup(group);
-
-  return res.json({ message: "Usuário retirado do Grupo" });
 }

@@ -28,7 +28,7 @@ class User extends Model {
     this.belongsTo(models.Contact, { foreignKey: 'id_contact', as: 'contact' });
     this.belongsTo(models.Address, { foreignKey: 'id_address', as: 'address' });
     this.belongsTo(models.AccessPlan, { foreignKey: 'id_access_plan', as: 'access_plans' });
-    this.belongsToMany(models.Group, { foreignKey: 'id_user', through: 'user_groups', as: 'groups' });
+    this.belongsTo(models.Group, { foreignKey: 'id_group', as: 'groups' });
   }
 
 }

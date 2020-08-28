@@ -5,7 +5,7 @@ class Group extends Model {
     super.init({
       name: DataTypes.STRING,
       description: DataTypes.TEXT,
-      enable:  DataTypes.BOOLEAN,
+      enable: DataTypes.BOOLEAN,
       created_by: DataTypes.INTEGER,
       updated_by: DataTypes.INTEGER,
     }, {
@@ -14,7 +14,7 @@ class Group extends Model {
   }
 
   static associate(models) {
-    this.belongsToMany(models.User, { foreignKey: 'id_group', through: 'user_groups', as: 'users' });
+    // this.belongsToMany(models.User, { foreignKey: 'id_group', through: 'user_groups', as: 'users' });
     this.belongsToMany(models.Permission, { foreignKey: 'id_group', through: 'group_permissions', as: 'permissions' });
   }
 
