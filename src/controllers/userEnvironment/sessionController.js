@@ -8,6 +8,7 @@ const Owner = require('../../models/userEntities/Owner');
 const Worker = require('../../models/userEntities/Worker');
 const Company = require('../../models/userEntities/Company');
 const AccessPlan = require('../../models/userEntities/AccessPlan');
+const Group = require('../../models/userEntities/Group');
 
 const { createContact } = require('../../services/contactService');
 const { createAddress } = require('../../services/addressService');
@@ -139,9 +140,26 @@ exports.signin = async (req, res, next) => {
 
     user.password = undefined;
 
+    let permissions = [];
+
+    if (user.id_group) {
+      const group = await Group.findByPk(user.id_group, {
+        include: {
+          association: 'permissions',
+          attributes: ['id', 'name', 'action'],
+          through: {
+            attributes: []
+          }
+        }
+      });
+
+      permissions = group.permissions;
+    }
+
     res.status(200).json({
       user,
-      access_token
+      access_token,
+      permissions
     })
 
   } catch (error) {
