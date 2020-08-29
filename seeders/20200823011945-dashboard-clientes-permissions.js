@@ -14,13 +14,6 @@ module.exports = {
         updated_at: date
       },
       {
-        name: 'Clientes',
-        action: 'Visualizar',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
         name: 'Clientes - Visão',
         action: 'Visualizar',
         enable: true,
@@ -28,56 +21,56 @@ module.exports = {
         updated_at: date
       },
       {
-        name: 'Clientes - Clientes',
+        name: 'Clientes',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Clientes - Clientes',
+        name: 'Clientes',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Clientes - Clientes',
+        name: 'Clientes',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Clientes - Clientes',
+        name: 'Clientes',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Clientes - Veículos',
+        name: 'Veículos',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Clientes - Veículos',
+        name: 'Veículos',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Clientes - Veículos',
+        name: 'Veículos',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Clientes - Veículos',
+        name: 'Veículos',
         action: 'Excluir',
         enable: true,
         created_at: date,

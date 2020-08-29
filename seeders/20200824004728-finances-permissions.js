@@ -7,13 +7,6 @@ module.exports = {
 
     return queryInterface.bulkInsert('permissions', [
       {
-        name: 'Finanças',
-        action: 'Visualizar',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
         name: 'Finanças - Visão',
         action: 'Visualizar',
         enable: true,
@@ -21,196 +14,196 @@ module.exports = {
         updated_at: date
       },
       {
-        name: 'Finanças - Receitas',
+        name: 'Receitas',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Receitas',
+        name: 'Receitas',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Receitas',
+        name: 'Receitas',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Receitas',
+        name: 'Receitas',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Detalhes da Receita',
+        name: 'Detalhes da Receita',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Detalhes da Receita',
+        name: 'Detalhes da Receita',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Despesas',
+        name: 'Despesas',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Despesas',
+        name: 'Despesas',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Despesas',
+        name: 'Despesas',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Despesas',
+        name: 'Despesas',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Detalhes da Despesa',
+        name: 'Detalhes da Despesa',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Detalhes da Despesa',
+        name: 'Detalhes da Despesa',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Contas',
+        name: 'Contas',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Contas',
+        name: 'Contas',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Contas',
+        name: 'Contas',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Contas',
+        name: 'Contas',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Transferir',
+        name: 'Transferir',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Transferir',
+        name: 'Transferir',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Transferir',
+        name: 'Transferir',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Transferir',
+        name: 'Transferir',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Métodos',
+        name: 'Métodos',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Métodos',
+        name: 'Métodos',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Métodos',
+        name: 'Métodos',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Métodos',
+        name: 'Métodos',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Categorias',
+        name: 'Categorias',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Categorias',
+        name: 'Categorias',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Categorias',
+        name: 'Categorias',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Finanças - Categorias',
+        name: 'Categorias',
         action: 'Excluir',
         enable: true,
         created_at: date,

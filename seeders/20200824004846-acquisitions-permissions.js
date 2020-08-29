@@ -7,13 +7,6 @@ module.exports = {
 
     return queryInterface.bulkInsert('permissions', [
       {
-        name: 'Aquisições',
-        action: 'Visualizar',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
         name: 'Aquisições - Visão',
         action: 'Visualizar',
         enable: true,
@@ -21,112 +14,112 @@ module.exports = {
         updated_at: date
       },
       {
-        name: 'Aquisições - Aquisições',
+        name: 'Aquisições',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Aquisições',
+        name: 'Aquisições',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Aquisições',
+        name: 'Aquisições',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Aquisições',
+        name: 'Aquisições',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Produtos',
+        name: 'Produtos',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Produtos',
+        name: 'Produtos',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Produtos',
+        name: 'Produtos',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Produtos',
+        name: 'Produtos',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Fornecedores',
+        name: 'Fornecedores',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Fornecedores',
+        name: 'Fornecedores',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Fornecedores',
+        name: 'Fornecedores',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Fornecedores',
+        name: 'Fornecedores',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Famílias',
+        name: 'Famílias',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Famílias',
+        name: 'Famílias',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Famílias',
+        name: 'Famílias',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Aquisições - Famílias',
+        name: 'Famílias',
         action: 'Excluir',
         enable: true,
         created_at: date,

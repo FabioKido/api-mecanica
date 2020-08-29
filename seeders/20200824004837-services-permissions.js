@@ -7,13 +7,6 @@ module.exports = {
 
     return queryInterface.bulkInsert('permissions', [
       {
-        name: 'Serviços',
-        action: 'Visualizar',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
         name: 'Serviços - Visão',
         action: 'Visualizar',
         enable: true,
@@ -21,302 +14,302 @@ module.exports = {
         updated_at: date
       },
       {
-        name: 'Serviços - Ordens',
+        name: 'Serviços',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Ordens',
+        name: 'Serviços',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Ordens',
+        name: 'Ordens',
+        action: 'Visualizar',
+        enable: true,
+        created_at: date,
+        updated_at: date
+      },
+      {
+        name: 'Ordens',
+        action: 'Criar',
+        enable: true,
+        created_at: date,
+        updated_at: date
+      },
+      {
+        name: 'Ordens',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Ordens',
+        name: 'Ordens',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Serviços da Ordem',
+        name: 'Serviços da Ordem',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Serviços da Ordem',
+        name: 'Serviços da Ordem',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Produtos do Serviço',
+        name: 'Produtos do Serviço',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Produtos do Serviço',
+        name: 'Produtos do Serviço',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Produtos do Serviço',
+        name: 'Produtos do Serviço',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Produtos do Serviço',
+        name: 'Produtos do Serviço',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Pagamentos',
+        name: 'Pagamentos',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Pagamentos',
+        name: 'Pagamentos',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Pagamentos',
+        name: 'Pagamentos',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Pagamentos',
+        name: 'Pagamentos',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Parcelas do Pagamento',
+        name: 'Parcelas do Pagamento',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Parcelas do Pagamento',
+        name: 'Parcelas do Pagamento',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Timeline',
+        name: 'Timeline',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Itens da Timeline',
+        name: 'Itens da Timeline',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Itens da Timeline',
+        name: 'Itens da Timeline',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Itens da Timeline',
+        name: 'Itens da Timeline',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Itens da Timeline',
+        name: 'Itens da Timeline',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Rápidas',
+        name: 'Rápidas',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Rápidas',
+        name: 'Rápidas',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Rápidas',
+        name: 'Rápidas',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Orçar',
+        name: 'Orçar',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Orçar',
+        name: 'Orçar',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Orçar',
+        name: 'Orçar',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Orçar',
+        name: 'Orçar',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Checklist',
+        name: 'Checklist',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Itens da Checklist',
+        name: 'Itens da Checklist',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Itens da Checklist',
+        name: 'Itens da Checklist',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Itens da Checklist',
+        name: 'Itens da Checklist',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Itens da Checklist',
+        name: 'Itens da Checklist',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Revisões',
+        name: 'Revisões',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Revisões',
+        name: 'Revisões',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Revisões',
+        name: 'Revisões',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Revisões',
+        name: 'Revisões',
         action: 'Excluir',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Agendar',
+        name: 'Agendar',
         action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Agendar',
+        name: 'Agendar',
         action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Agendar',
+        name: 'Agendar',
         action: 'Editar',
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Serviços - Agendar',
+        name: 'Agendar',
         action: 'Excluir',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
-        name: 'Serviços - Seviços',
-        action: 'Visualizar',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
-        name: 'Serviços - Seviços',
-        action: 'Criar',
         enable: true,
         created_at: date,
         updated_at: date
@@ -360,6 +353,6 @@ module.exports = {
 
     -- Agendar: Criar, Viasualizar, Editar, Excluir
 
-    -- Seviços: Criar, Viasualizar
+    -- Serviços: Criar, Viasualizar
 
 */
