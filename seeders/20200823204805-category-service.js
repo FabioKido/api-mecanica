@@ -7,6 +7,7 @@ module.exports = {
 
     return queryInterface.bulkInsert('categories', [
       {
+        id: 1,
         description: 'Serviços',
         indicator: 'Normal',
         workshop: 'admin@emecanica.com',

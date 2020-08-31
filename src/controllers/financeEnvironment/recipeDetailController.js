@@ -126,6 +126,7 @@ exports.update = async (req, res, next) => {
         }
       });
 
+    // FIXME Não está atualizando, quando não tem o payment e a parcel referentes.
     const { id_payment } = await Recipe.findByPk(id_recipe);
 
     const parcels = await Parcel.findAll({
@@ -150,7 +151,7 @@ exports.update = async (req, res, next) => {
     },
       {
         where: {
-          id: parcel[0].id
+          id: parcel[0].id // Erro acontece aqui, por não ter parcela relacionada.
         }
       });
 

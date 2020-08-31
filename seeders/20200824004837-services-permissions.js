@@ -140,13 +140,6 @@ module.exports = {
         updated_at: date
       },
       {
-        name: 'Timeline',
-        action: 'Visualizar',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
         name: 'Itens da Timeline',
         action: 'Visualizar',
         enable: true,
@@ -169,27 +162,6 @@ module.exports = {
       },
       {
         name: 'Itens da Timeline',
-        action: 'Excluir',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
-        name: 'Rápidas',
-        action: 'Visualizar',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
-        name: 'Rápidas',
-        action: 'Criar',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
-        name: 'Rápidas',
         action: 'Excluir',
         enable: true,
         created_at: date,
@@ -219,13 +191,6 @@ module.exports = {
       {
         name: 'Orçar',
         action: 'Excluir',
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
-        name: 'Checklist',
-        action: 'Visualizar',
         enable: true,
         created_at: date,
         updated_at: date

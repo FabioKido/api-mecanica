@@ -114,6 +114,7 @@ exports.update = async (req, res, next) => {
       }
     });
 
+    // FIXME Deve acontecer o error aqui também, quando não tiver a recipe e o detail referentes.
     const valuesEquals = item => item.document_number === document_number;
 
     const recipe_detail = details.filter(valuesEquals);
