@@ -108,32 +108,34 @@ exports.update = async (req, res, next) => {
       }
     });
 
-    const details = await RecipeDetail.findAll({
-      where: {
-        id_recipe: recipe.id
-      }
-    });
-
-    // FIXME Deve acontecer o error aqui também, quando não tiver a recipe e o detail referentes.
-    const valuesEquals = item => item.document_number === document_number;
-
-    const recipe_detail = details.filter(valuesEquals);
-
-    await RecipeDetail.update({
-      id_payment_method: id_payment_method || null,
-      id_account_destiny: id_bank_account || null,
-      value: new_value,
-      vencimento,
-      document_number,
-      taxa_ajuste,
-      observations,
-      paid_out
-    },
-      {
+    if (recipe) {
+      const details = await RecipeDetail.findAll({
         where: {
-          id: recipe_detail[0].id
+          id_recipe: recipe.id
         }
       });
+
+      const valuesEquals = item => item.document_number === document_number;
+
+      const recipe_detail = details.filter(valuesEquals);
+
+      await RecipeDetail.update({
+        id_payment_method: id_payment_method || null,
+        id_account_destiny: id_bank_account || null,
+        value: new_value,
+        vencimento,
+        document_number,
+        taxa_ajuste,
+        observations,
+        paid_out
+      },
+        {
+          where: {
+            id: recipe_detail[0].id
+          }
+        });
+
+    }
 
     if (paid_out !== paid_ant && Number(new_value) === Number(value_ant)) {
 

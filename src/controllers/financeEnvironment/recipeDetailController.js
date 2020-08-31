@@ -126,34 +126,35 @@ exports.update = async (req, res, next) => {
         }
       });
 
-    // FIXME Não está atualizando, quando não tem o payment e a parcel referentes.
     const { id_payment } = await Recipe.findByPk(id_recipe);
 
-    const parcels = await Parcel.findAll({
-      where: {
-        id_payment
-      }
-    });
-
-    const valuesEquals = item => item.document_number === document_number;
-
-    const parcel = parcels.filter(valuesEquals);
-
-    await Parcel.update({
-      id_payment_method: id_payment_method || null,
-      id_bank_account: id_account_destiny || null,
-      value: new_value,
-      vencimento,
-      document_number,
-      taxa_ajuste,
-      observations,
-      paid_out
-    },
-      {
+    if (id_payment) {
+      const parcels = await Parcel.findAll({
         where: {
-          id: parcel[0].id // Erro acontece aqui, por não ter parcela relacionada.
+          id_payment
         }
       });
+
+      const valuesEquals = item => item.document_number === document_number;
+
+      const parcel = parcels.filter(valuesEquals);
+
+      await Parcel.update({
+        id_payment_method: id_payment_method || null,
+        id_bank_account: id_account_destiny || null,
+        value: new_value,
+        vencimento,
+        document_number,
+        taxa_ajuste,
+        observations,
+        paid_out
+      },
+        {
+          where: {
+            id: parcel[0].id
+          }
+        });
+    }
 
     if (paid_out !== paid_ant && Number(new_value) === Number(value_ant)) {
 
