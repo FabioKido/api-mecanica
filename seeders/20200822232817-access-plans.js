@@ -7,7 +7,8 @@ module.exports = {
 
     return queryInterface.bulkInsert('access_plans', [
       {
-        name: 'Individual',
+        id: 1,
+        name: 'MEI',
         type: 'basic',
         value: 0.00,
         enable: true,
@@ -15,25 +16,19 @@ module.exports = {
         updated_at: date
       },
       {
+        id: 2,
         name: 'MPE',
         type: 'elite',
-        value: 22.00,
+        value: 32.00,
         enable: true,
         created_at: date,
         updated_at: date
       },
       {
-        name: 'Média',
-        type: 'elite',
-        value: 59.00,
-        enable: true,
-        created_at: date,
-        updated_at: date
-      },
-      {
-        name: 'Grande',
+        id: 3,
+        name: 'MGE',
         type: 'preemium',
-        value: 97.00,
+        value: 79.90,
         enable: true,
         created_at: date,
         updated_at: date
