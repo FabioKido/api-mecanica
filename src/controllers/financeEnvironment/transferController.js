@@ -49,36 +49,49 @@ exports.store = async (req, res, next) => {
       observations
     } = req.body;
 
-    const account_origin = await Account.findByPk(id_account_origin);
-    const { initial_value: origin_value } = account_origin;
+    if (!id_account_origin || !id_account_destiny) {
+      res.status(500).json({
+        error: "Verifique se as contas estão inseridas"
+      })
 
-    const account_destiny = await Account.findByPk(id_account_destiny);
-    const { initial_value: destiny_value } = account_destiny;
-
-    if ((id_account_origin === id_account_destiny) || !id_account_origin || !id_account_destiny || (Number(origin_value) < Number(total_value))) {
-
-      return next(new Error('Verifique se as contas são diferentes entre si ou existam'));
+      return;
 
     } else {
-      const transfer = await Transfer.create({
-        id_category: id_category || null,
-        id_account_origin: id_account_origin || null,
-        id_account_destiny: id_account_destiny || null,
-        total_value,
-        description,
-        date: date || Date.now(),
-        observations,
-        enable: true,
-        workshop: workshop,
-        created_by: userId
-      });
+      const account_origin = await Account.findByPk(id_account_origin);
+      const { initial_value: origin_value } = account_origin;
 
-      res.json({
-        transfer,
-        origin_value,
-        destiny_value,
-        message: "Transferência cadastrada com sucesso"
-      })
+      const account_destiny = await Account.findByPk(id_account_destiny);
+      const { initial_value: destiny_value } = account_destiny;
+
+      if ((id_account_origin === id_account_destiny) || (Number(origin_value) < Number(total_value))) {
+
+        res.status(500).json({
+          error: "Verifique se as contas são diferentes e se o valor da conta é menor que o valor total"
+        })
+
+        return;
+
+      } else {
+        const transfer = await Transfer.create({
+          id_category: id_category || null,
+          id_account_origin: id_account_origin || null,
+          id_account_destiny: id_account_destiny || null,
+          total_value,
+          description,
+          date: date || Date.now(),
+          observations,
+          enable: true,
+          workshop: workshop,
+          created_by: userId
+        });
+
+        res.json({
+          transfer,
+          origin_value,
+          destiny_value,
+          message: "Transferência cadastrada com sucesso"
+        })
+      }
     }
 
   } catch (error) {
