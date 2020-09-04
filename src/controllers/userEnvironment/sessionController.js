@@ -124,13 +124,31 @@ exports.signin = async (req, res, next) => {
       }
     });
 
-    if (!user) return next(new Error('Usuário não existe'));
+    if (!user) {
+      res.status(500).json({
+        error: "Usuário não existe"
+      })
+
+      return;
+    }
 
     const validPassword = await validatePassword(password, user.password);
 
-    if (!validPassword) return next(new Error('Senha incorreta'));
+    if (!validPassword) {
+      res.status(500).json({
+        error: "Senha está incorreta"
+      })
 
-    if (!user.enable) return next(new Error('Usuário sem permissão de entrar'));
+      return;
+    }
+
+    if (!user.enable) {
+      res.status(500).json({
+        error: "Usuário sem permissão de entrar"
+      })
+
+      return;
+    }
 
     const access_token = jwt.sign({ userId: user.id, workshop: user.workshop }, process.env.JWT_SECRET, {
       expiresIn: 86400,
@@ -227,7 +245,7 @@ exports.signupWorker = async (req, res, next) => {
   }
 }
 
-// Add data da req de nova senha
+//TODO Add data da req de nova senha
 exports.forgot = async (req, res, next) => {
 
   try {
