@@ -10,7 +10,13 @@ exports.getDiagnosticOrder = async (req, res, next) => {
       }
     });
 
-    if (!order) return next(new Error('Ordem de Serviço não existe'));
+    if (!order) {
+      res.status(400).json({
+        error: "Ordem de Serviço não existe"
+      })
+
+      return;
+    };
 
     res.status(200).json({
       order
@@ -30,7 +36,13 @@ exports.getPreventiveOrder = async (req, res, next) => {
       }
     });
 
-    if (!order) return next(new Error('Ordem de Serviço não existe'));
+    if (!order) {
+      res.status(400).json({
+        error: "Ordem de Serviço não existe"
+      })
+
+      return;
+    };
 
     res.status(200).json({
       order
@@ -50,7 +62,13 @@ exports.getScheduleOrder = async (req, res, next) => {
       }
     });
 
-    if (!order) return next(new Error('Ordem de Serviço não existe'));
+    if (!order) {
+      res.status(400).json({
+        error: "Ordem de Serviço não existe"
+      })
+
+      return;
+    };
 
     res.status(200).json({
       order
@@ -70,7 +88,13 @@ exports.getRecordOrder = async (req, res, next) => {
       }
     });
 
-    if (!order) return next(new Error('Ordem de Serviço não existe'));
+    if (!order) {
+      res.status(400).json({
+        error: "Ordem de Serviço não existe"
+      })
+
+      return;
+    };
 
     res.status(200).json({
       order

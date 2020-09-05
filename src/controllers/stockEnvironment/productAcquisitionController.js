@@ -24,11 +24,15 @@ exports.index = async (req, res, next) => {
   try {
     const { id_product } = req.params;
 
-    const prod_acqs = await ProductAcquisition.findAll({
+    const acqs = await ProductAcquisition.findAll({
       where: {
         id_product
       }
     });
+
+    const getProds = item => item.qtd !== 0;
+
+    const prod_acqs = acqs.filter(getProds);
 
     res.status(200).json({
       prod_acqs

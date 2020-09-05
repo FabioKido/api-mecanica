@@ -114,7 +114,11 @@ exports.update = async (req, res, next) => {
         message: "Item de Produto atualizado com sucesso"
       })
     } else {
-      return next(new Error('Quantidade não pode ser ZERO ou Igual a anterior'));
+      res.status(500).json({
+        error: "Quantidade não pode ser ZERO ou Igual a anterior"
+      })
+
+      return;
     }
 
   } catch (error) {

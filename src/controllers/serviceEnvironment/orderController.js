@@ -24,7 +24,13 @@ exports.show = async (req, res, next) => {
 
     const order = await Order.findByPk(id_order);
 
-    if (!order) return next(new Error('Ordem de Serviço não existe'));
+    if (!order) {
+      res.status(500).json({
+        error: "Ordem de Serviço não existe"
+      })
+
+      return;
+    };
 
     res.status(200).json({
       data: order

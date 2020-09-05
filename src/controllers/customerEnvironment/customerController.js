@@ -35,7 +35,15 @@ exports.show = async (req, res, next) => {
   try {
     const { id_customer } = req.params;
     const customer = await Customer.findByPk(id_customer);
-    if (!customer) return next(new Error('Cliente não existe'));
+
+    if (!customer) {
+      res.status(400).json({
+        error: "Cliente não existe"
+      })
+
+      return;
+    };
+
     res.status(200).json({
       customer
     });

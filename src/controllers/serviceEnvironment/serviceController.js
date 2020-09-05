@@ -35,7 +35,13 @@ exports.store = async (req, res, next) => {
       }
     });
 
-    if (service) return next(new Error('Serviço já existe'));
+    if (service) {
+      res.status(401).json({
+        error: "Serviço já existe na base de dados"
+      })
+
+      return;
+    };
 
     const serv = await Service.create({
       name
