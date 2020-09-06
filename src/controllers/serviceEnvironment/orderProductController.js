@@ -49,6 +49,14 @@ exports.store = async (req, res, next) => {
     if (qtd > 0) {
       const { qtd: quantity } = await ProductAcquisition.findByPk(id_prod_acq);
 
+      if (qtd > quantity) {
+        res.status(401).json({
+          error: "Quantidade não disponível no estoque"
+        })
+
+        return;
+      }
+
       await ProductAcquisition.update({
         qtd: Number(quantity) - Number(qtd)
       },
@@ -84,6 +92,16 @@ exports.update = async (req, res, next) => {
     } = req.body;
 
     const { qtd: quantity } = await ProductAcquisition.findByPk(id_prod_acq);
+
+    const stock = Number(quantity) + Number(qtd_ant);
+
+    if (qtd > stock) {
+      res.status(401).json({
+        error: "Quantidade não disponível no estoque"
+      })
+
+      return;
+    }
 
     if (qtd > 0) {
       const orderProduct = await OrderProduct.update({
