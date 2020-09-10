@@ -1,9 +1,9 @@
 module.exports = {
   dialect: 'mysql',
-  host: 'localhost',
-  username: 'root',
-  password: 'password',
-  database: 'sequelise',
+  host: process.env.HOST || 'localhost',
+  username: process.env.USERNAME || 'root',
+  password: process.env.PASSWORD || 'password',
+  database: process.env.DATABASE || 'emecanica',
   define: {
     timestamps: true,
     underscored: true,
