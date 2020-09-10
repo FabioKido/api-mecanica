@@ -12,11 +12,12 @@ require("dotenv").config({
 
 const app = express();
 
+const apiBaseUrl = process.env.API_BASE_URL || '/';
 const PORT = process.env.PORT || 3333;
 
 app.use(cors());
 app.use(express.json());
-app.use('/', routes);
+app.use(apiBaseUrl, routes);
 
 app.listen(PORT, () => {
   console.log('Server is listening on Port:', PORT)
