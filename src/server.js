@@ -12,7 +12,7 @@ require("dotenv").config({
 
 const app = express();
 
-const apiBaseUrl = process.env.API_BASE_URL || '/';
+const apiBaseUrl = process.env.API_BASE_URL || '/api';
 const PORT = process.env.PORT || 3333;
 
 app.use(cors());
