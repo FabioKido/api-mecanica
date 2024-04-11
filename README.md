@@ -20,3 +20,5 @@ para permitir o offline first;
 
 E a criação do dashboard admin, sendo o frontend web criado com reactjs, com deploy futuro
 no heroku.
+
+Status: Descontinuado!
